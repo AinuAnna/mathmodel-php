@@ -1,0 +1,65 @@
+.hero-home{
+    display: flex;
+    position: relative;
+    align-items: center;
+    min-height: 600px;
+    background-image: url('https://i.imgur.com/CeHCzym.jpg');
+    background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.subtitle{
+    font-size: 20px;
+    padding: 8px;
+}
+a.btn-primary {
+    background-color: #bece5f;
+    border-color: #bece5f;
+    color: rgba(0,0,0,.5);
+}
+a.btn-primary:hover{
+    background-color: rgb(74, 134, 132);
+    border-color: rgb(74, 134, 132);  
+    color: #fff;
+}
+.text-shadow{
+    color: #bece5f;
+}
+.large-list{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: initial;
+}
+.will-help-you{
+    border-bottom-right-radius: 150px;
+    margin-bottom: -150px;
+    z-index: 1;
+    background: #fff;
+}
+.content .container {
+    padding: 70px 40px;
+}
+.large-list> li{
+    font-size: 1.5em;
+    line-height: 130%;
+    color: #292929;
+    position: relative;
+    padding-left: 58px;
+    margin-bottom: 30px;
+}
+li::marker{
+    color: rgb(74, 134, 132);
+}
+button.btn.btn-primary{
+    background-color: #bece5f;
+    border-color: #bece5f;
+    color: rgba(0,0,0,.5);
+}
+button.btn.btn-primary:hover{
+    background-color: rgb(74, 134, 132);
+    border-color: rgb(74, 134, 132);  
+    color: white;
+}
