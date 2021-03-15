@@ -1,5 +1,7 @@
 <?php
     session_start();
+    include ("bd.php");
+
     ?>
     <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-    <title>Sign in</title>
+    <title>Вход</title>
 </head>
 <body>
 <div class="row min-vh-100">
@@ -58,8 +60,7 @@
     $fullname = trim($fullname);
     $password = trim($password);
     $email = trim($email);
-    include ("bd.php");
- 
+   
     $result = mysqli_query($GLOBALS["db"], "SELECT * FROM users WHERE fullname='$fullname'"); 
     $myrow = mysqli_fetch_array($result);
     if (empty($myrow['password']))
@@ -87,10 +88,10 @@
     }
   }
     ?>
-            <a href="login.php" style = "color:rgb(74, 134, 132);">Зарегистрироваться</a> 
+            <a href="reg.php" style = "color:rgb(74, 134, 132);">Зарегистрироваться</a> 
           </div>
         </div>
-        <div class="col-md-4 col-lg-6 col-xl-7 d-none d-md-block">
+        <div class="col-md-4 col-lg-6 col-xl-7 d-none d-md-block" style = "padding: 0;">
           <!-- Image-->
           <div class="bg-cover h-100 mr-n3" style="background-image: url(https://st2.depositphotos.com/1340907/6714/v/950/depositphotos_67148421-stock-illustration-triangles.jpg);"></div>
         </div>

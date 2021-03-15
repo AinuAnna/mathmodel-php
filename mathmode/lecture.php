@@ -28,7 +28,7 @@
           </div>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="student.php">Профиль</a></li>
+            <li class="nav-item"><a class="nav-link" href="admin.php">Профиль</a></li>
               <li class="nav-item"><a class="nav-link" href="lecture.php">Лекции</a></li>
               <li class="nav-item"><a class="nav-link" href="tests.php">Тесты</a></li>
               <li class="nav-item"><a class="nav-link" href="testResult.php">Результаты тестов</a></li>
@@ -38,6 +38,7 @@
         </div>
       </nav>
       <!-- /Navbar -->
+      </header>
       <section class="slice bg-section-secondary">
         <div class="content will-help-you">
           <div class="container">
@@ -120,7 +121,7 @@
            <div class="w-50 position-relative">
            <form class="form-validate" method="post">
            <div class="form-group">
-           <label class="form-label" for="idtopics">Идентификатор темы:</label>
+           <label class="form-label" for="idtopics">Выберите тему, которую хотите удалить:</label>
            <select class="custom-select" name = "deleteterm">
             <?php $query = "SELECT * FROM topics";
               //Делаем запрос к БД, результат запроса пишем в $result:
@@ -160,17 +161,34 @@
              <div class="w-50 position-relative">
            <form class="form-validate" method="post">
            <div class="form-group">
-           <label class="form-label" for="idlectures">Идентификатор раздела:</label><input class="form-control" name="idlectures" id="idlectures" type="text" placeholder="1" autocomplete="off" required="" data-msg="Пожалуйста введите идентификатор раздела">
-           <label class="form-label" for="theme">Название раздела:</label><input class="form-control" name="theme" id="theme" type="text" placeholder="Теория графов" autocomplete="off" required="" data-msg="Пожалуйста введите новое название">
+           <label class="form-label" for="theme">Выберите раздел, который хотите изменить:</label>
+           <select class="custom-select" name = "editterm">
+            <?php $query = "SELECT * FROM lectures";
+              //Делаем запрос к БД, результат запроса пишем в $result:
+              $result = mysqli_query($GLOBALS['db'], $query) or die( mysqli_error($GLOBALS['db']));
+
+                if($result)
+                {
+                    $rows = mysqli_num_rows($result); // количество полученных строк
+                    while($row = mysqli_fetch_array($result))
+                    {
+                            echo "<p><option value = ".$row['idlectures'].">".$row['theme']."</p>";
+                    }
+                    // очищаем результат
+                    mysqli_free_result($result);
+                }
+                ?>         
+            </select>  
+            <label class="form-label" for="theme">Новый раздел:</label><input class="form-control" name="theme" id="theme" type="text" placeholder="Модели" autocomplete="off" required="" data-msg="Пожалуйста введите новый вопрос">
            </div><button class="btn btn-primary" name = "editButton" id = "editButton" type = "submit">Обновить</button>
             </form>
         </div>
         <?php 
         if(isset($_POST['editButton'])){
-            if (!$_POST["idlectures"] || !$_POST["theme"]) {
+            if (!$_POST["editterm"]) {
                 echo "Вы не ввели критерии поиска. Вернитесь назад и попробуйте еще раз"; exit();
                 }
-            $query = "UPDATE lectures SET theme = '".$_POST["theme"]."' WHERE idlectures = '".$_POST["idlectures"]."'";
+            $query = "UPDATE lectures SET theme = '".$_POST["theme"]."' WHERE idlectures = '".$_POST["editterm"]."'";
             $result = mysqli_query($GLOBALS["db"], $query);
             if(!$result) echo("Ошибка выполнения"); else echo("Запись успешно изменена");
         }
@@ -179,27 +197,59 @@
              <div class="w-50 position-relative">
            <form class="form-validate" method="post">
            <div class="form-group">
-           <label class="form-label" for="idtopics">Идентификатор темы:</label><input class="form-control" name="idtopics" id="idtopics" type="text" placeholder="1" autocomplete="off" required="" data-msg="Пожалуйста введите идентификатор темы">
-           <label class="form-label" for="nametopic">Название темы:</label><input class="form-control" name="nametopic" id="nametopic" type="text" placeholder="Определения" autocomplete="off" required="" data-msg="Пожалуйста введите новую тему">
+           <label class="form-label" for="nametopic">Выберите тему, которую хотите изменить:</label>
+           <select class="custom-select" name = "edittype">
+            <?php $query = "SELECT * FROM topics";
+              //Делаем запрос к БД, результат запроса пишем в $result:
+              $result = mysqli_query($GLOBALS['db'], $query) or die( mysqli_error($GLOBALS['db']));
+
+                if($result)
+                {
+                    $rows = mysqli_num_rows($result); // количество полученных строк
+                    while($row = mysqli_fetch_array($result))
+                    {
+                            echo "<p><option value = ".$row['idtopics'].">".$row['nametopic']."</p>";
+                    }
+                    // очищаем результат
+                    mysqli_free_result($result);
+                }
+                ?>         
+            </select>  
+            <label class="form-label" for="nametopic">Новая тема:</label><input class="form-control" name="nametopic" id="nametopic" type="text" placeholder="Модели" autocomplete="off" required="" data-msg="Пожалуйста введите новый вопрос">
            </div><button class="btn btn-primary" name = "editButton2" id = "editButton2" type = "submit">Обновить</button>
             </form>
         </div>
-        <?php
+        <?php 
         if(isset($_POST['editButton2'])){
-            if (!$_POST["idtopics"] || !$_POST["nametopic"]) {
+            if (!$_POST["edittype"]) {
                 echo "Вы не ввели критерии поиска. Вернитесь назад и попробуйте еще раз"; exit();
                 }
-            $query = "UPDATE topics SET nametopic = '".$_POST["nametopic"]."' WHERE idtopics = '".$_POST["idtopics"]."'";
+            $query = "UPDATE topics SET nametopic = '".$_POST["nametopic"]."' WHERE idtopics = '".$_POST["edittype"]."'";
             $result = mysqli_query($GLOBALS["db"], $query);
             if(!$result) echo("Ошибка выполнения"); else echo("Запись успешно изменена");
         }
-         ?>
+        ?>
         <h4 style = "margin-top: 40px; margin-top: 20px;">Добавление лекции:</h4>
              <div class="w-50 position-relative">
            <form class="form-validate" method="post">
            <div class="form-group">
-           <label class="form-label" for="idlectures">Идентификатор раздела:</label><input class="form-control" name="idlectures" id="idlectures" type="text" placeholder="1" autocomplete="off" required="" data-msg="Пожалуйста введите идентификатор раздела">
-           <label class="form-label" for="theme">Название раздела:</label><input class="form-control" name="theme" id="theme" type="text" placeholder="Теория игр" autocomplete="off" required="" data-msg="Пожалуйста введите новое название">
+           <select class="custom-select" name = "addtype">
+            <?php $query = "SELECT * FROM lectures";
+              //Делаем запрос к БД, результат запроса пишем в $result:
+              $result = mysqli_query($GLOBALS['db'], $query) or die( mysqli_error($GLOBALS['db']));
+
+                if($result)
+                {
+                    $rows = mysqli_num_rows($result); // количество полученных строк
+                    while($row = mysqli_fetch_array($result))
+                    {
+                            echo "<p><option value = ".$row['idlectures'].">".$row['theme']."</p>";
+                    }
+                    // очищаем результат
+                    mysqli_free_result($result);
+                }
+                ?>         
+            </select>
            <label class="form-label" for="nametopic">Название темы:</label><input class="form-control" name="nametopic" id="nametopic" type="text" placeholder="Матричные игры" autocomplete="off" required="" data-msg="Пожалуйста введите новую тему">
            <div class="custom-file mt-3">
            <input type="file" class = "custom-file-input" name = "file" id="filename"/>
@@ -219,22 +269,42 @@
         </div>
         <?php
         if(isset($_POST['addButton'])){
-            if (!$_POST["nametopic"]|| !$_POST["theme"]) {
+            if (!$_POST["nametopic"]) {
                 echo "Вы не ввели критерии поиска. Вернитесь назад и попробуйте еще раз"; exit();
                 }
-            $sql = "INSERT INTO topics (idtopics, idlectures, nametopic, file)
-            VALUES (NULL, '".$_POST['idlectures']."', '".$_POST['nametopic']."', '".$_POST['file']."');";
-
-            $sql .= "INSERT INTO lectures (idlectures, theme)
-            VALUES (NULL, '".$_POST['theme']."');";
-
-            if ($GLOBALS["db"]->multi_query($sql) === TRUE) {
+            $query = "INSERT INTO topics (idtopics, idlectures, nametopic, file)
+            VALUES (NULL, '".$_POST['addtype']."', '".$_POST['nametopic']."', '".$_POST['file']."');";
+            $result = mysqli_query($GLOBALS['db'], $query) or die( mysqli_error($GLOBALS['db']));
+            if ($result) {
                 echo "Успешно созданы новые записи";
             } else {
-               echo "Ошибка: " . $sql . "<br>" . $GLOBALS["db"]->error;
+               echo "Ошибка: " . $query . "<br>" . $GLOBALS["db"]->error;
             }
         }
          ?>
+            <h4 style = "margin-top: 40px; margin-top: 20px;">Добавление раздела:</h4>
+             <div class="w-50 position-relative">
+           <form class="form-validate" method="post">
+           <div class="form-group">
+           <label class="form-label" for="theme">Название раздела:</label><input class="form-control" name="theme" id="theme" type="text" placeholder="Матричные игры" autocomplete="off" required="" data-msg="Пожалуйста введите новый раздел">
+           </div>
+           <button class="btn btn-primary" name = "addButton2" id = "addButton2" type = "submit">Добавить</button>
+           </form>
+           </div>
+           <?php
+           if(isset($_POST['addButton2'])){
+            if (!$_POST["theme"]) {
+                echo "Вы не ввели критерии поиска. Вернитесь назад и попробуйте еще раз"; exit();
+                }
+            $query = "INSERT INTO lectures (idlectures, theme) VALUES (NULL, '".$_POST['theme']."');";
+            $result = mysqli_query($GLOBALS['db'], $query) or die( mysqli_error($GLOBALS['db']));
+            if ($result) {
+                echo "Успешно созданы новые записи";
+            } else {
+               echo "Ошибка: " . $query . "<br>" . $GLOBALS["db"]->error;
+            }
+        }
+          ?>
       </div>
       </div>
     </section>
