@@ -4,6 +4,11 @@
     mysqli_query($GLOBALS['db'], "ALTER TABLE topics AUTO_INCREMENT = 0");
     mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
     ?>
+<script>
+if ( window.history.replaceState ) {
+window.history.replaceState( null, null, window.location.href );
+}
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href = "./style.css">
-    
+    <link rel="shortcut icon" href="assets/math.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
@@ -31,7 +36,7 @@
             <li class="nav-item"><a class="nav-link" href="admin.php">Профиль</a></li>
               <li class="nav-item"><a class="nav-link" href="lecture.php">Лекции</a></li>
               <li class="nav-item"><a class="nav-link" href="tests.php">Тесты</a></li>
-              <li class="nav-item"><a class="nav-link" href="testResult.php">Результаты тестов</a></li>
+              <li class="nav-item"><a class="nav-link" href="resultAll.php">Результаты тестов</a></li>
               <li class="nav-item"><a class="btn btn-primary" href="logout.php">Выйти</a></li>
             </ul>
           </div>
@@ -91,7 +96,7 @@
                     $rows = mysqli_num_rows($result); // количество полученных строк
                     while($row = mysqli_fetch_array($result))
                     {
-                            echo "<p><option value = ".$row['theme'].">".$row['theme']."</p>";
+                            echo "<p><option value = ".$row['idlectures'].">".$row['theme']."</p>";
                     }
                     // очищаем результат
                     mysqli_free_result($result);
@@ -105,8 +110,7 @@
             <?php
             if(isset($_POST["deleteButton"])){     
             if(!empty($_POST['deletetype'])) {
-             $deletetype= htmlspecialchars($_POST['deletetype']);
-             $query="DELETE FROM lectures WHERE theme ='$deletetype'";
+             $query="DELETE FROM lectures WHERE idlectures =".$_POST['deletetype']."";
              $result=mysqli_query($GLOBALS["db"], $query);
              
              if ($result)
@@ -132,7 +136,7 @@
                     $rows = mysqli_num_rows($result); // количество полученных строк
                     while($row = mysqli_fetch_array($result))
                     {
-                            echo "<p><option value = ".$row['nametopic'].">".$row['nametopic']."</p>";
+                            echo "<p><option value = ".$row['idtopics'].">".$row['nametopic']."</p>";
                     }
                     // очищаем результат
                     mysqli_free_result($result);
@@ -146,8 +150,8 @@
             <?php
             if(isset($_POST["deleteButton2"])){     
             if(!empty($_POST['deleteterm'])) {
-             $deleteterm= htmlspecialchars($_POST['deleteterm']);
-             $query="DELETE FROM topics WHERE nametopic ='$deleteterm'";
+             $query="DELETE FROM topics WHERE idtopics =".$_POST['deleteterm']."";
+             echo $query;
              $result=mysqli_query($GLOBALS["db"], $query);
              if ($result)
              echo "<div class=\"alert alert-success alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Запись успешно удалена!</div>";

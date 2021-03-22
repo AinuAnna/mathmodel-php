@@ -2,24 +2,18 @@
     session_start();
     include ("bd.php");
     ?>
-    <script>
-if ( window.history.replaceState ) {
-window.history.replaceState( null, null, window.location.href );
-}
-</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href = "./style.css">
     <link rel="shortcut icon" href="assets/math.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-    <title>Личный кабинет | Тесты</title>
+    <title>Личный кабинет | Результаты тестов</title>
 </head>
 <body>
 <header class="header">
@@ -39,14 +33,14 @@ window.history.replaceState( null, null, window.location.href );
             </ul>
           </div>
         </div>
-      </nav>
-      <!-- /Navbar -->
+      </nav>-
       </header>
       <section class="slice bg-section-secondary">
         <div class="content will-help-you">
           <div class="container">
             <div class="row">
-              <?php $query = "SELECT * FROM tests";
+            <form method="post">
+              <?php $query = "SELECT * FROM `test-results` WHERE idusers = ".$_SESSION['idusers']."";
               //Делаем запрос к БД, результат запроса пишем в $result:
               $result = mysqli_query($GLOBALS['db'], $query) or die( mysqli_error($GLOBALS['db']));
 
@@ -55,14 +49,22 @@ window.history.replaceState( null, null, window.location.href );
                     $rows = mysqli_num_rows($result); // количество полученных строк
                     
                     echo "
-                    <div class = 'container-fluid p-0'>
-                    <div class = 'table-responsive-md'>
-                    <h4 style = 'margin-top: 40px; margin-top: 20px;'>Тесты:</h4>
-                    <ol>";
-                    while($row = mysqli_fetch_array($result)){
-                        echo "<li><a href = 'testpage.php?idtests=".$row['idtests']."'>".$row['testtitle']."</a></li>";
+                    <div class = 'container-fluid p-2'>
+                    <h4 style = 'margin-top: 40px; margin-top: 20px;'>Ваши результаты тестов:</h4>
+                    <div class = 'table-responsive-md mt-4'>
+                    <table class = 'table'>
+                    <thead><th>Название теста</th><th>Оценка</th></thead>";
+                    while($row = mysqli_fetch_array($result))
+                    {
+                        echo"<tr>";
+                        $query2 = "SELECT * FROM tests WHERE idtests = ".$row['idtests']."";
+                        $result2 = mysqli_query($GLOBALS['db'], $query2);
+                        while($row2 = mysqli_fetch_array($result2)){
+                            echo "<td>".$row2['testtitle']."</td>";
+                        }    
+                        echo "<td>".$row['mark']."</td></tr>";                                
                     }
-                    echo "</ul>
+                    echo "</table>
                     </div>
                     </div>";
                     // очищаем результат
@@ -70,8 +72,6 @@ window.history.replaceState( null, null, window.location.href );
                 }
                 ?>         
            </div>
-           </div>
-           </div>
-           </section>
-           </body>
-           </html>
+           </form>
+</body>
+</html>
