@@ -29,11 +29,11 @@ include ("bd.php");
                     <div class = 'container-fluid p-0'>
                     <div class = 'table-responsive-md'>
                     <table class = 'table'>
-                    <tr><th>Идентификатор</th><th>Имя</th><th>Почта</th><th>Пароль</th><th>Роль</th></tr>";
+                    <tr><th>Идентификатор</th><th>Имя</th><th>Почта</th><th>Пароль</th><th>Роль</th><th>Аватар</th></tr>";
               for ($i = 0; $i < $rows; ++$i) {
                 $row = mysqli_fetch_row($result);
                 echo "<tr>";
-                for ($j = 0; $j < 5; ++$j) echo "<td>$row[$j]</td>";
+                for ($j = 0; $j < 6; ++$j) echo "<td>$row[$j]</td>";
                 echo "</tr>";
               }
               echo "</table>
@@ -56,11 +56,7 @@ include ("bd.php");
             $idusers = htmlspecialchars($_POST['idusers']);
             $query = "DELETE FROM users WHERE idusers ='$idusers';";
             $result = mysqli_query($GLOBALS["db"], $query);
-            if ($result)
-              echo "<div class=\"alert alert-success alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Запись успешно удалена!</div>";
-            else {
-              echo "<div class=\"alert alert-danger alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Ошибка выполнения...</div>";
-            }
+            include("notification.php");
           } else echo "<div class=\"alert alert-warning alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Все поля должны быть заполнены!</div>";
         }
         ?>
