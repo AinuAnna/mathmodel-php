@@ -1,0 +1,120 @@
+.hero-home {
+    display: flex;
+    position: relative;
+    align-items: center;
+    min-height: 600px;
+    background-image: url('https://i.imgur.com/CeHCzym.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.subtitle {
+    font-size: 20px;
+    padding: 8px;
+}
+
+a.btn-primary {
+    background-color: #bece5f;
+    border-color: #bece5f;
+    color: rgba(0, 0, 0, .5);
+}
+
+a.btn-primary:hover {
+    background-color: rgb(74, 134, 132);
+    border-color: rgb(74, 134, 132);
+    color: #fff;
+}
+
+.text-shadow {
+    color: #bece5f;
+}
+
+.large-list {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: initial;
+}
+
+.will-help-you {
+    border-bottom-right-radius: 150px;
+    margin-bottom: -150px;
+    z-index: 1;
+    background: #fff;
+}
+
+.content .container {
+    padding: 70px 40px;
+}
+
+.large-list>li {
+    font-size: 1.5em;
+    line-height: 130%;
+    color: #292929;
+    position: relative;
+    padding-left: 58px;
+    margin-bottom: 30px;
+}
+
+li::marker {
+    color: rgb(74, 134, 132);
+}
+
+button.btn.btn-primary {
+    background-color: #bece5f;
+    border-color: #bece5f;
+    color: rgba(0, 0, 0, .5);
+    margin-bottom: 1rem;
+}
+
+button.btn.btn-primary:hover {
+    background-color: rgb(74, 134, 132);
+    border-color: rgb(74, 134, 132);
+    color: white;
+}
+
+#user-avatar {
+    width: 10em;
+    height: 10em;
+    border: 2px solid #82a07c;
+    border-radius: 50%;
+    text-align: center;
+    background: rgb(236, 236, 236);
+    margin: auto;
+}
+
+.card-body {
+    padding-top: 186px;
+}
+
+input#upload {
+    display: none;
+}
+
+#label {
+    position: relative;
+    height: 30px;
+    width: 30px;
+    top: 7.5rem;
+    background-color: #bece5f;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+    transition: ease-out 200ms;
+    cursor: pointer;
+}
+
+#label:hover,
+#label:focus {
+    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+    background-color: rgb(74, 134, 132);
+}
+
+.student-profile__right {
+    display: flex;
+    justify-content: center;
+}
