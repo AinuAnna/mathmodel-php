@@ -84,11 +84,11 @@ include ("bd.php");
               $_SESSION['roleid'] = $myrow['roleid'];
               if (isset($_SESSION['fullname'])) {
                 if ($_SESSION['roleid'] == 2) {
-                  header('location: student.php');
+                  header('location: info.php');
                 } else if ($_SESSION['roleid'] == 3) {
                   header('location: teacher.php');
                 } else {
-                  header('location: admin.php');
+                  header('location: adminProfile.php');
                 }
               }
             } else {

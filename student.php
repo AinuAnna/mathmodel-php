@@ -14,7 +14,7 @@
         <div class="content will-help-you">
             <div class="container">
                 <div class="row" style="flex-direction: column; align-items: center;">
-                    <h2 class="display-5 text-shadow font-weight-bold" style="margin-bottom: 50px; color:#00090b;">Добро пожаловать в личный кабинет!</h2>
+                    <h2 class="display-5 text-shadow font-weight-bold" style="margin-bottom: 50px; color:#00090b;">Мой профиль</h2>
                     <?php include('profile.php')?>
                 </div>
             </div>

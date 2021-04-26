@@ -7,6 +7,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a class="nav-link" href="student.php">Профиль</a></li>
+          <li class="nav-item"><a class="nav-link" href="info.php">Информация</a></li>
           <li class="nav-item"><a class="nav-link" href="lectureStudent.php">Лекции</a></li>
           <li class="nav-item"><a class="nav-link" href="testsStudent.php">Тесты</a></li>
           <li class="nav-item"><a class="nav-link" href="result.php">Результаты тестов</a></li>

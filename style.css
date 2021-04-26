@@ -14,6 +14,14 @@
     padding: 8px;
 }
 
+#search {
+    width: 20rem !important;
+}
+
+.container {
+    padding: 90px 0px 40px 0px !important;
+}
+
 a.btn-primary {
     background-color: #bece5f;
     border-color: #bece5f;
@@ -114,7 +122,12 @@ input#upload {
     background-color: rgb(74, 134, 132);
 }
 
-.student-profile__right {
-    display: flex;
-    justify-content: center;
+.profile {
+    margin-bottom: 50px;
+}
+
+#group {
+    font-style: italic;
+    font-weight: 600;
+    color: #bece5f!important;
 }

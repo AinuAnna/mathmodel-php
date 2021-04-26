@@ -7,12 +7,17 @@ include("bd.php");
     window.history.replaceState(null, null, window.location.href);
   }
 </script>
+<script type='text/javascript'>
+  document.addEventListener('DOMContentLoaded', function() {
+    window.setTimeout(document.querySelector('svg').classList.add('animated'), 1000);
+  })
+</script>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<?php include('head.php') ?>
-<?php if ($_SESSION['roleid'] == 1) {
+  <?php include('head.php') ?>
+  <?php if ($_SESSION['roleid'] == 1) {
     echo ' <title>Панель администратора | Тесты</title>';
   } else {
     echo ' <title>Кабинет преподавателя | Тесты</title>';
@@ -20,34 +25,41 @@ include("bd.php");
 </head>
 
 <body>
-<?php include('headerAdmin.php')?>
+  <?php include('headerAdmin.php') ?>
   <section class="slice bg-section-secondary">
     <div class="content will-help-you">
       <div class="container">
-        <div class="row">
+        <div class="row" style="flex-direction: column; margin-bottom: 6rem;">
           <?php $query = "SELECT * FROM tests";
           $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
           if ($result) {
-            $rows = mysqli_num_rows($result); 
+            $rows = mysqli_num_rows($result);
 
             echo "
-                    <div class = 'container-fluid p-0'>
-                    <div class = 'table-responsive-md'>
-                    <h4 style = 'margin-top: 40px; margin-top: 20px;'>Тесты:</h4>
+            <div style = 'height: 30rem;'>
+            <div class=' position-relative'>
+            <h2 class='display-5 text-shadow font-weight-bold' style='margin-bottom: 50px; color:#00090b; margin-bottom: 3rem;'>
+            Тесты</h2>
+            <div class = 'table-responsive-md'>
                     <ol>";
             while ($row = mysqli_fetch_array($result)) {
               echo "<li><a href = 'testpage.php?idtests=" . $row['idtests'] . "'>" . $row['testtitle'] . "</a></li>";
             }
             echo "</ul>
-                    </div>
-                    </div>";
+            <div class='position-absolute d-md-block image-container' style = 'top: 0; right: 0;'>
+              <img alt='lecture image' src='./assets/mathematics-animate (1).svg' style = 'width: 40rem !important;'>
+            </div>
+          </div>
+         </div>
+       </div>";
             mysqli_free_result($result);
           }
           ?>
-        </div>
+      </div>
+      <div class="row" style="flex-direction: column; align-items: center;">  
         <h4 style="margin-top: 40px; margin-top: 20px;">Удаление теста:</h4>
-        <div class="w-50 position-relative">
+        <div class="w-100 position-relative">
           <form class="form-validate" method="post">
             <div class="form-group">
               <label class="form-label" for="testtitle">Выберите тест, который хотите удалить:</label>
@@ -56,7 +68,7 @@ include("bd.php");
                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                 if ($result) {
-                  $rows = mysqli_num_rows($result); 
+                  $rows = mysqli_num_rows($result);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<p><option value = " . $row['idtests'] . ">" . $row['testtitle'] . "</p>";
                   }
@@ -79,7 +91,7 @@ include("bd.php");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Удаление вопроса:</h4>
-        <div class="w-50 position-relative">
+        <div class="w-100 position-relative">
           <form class="form-validate" method="post">
             <div class="form-group">
               <label class="form-label" for="questiontext">Выберите вопрос, который хотите удалить:</label>
@@ -111,7 +123,7 @@ include("bd.php");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Редактирование вопроса:</h4>
-        <div class="w-50 position-relative">
+        <div class="w-100 position-relative">
           <form class="form-validate" method="post">
             <div class="form-group">
               <label class="form-label" for="questiontext">Выберите вопрос, который хотите обновить:</label>
@@ -120,7 +132,7 @@ include("bd.php");
                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                 if ($result) {
-                  $rows = mysqli_num_rows($result); 
+                  $rows = mysqli_num_rows($result);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<p><option value = " . $row['idquestions'] . ">" . $row['questiontext'] . "</p>";
                   }
@@ -144,6 +156,7 @@ include("bd.php");
           include("notification.php");
         }
         ?>
+        </div>
   </section>
 </body>
 

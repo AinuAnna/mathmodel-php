@@ -19,48 +19,57 @@ include("bd.php");
   <?php include('headerAdmin.php') ?>
   <section class="slice bg-section-secondary">
     <div class="content will-help-you">
-      <div class="container">
-        <div class="row">
-          <form method="post">
-            <h2 class="display-5 text-shadow font-weight-bold" style="margin-bottom: 50px; color:#00090b;">Пользователи </h2>
-            <?php $query = "SELECT * FROM users";
-            $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-            if ($result) {
-              $rows = mysqli_num_rows($result); 
-              echo "
+      <div class="container" style="padding: 90px 0px;">
+        <div class="row" style="flex-direction: column; align-items: center;">
+          <h2 class="display-5 text-shadow font-weight-bold" style="margin-bottom: 50px; color:#00090b;">
+            Пользователи</h2>
+          <?php $query = "SELECT * FROM users";
+          $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
+          if ($result) {
+            $rows = mysqli_num_rows($result);
+            echo "
               <div class = 'container-fluid p-0'>
               <div class = 'table-responsive-md'>
               <table class = 'table'>";
-              echo "<tr><th>Идентификатор</th><th>Имя</th><th>Почта</th><th>Пароль</th><th>Роль</th><th>Доступ</th><th>Аватар</th></tr>";
-              while ($row = mysqli_fetch_array($result)) {
-                echo "<tr><td>" . $row['idusers'] . "</td>";
-                echo "<td>" . $row['fullname'] . "</td>";
-                echo "<td>" . $row['email'] . "</td>";
-                echo "<td>" . $row['password'] . "</td>";
-                echo "<td>" . $row['roleid'] . "</td>";
-                if ($row["roleid"] != null) {
-                  $query2 = "SELECT * FROM role WHERE idrole = " . $row['roleid'] . "";
-                  $result2 = mysqli_query($GLOBALS['db'], $query2);
-                  echo "<td>";
-                  while ($row2 = mysqli_fetch_array($result2)) {
-                    echo "<a" . $row['idrole'] . "'>" . $row2['type'] . "</a>";
-                  }
-                  echo "</td>";
+            echo "<tr><th>Идентификатор</th><th>Имя</th><th>Почта</th><th>Роль</th><th>Доступ</th><th>Группа</th><th>Аватар</th></tr>";
+            while ($row = mysqli_fetch_array($result)) {
+              echo "<tr><td>" . $row['idusers'] . "</td>";
+              echo "<td>" . $row['fullname'] . "</td>";
+              echo "<td>" . $row['email'] . "</td>";
+              echo "<td>" . $row['roleid'] . "</td>";
+              if ($row["roleid"] != null) {
+                $query2 = "SELECT * FROM role WHERE idrole = " . $row['roleid'] . "";
+                $result2 = mysqli_query($GLOBALS['db'], $query2);
+                echo "<td>";
+                while ($row2 = mysqli_fetch_array($result2)) {
+                  echo "<a" . $row['idrole'] . "'>" . $row2['type'] . "</a>";
                 }
-                if($row['avatar'] == ''){
-                  echo '<td><img src = "./assets/user-avatar.svg" width= 50px; height= 50px;></td></tr>';
-                }
-                else{
-                  echo "<td><img src = '" . $row['avatar'] . "' width= 50px; height= 50px; style = 'object-fit: cover; border-radius: 50%'></td></tr>";
-                }
+                echo "</td>";
               }
-              echo "</tr>
+              if ($row["groupsid"]) {
+                $query2 = "SELECT * FROM `groups` WHERE idgroups = " . $row['groupsid'] . "";
+                $result2 = mysqli_query($GLOBALS['db'], $query2);
+                echo "<td>";
+                while ($row2 = mysqli_fetch_array($result2)) {
+                  echo "<a" . $row['idgroups'] . "'>" . $row2['namegroup'] . "</a>";
+                }
+                echo "</td>";
+              } else {
+                echo "<td><a>этот пользователь не состоит в группе</a></td>";
+              }
+              if ($row['avatar'] == '') {
+                echo '<td><img src = "./assets/user-avatar.svg" width= 50px; height= 50px;></td></tr>';
+              } else {
+                echo "<td><img src = '" . $row['avatar'] . "' width= 50px; height= 50px; style = 'object-fit: cover; border-radius: 50%'></td></tr>";
+              }
+            }
+            echo "</tr>
               </table>
                       </div>
                       </div>";
-              mysqli_free_result($result);
-            }
-            ?>
+            mysqli_free_result($result);
+          }
+          ?>
         </div>
         </form>
         <label class="form-label" for="idusers">Идентификатор пользователя:</label>

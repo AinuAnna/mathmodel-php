@@ -9,6 +9,11 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
     window.history.replaceState(null, null, window.location.href);
   }
 </script>
+<script type='text/javascript'>
+  document.addEventListener('DOMContentLoaded', function() {
+    window.setTimeout(document.querySelector('svg').classList.add('animated'), 1000);
+  })
+</script>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,42 +28,48 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
 
 <body>
   <?php include('headerAdmin.php') ?>
-  <section class="slice bg-section-secondary">
-    <div class="content will-help-you">
-      <div class="container">
-        <div class="row">
-          <?php $query = "SELECT * FROM lectures";
-          $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
+  <div class="content will-help-you">
+    <div class="container">
+      <div class="row" style="flex-direction: column; margin-bottom: 6rem;">
+        <?php $query = "SELECT * FROM lectures";
+        $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
-          if ($result) {
-            $rows = mysqli_num_rows($result);
+        if ($result) {
+          $rows = mysqli_num_rows($result);
 
-            echo "
-                    <div class = 'container-fluid p-0'>
-                    <div class = 'table-responsive-md'>
-                    <h4 style = 'margin-top: 40px; margin-top: 20px;'>Разделы:</h4>
+          echo "
+            <div style = 'height: 30rem;'>
+            <div class=' position-relative'>
+            <h2 class='display-5 text-shadow font-weight-bold' style='margin-bottom: 50px; color:#00090b; margin-bottom: 3rem;'>
+            Лекции</h2>
+            <div class = 'table-responsive-md'>
                     <ol>";
-            while ($row = mysqli_fetch_array($result)) {
-              echo "<li>" . $row['theme'] . "</li>";
-              if ($row["idlectures"] != null) {
-                $query2 = "SELECT * FROM topics WHERE idlectures = " . $row['idlectures'] . "";
-                $result2 = mysqli_query($GLOBALS['db'], $query2);
-                echo "<ul>";
-                while ($row2 = mysqli_fetch_array($result2)) {
-                  echo "<li><a href = 'file.php?idlectures=" . $row['idlectures'] . "'>" . $row2['nametopic'] . "</a></li>";
-                }
-                echo "</ul>";
+          while ($row = mysqli_fetch_array($result)) {
+            echo "<li>" . $row['theme'] . "</li>";
+            if ($row["idlectures"] != null) {
+              $query2 = "SELECT * FROM topics WHERE idlectures = " . $row['idlectures'] . "";
+              $result2 = mysqli_query($GLOBALS['db'], $query2);
+              echo "<ul>";
+              while ($row2 = mysqli_fetch_array($result2)) {
+                echo "<li><a href = 'file.php?idlectures=" . $row['idlectures'] . "'>" . $row2['nametopic'] . "</a></li>";
               }
+              echo "</ul>";
             }
-            echo "</ul>
-                    </div>
-                    </div>";
-            mysqli_free_result($result);
           }
-          ?>
-        </div>
+          echo "</ul>
+            <div class='position-absolute d-md-block image-container' style = 'top: 0; right: 0;'>
+              <img alt='lecture image' src='./assets/mathematics-animate.svg' style = 'width: 40rem !important;'>
+            </div>
+          </div>
+         </div>
+       </div>";
+          mysqli_free_result($result);
+        }
+        ?>
+      </div>
+      <div class="row" style="flex-direction: column; align-items: center;">
         <h4 style="margin-top: 40px; margin-top: 20px;">Удаление раздела:</h4>
-        <div class="w-50 position-relative">
+        <div class="w-100 position-relative">
           <form class="form-validate" method="post">
             <div class="form-group">
               <label class="form-label" for="theme">Выберите раздел, который хотите удалить:</label>
@@ -89,7 +100,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Удаление темы:</h4>
-        <div class="w-50 position-relative">
+        <div class="w-100 position-relative">
           <form class="form-validate" method="post">
             <div class="form-group">
               <label class="form-label" for="idtopics">Выберите тему, которую хотите удалить:</label>
@@ -121,7 +132,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Редактирование раздела:</h4>
-        <div class="w-50 position-relative">
+        <div class="w-100 position-relative">
           <form class="form-validate" method="post">
             <div class="form-group">
               <label class="form-label" for="theme">Выберите раздел, который хотите изменить:</label>
@@ -154,7 +165,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Редактирование темы:</h4>
-        <div class="w-50 position-relative">
+        <div class="w-100 position-relative">
           <form class="form-validate" method="post">
             <div class="form-group">
               <label class="form-label" for="nametopic">Выберите тему, которую хотите изменить:</label>
@@ -187,7 +198,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Добавление лекции:</h4>
-        <div class="w-50 position-relative">
+        <div class="w-100 position-relative">
           <form class="form-validate" method="post">
             <div class="form-group">
               <select class="custom-select" name="addtype">
@@ -234,7 +245,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Добавление раздела:</h4>
-        <div class="w-50 position-relative">
+        <div class="w-100 position-relative">
           <form class="form-validate" method="post">
             <div class="form-group">
               <label class="form-label" for="theme">Название раздела:</label><input class="form-control" name="theme" id="theme" type="text" placeholder="Матричные игры" autocomplete="off" required="" data-msg="Пожалуйста введите новый раздел">
@@ -255,6 +266,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         ?>
       </div>
     </div>
+  </div>
   </section>
 </body>
 

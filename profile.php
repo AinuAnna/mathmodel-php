@@ -10,7 +10,7 @@ include("bd.php");
 <script src="avatar.js"></script>
 <div class="container-fluid p-0">
 <form class="form-validate" method="post">
-    <div class="student-profile__right">
+    <div class="profile">
         <div class="center-cont">
                 <div class="card-body" id="user-avatar" name="upload" area-label="user avatar" style="background: url('<?php include("avatar.php"); ?>') center center/cover">
                     <input id="upload" type="file" accept="image/*">
@@ -22,6 +22,7 @@ include("bd.php");
         </div>
     </div>
 </div>
+<button class="btn btn-primary" name="saveButton" id="saveButton" type="submit">Обновить</button>
 <div class="w-50 position-relative">
         <div class="form-group">
             <label class="form-label" for="fullname">Имя пользователя: </label>
