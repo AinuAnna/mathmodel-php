@@ -15,7 +15,7 @@
             <div class="container">
                 <div class="row" style="flex-direction: column; align-items: center;">
                     <h2 class="display-5 text-shadow font-weight-bold" style="margin-bottom: 50px; color:#00090b;">Мой профиль</h2>
-                    <?php include('profile.php')?>
+                    <?php include('profile.php');  include('profiledata.php');?>
                 </div>
             </div>
         </div>
