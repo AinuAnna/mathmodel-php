@@ -18,6 +18,7 @@ include ("bd.php");
                 <div class="row" style="flex-direction: column;">
                     <h2 class="display-5 text-shadow font-weight-bold" style="margin-bottom: 50px; color:#00090b;">Добро пожаловать в кабинет преподавателя!</h2>
                     <?php include('profile.php')?>
+                    <?php include('profiledata.php')?>
                 </div>
             </div>
         </div>
