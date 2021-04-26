@@ -135,3 +135,7 @@ input#upload {
 #reg {
     padding: 150px 0px 40px 0px !important;
 }
+
+.slice.bg-section-secondary {
+    min-height: 75vh;
+}
