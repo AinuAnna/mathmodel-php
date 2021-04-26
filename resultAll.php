@@ -2,6 +2,11 @@
 session_start();
 include("bd.php");
 ?>
+<script>
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
+</script>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,9 +37,14 @@ include("bd.php");
                     <h4 style = 'margin-top: 40px; margin-top: 20px;'>Результаты тестов учащихся:</h4>
                     <div class = 'table-responsive-md mt-4'>
                     <table class = 'table'>
-                    <thead><th>Название теста</th><th>Оценка</th><th>Пользователь</th></thead>";
+                    <thead><th>Идентификатор результата</th><th>Название теста</th><th>Оценка</th><th>Пользователь</th></thead>";
               while ($row = mysqli_fetch_array($result)) {
                 echo "<tr>";
+                $query2 = "SELECT * FROM `test-results` WHERE idtestResults = " . $row['idtestResults'] . "";
+                $result2 = mysqli_query($GLOBALS['db'], $query2);
+                while ($row2 = mysqli_fetch_array($result2)) {
+                  echo "<td>" . $row2['idtestResults'] . "</td>";
+                }
                 $query2 = "SELECT * FROM tests WHERE idtests = " . $row['idtests'] . "";
                 $result2 = mysqli_query($GLOBALS['db'], $query2);
                 while ($row2 = mysqli_fetch_array($result2)) {
@@ -55,6 +65,21 @@ include("bd.php");
             ?>
         </div>
         </form>
+        <label class="form-label" for="idtestResults">Идентификатор результата:</label>
+        <form class="form-validate" method="post">
+          <input class="delete-id" name="idtestResults" id="idtestResults" type="text" placeholder="1" autocomplete="off" required="" data-msg="Пожалуйста введите идентификатор">
+          <button class="btn btn-primary" name="deleteButton" id="deleteButton" type="submit">Удалить</button>
+        </form>
+        <?php
+        if (isset($_POST["deleteButton"])) {
+          if (!empty($_POST['idtestResults'])) {
+            $idtestResults = htmlspecialchars($_POST['idtestResults']);
+            $query = "DELETE FROM `test-results` WHERE idtestResults ='$idtestResults';";
+            $result = mysqli_query($GLOBALS["db"], $query);
+            include("notification.php");
+          } else echo "<div class=\"alert alert-warning alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Все поля должны быть заполнены!</div>";
+        }
+        ?>
 </body>
 
 </html>

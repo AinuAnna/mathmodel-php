@@ -2,6 +2,11 @@
 session_start();
 include("bd.php");
 ?>
+<script>
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
+</script>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,7 +47,12 @@ include("bd.php");
                   }
                   echo "</td>";
                 }
-                echo "<td><img src = '" . $row['avatar'] . "' width= 50px; height= 50px; style = 'object-fit: cover; border-radius: 50%'></td></tr>";
+                if($row['avatar'] == ''){
+                  echo '<td><img src = "./assets/user-avatar.svg" width= 50px; height= 50px;></td></tr>';
+                }
+                else{
+                  echo "<td><img src = '" . $row['avatar'] . "' width= 50px; height= 50px; style = 'object-fit: cover; border-radius: 50%'></td></tr>";
+                }
               }
               echo "</tr>
               </table>
