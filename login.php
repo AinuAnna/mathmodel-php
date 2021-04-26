@@ -101,7 +101,6 @@ include ("bd.php");
       </div>
     </div>
     <div class="col-md-4 col-lg-6 col-xl-7 d-none d-md-block" style="padding: 0;">
-      <!-- Image-->
       <div class="bg-cover h-100 mr-n3" style="background-image: url(https://st2.depositphotos.com/1340907/6714/v/950/depositphotos_67148421-stock-illustration-triangles.jpg);"></div>
     </div>
   </div>

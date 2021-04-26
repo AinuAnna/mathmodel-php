@@ -12,7 +12,11 @@ include("bd.php");
 
 <head>
 <?php include('head.php') ?>
-  <title>Личный кабинет | Тесты</title>
+<?php if ($_SESSION['roleid'] == 1) {
+    echo ' <title>Панель администратора | Тесты</title>';
+  } else {
+    echo ' <title>Кабинет преподавателя | Тесты</title>';
+  } ?>
 </head>
 
 <body>
@@ -22,11 +26,10 @@ include("bd.php");
       <div class="container">
         <div class="row">
           <?php $query = "SELECT * FROM tests";
-          //Делаем запрос к БД, результат запроса пишем в $result:
           $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
           if ($result) {
-            $rows = mysqli_num_rows($result); // количество полученных строк
+            $rows = mysqli_num_rows($result); 
 
             echo "
                     <div class = 'container-fluid p-0'>
@@ -39,7 +42,6 @@ include("bd.php");
             echo "</ul>
                     </div>
                     </div>";
-            // очищаем результат
             mysqli_free_result($result);
           }
           ?>
@@ -51,15 +53,13 @@ include("bd.php");
               <label class="form-label" for="testtitle">Выберите тест, который хотите удалить:</label>
               <select class="custom-select" name="deletetype">
                 <?php $query = "SELECT * FROM tests";
-                //Делаем запрос к БД, результат запроса пишем в $result:
                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                 if ($result) {
-                  $rows = mysqli_num_rows($result); // количество полученных строк
+                  $rows = mysqli_num_rows($result); 
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<p><option value = " . $row['idtests'] . ">" . $row['testtitle'] . "</p>";
                   }
-                  // очищаем результат
                   mysqli_free_result($result);
                 }
                 ?>
@@ -74,12 +74,7 @@ include("bd.php");
             $deletetype = htmlspecialchars($_POST['deletetype']);
             $query = "DELETE FROM tests WHERE idtests ='$deletetype'";
             $result = mysqli_query($GLOBALS["db"], $query);
-
-            if ($result)
-              echo "<div class=\"alert alert-success alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Запись успешно удалена!</div>";
-            else {
-              echo "<div class=\"alert alert-danger alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Ошибка выполнения...</div>";
-            }
+            include("notification.php");
           } else echo "<div class=\"alert alert-warning alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Все поля должны быть заполнены!</div>";
         }
         ?>
@@ -90,15 +85,13 @@ include("bd.php");
               <label class="form-label" for="questiontext">Выберите вопрос, который хотите удалить:</label>
               <select class="custom-select" name="deleteterm">
                 <?php $query = "SELECT * FROM questions";
-                //Делаем запрос к БД, результат запроса пишем в $result:
                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                 if ($result) {
-                  $rows = mysqli_num_rows($result); // количество полученных строк
+                  $rows = mysqli_num_rows($result);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<p><option value = " . $row['questiontext'] . ">" . $row['questiontext'] . "</p>";
                   }
-                  // очищаем результат
                   mysqli_free_result($result);
                 }
                 ?>
@@ -113,11 +106,7 @@ include("bd.php");
             $deleteterm = htmlspecialchars($_POST['deleteterm']);
             $query = "DELETE FROM topics WHERE nametopic ='$deleteterm'";
             $result = mysqli_query($GLOBALS["db"], $query);
-            if ($result)
-              echo "<div class=\"alert alert-success alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Запись успешно удалена!</div>";
-            else {
-              echo "<div class=\"alert alert-danger alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Ошибка выполнения...</div>";
-            }
+            include("notification.php");
           } else echo "<div class=\"alert alert-warning alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Все поля должны быть заполнены!</div>";
         }
         ?>
@@ -128,15 +117,13 @@ include("bd.php");
               <label class="form-label" for="questiontext">Выберите вопрос, который хотите обновить:</label>
               <select class="custom-select" name="edittype">
                 <?php $query = "SELECT * FROM questions";
-                //Делаем запрос к БД, результат запроса пишем в $result:
                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                 if ($result) {
-                  $rows = mysqli_num_rows($result); // количество полученных строк
+                  $rows = mysqli_num_rows($result); 
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<p><option value = " . $row['idquestions'] . ">" . $row['questiontext'] . "</p>";
                   }
-                  // очищаем результат
                   mysqli_free_result($result);
                 }
                 ?>
@@ -154,8 +141,7 @@ include("bd.php");
           }
           $query = "UPDATE questions SET questiontext = '" . $_POST["questiontext"] . "' WHERE idquestions = '" . $_POST["edittype"] . "'";
           $result = mysqli_query($GLOBALS["db"], $query);
-          if (!$result) echo ("Ошибка выполнения");
-          else echo ("Запись успешно изменена");
+          include("notification.php");
         }
         ?>
   </section>

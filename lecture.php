@@ -1,6 +1,6 @@
 <?php
 session_start();
-include ("bd.php");
+include("bd.php");
 mysqli_query($GLOBALS['db'], "ALTER TABLE topics AUTO_INCREMENT = 0");
 mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
 ?>
@@ -14,7 +14,11 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
 
 <head>
   <?php include('head.php') ?>
-  <title>Личный кабинет | Лекции</title>
+  <?php if ($_SESSION['roleid'] == 1) {
+    echo ' <title>Панель администратора | Лекции</title>';
+  } else {
+    echo ' <title>Кабинет преподавателя | Лекции</title>';
+  } ?>
 </head>
 
 <body>
@@ -24,11 +28,10 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
       <div class="container">
         <div class="row">
           <?php $query = "SELECT * FROM lectures";
-          //Делаем запрос к БД, результат запроса пишем в $result:
           $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
           if ($result) {
-            $rows = mysqli_num_rows($result); // количество полученных строк
+            $rows = mysqli_num_rows($result);
 
             echo "
                     <div class = 'container-fluid p-0'>
@@ -50,7 +53,6 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
             echo "</ul>
                     </div>
                     </div>";
-            // очищаем результат
             mysqli_free_result($result);
           }
           ?>
@@ -62,15 +64,13 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
               <label class="form-label" for="theme">Выберите раздел, который хотите удалить:</label>
               <select class="custom-select" name="deletetype">
                 <?php $query = "SELECT * FROM lectures";
-                //Делаем запрос к БД, результат запроса пишем в $result:
                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                 if ($result) {
-                  $rows = mysqli_num_rows($result); // количество полученных строк
+                  $rows = mysqli_num_rows($result);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<p><option value = " . $row['idlectures'] . ">" . $row['theme'] . "</p>";
                   }
-                  // очищаем результат
                   mysqli_free_result($result);
                 }
                 ?>
@@ -84,12 +84,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
           if (!empty($_POST['deletetype'])) {
             $query = "DELETE FROM lectures WHERE idlectures =" . $_POST['deletetype'] . "";
             $result = mysqli_query($GLOBALS["db"], $query);
-
-            if ($result)
-              echo "<div class=\"alert alert-success alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Запись успешно удалена!</div>";
-            else {
-              echo "<div class=\"alert alert-danger alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Ошибка выполнения...</div>";
-            }
+            include("notification.php");
           } else echo "<div class=\"alert alert-warning alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Все поля должны быть заполнены!</div>";
         }
         ?>
@@ -100,15 +95,13 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
               <label class="form-label" for="idtopics">Выберите тему, которую хотите удалить:</label>
               <select class="custom-select" name="deleteterm">
                 <?php $query = "SELECT * FROM topics";
-                //Делаем запрос к БД, результат запроса пишем в $result:
                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                 if ($result) {
-                  $rows = mysqli_num_rows($result); // количество полученных строк
+                  $rows = mysqli_num_rows($result);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<p><option value = " . $row['idtopics'] . ">" . $row['nametopic'] . "</p>";
                   }
-                  // очищаем результат
                   mysqli_free_result($result);
                 }
                 ?>
@@ -123,11 +116,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
             $query = "DELETE FROM topics WHERE idtopics =" . $_POST['deleteterm'] . "";
             echo $query;
             $result = mysqli_query($GLOBALS["db"], $query);
-            if ($result)
-              echo "<div class=\"alert alert-success alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Запись успешно удалена!</div>";
-            else {
-              echo "<div class=\"alert alert-danger alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Ошибка выполнения...</div>";
-            }
+            include("notification.php");
           } else echo "<div class=\"alert alert-warning alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Все поля должны быть заполнены!</div>";
         }
         ?>
@@ -138,15 +127,13 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
               <label class="form-label" for="theme">Выберите раздел, который хотите изменить:</label>
               <select class="custom-select" name="editterm">
                 <?php $query = "SELECT * FROM lectures";
-                //Делаем запрос к БД, результат запроса пишем в $result:
                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                 if ($result) {
-                  $rows = mysqli_num_rows($result); // количество полученных строк
+                  $rows = mysqli_num_rows($result);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<p><option value = " . $row['idlectures'] . ">" . $row['theme'] . "</p>";
                   }
-                  // очищаем результат
                   mysqli_free_result($result);
                 }
                 ?>
@@ -163,8 +150,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
           }
           $query = "UPDATE lectures SET theme = '" . $_POST["theme"] . "' WHERE idlectures = '" . $_POST["editterm"] . "'";
           $result = mysqli_query($GLOBALS["db"], $query);
-          if (!$result) echo ("Ошибка выполнения");
-          else echo ("Запись успешно изменена");
+          include("notification.php");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Редактирование темы:</h4>
@@ -174,15 +160,13 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
               <label class="form-label" for="nametopic">Выберите тему, которую хотите изменить:</label>
               <select class="custom-select" name="edittype">
                 <?php $query = "SELECT * FROM topics";
-                //Делаем запрос к БД, результат запроса пишем в $result:
                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                 if ($result) {
-                  $rows = mysqli_num_rows($result); // количество полученных строк
+                  $rows = mysqli_num_rows($result);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<p><option value = " . $row['idtopics'] . ">" . $row['nametopic'] . "</p>";
                   }
-                  // очищаем результат
                   mysqli_free_result($result);
                 }
                 ?>
@@ -199,8 +183,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
           }
           $query = "UPDATE topics SET nametopic = '" . $_POST["nametopic"] . "' WHERE idtopics = '" . $_POST["edittype"] . "'";
           $result = mysqli_query($GLOBALS["db"], $query);
-          if (!$result) echo ("Ошибка выполнения");
-          else echo ("Запись успешно изменена");
+          include("notification.php");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Добавление лекции:</h4>
@@ -209,15 +192,13 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
             <div class="form-group">
               <select class="custom-select" name="addtype">
                 <?php $query = "SELECT * FROM lectures";
-                //Делаем запрос к БД, результат запроса пишем в $result:
                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                 if ($result) {
-                  $rows = mysqli_num_rows($result); // количество полученных строк
+                  $rows = mysqli_num_rows($result);
                   while ($row = mysqli_fetch_array($result)) {
                     echo "<p><option value = " . $row['idlectures'] . ">" . $row['theme'] . "</p>";
                   }
-                  // очищаем результат
                   mysqli_free_result($result);
                 }
                 ?>
@@ -225,7 +206,8 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
               <label class="form-label" for="nametopic">Название темы:</label><input class="form-control" name="nametopic" id="nametopic" type="text" placeholder="Матричные игры" autocomplete="off" required="" data-msg="Пожалуйста введите новую тему">
               <div class="custom-file mt-3">
                 <input type="file" class="custom-file-input" name="file" id="filename" />
-                <label class="custom-file-label" data-browse="Выбрать" for="filename">Файл не выбран</label>
+                <label class="custom-file-label" data-browse="Выбрать" for="filename">Файл не
+                  выбран</label>
               </div>
               <script type="text/javascript">
                 $('.custom-file input').change(function(e) {
@@ -248,11 +230,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
           $query = "INSERT INTO topics (idtopics, idlectures, nametopic, file)
             VALUES (NULL, '" . $_POST['addtype'] . "', '" . $_POST['nametopic'] . "', '" . $_POST['file'] . "');";
           $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-          if ($result) {
-            echo "Успешно созданы новые записи";
-          } else {
-            echo "Ошибка: " . $query . "<br>" . $GLOBALS["db"]->error;
-          }
+          include("notification.php");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Добавление раздела:</h4>
@@ -272,11 +250,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
           }
           $query = "INSERT INTO lectures (idlectures, theme) VALUES (NULL, '" . $_POST['theme'] . "');";
           $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-          if ($result) {
-            echo "Успешно созданы новые записи";
-          } else {
-            echo "Ошибка: " . $query . "<br>" . $GLOBALS["db"]->error;
-          }
+          include("notification.php");
         }
         ?>
       </div>

@@ -1,13 +1,13 @@
 <?php
 session_start();
-include ("bd.php");
+include("bd.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <?php include('head.php') ?>
-  <title>Панель администратора</title>
+  <title>Панель администратора | Пользователи</title>
 </head>
 
 <body>
@@ -17,29 +17,37 @@ include ("bd.php");
       <div class="container">
         <div class="row">
           <form method="post">
-            <h2 class="display-5 text-shadow font-weight-bold" style="margin-bottom: 50px; color:#00090b;">Добро пожаловать в панель администратора!</h2>
+            <h2 class="display-5 text-shadow font-weight-bold" style="margin-bottom: 50px; color:#00090b;">Пользователи </h2>
             <?php $query = "SELECT * FROM users";
-            //Делаем запрос к БД, результат запроса пишем в $result:
             $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-
             if ($result) {
-              $rows = mysqli_num_rows($result); // количество полученных строк
-
+              $rows = mysqli_num_rows($result); 
               echo "
-                    <div class = 'container-fluid p-0'>
-                    <div class = 'table-responsive-md'>
-                    <table class = 'table'>
-                    <tr><th>Идентификатор</th><th>Имя</th><th>Почта</th><th>Пароль</th><th>Роль</th><th>Аватар</th></tr>";
-              for ($i = 0; $i < $rows; ++$i) {
-                $row = mysqli_fetch_row($result);
-                echo "<tr>";
-                for ($j = 0; $j < 6; ++$j) echo "<td>$row[$j]</td>";
-                echo "</tr>";
+              <div class = 'container-fluid p-0'>
+              <div class = 'table-responsive-md'>
+              <table class = 'table'>";
+              echo "<tr><th>Идентификатор</th><th>Имя</th><th>Почта</th><th>Пароль</th><th>Роль</th><th>Доступ</th><th>Аватар</th></tr>";
+              while ($row = mysqli_fetch_array($result)) {
+                echo "<tr><td>" . $row['idusers'] . "</td>";
+                echo "<td>" . $row['fullname'] . "</td>";
+                echo "<td>" . $row['email'] . "</td>";
+                echo "<td>" . $row['password'] . "</td>";
+                echo "<td>" . $row['roleid'] . "</td>";
+                if ($row["roleid"] != null) {
+                  $query2 = "SELECT * FROM role WHERE idrole = " . $row['roleid'] . "";
+                  $result2 = mysqli_query($GLOBALS['db'], $query2);
+                  echo "<td>";
+                  while ($row2 = mysqli_fetch_array($result2)) {
+                    echo "<a" . $row['idrole'] . "'>" . $row2['type'] . "</a>";
+                  }
+                  echo "</td>";
+                }
+                echo "<td><img src = '" . $row['avatar'] . "' width= 50px; height= 50px; style = 'object-fit: cover; border-radius: 50%'></td></tr>";
               }
-              echo "</table>
-                    </div>
-                    </div>";
-              // очищаем результат
+              echo "</tr>
+              </table>
+                      </div>
+                      </div>";
               mysqli_free_result($result);
             }
             ?>

@@ -34,11 +34,10 @@ include ("bd.php");
             </form>
           </div>
           <?php $query = "SELECT * FROM lectures";
-          //Делаем запрос к БД, результат запроса пишем в $result:
           $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
           if ($result) {
-            $rows = mysqli_num_rows($result); // количество полученных строк
+            $rows = mysqli_num_rows($result); 
 
             echo "
                     <div class = 'container-fluid p-0'>
@@ -63,7 +62,6 @@ include ("bd.php");
             echo "</ul>
                     </div>
                     </div>";
-            // очищаем результат
             mysqli_free_result($result);
           }
           ?>

@@ -8,9 +8,5 @@ if (isset($_POST['saveButton'])) {
     }
     $query = "UPDATE users SET avatar = '" . $_POST["avatar"] . "', email = '" . $_POST["email"] . "', password = '" . $_POST["password2"] . "', fullname ='" . $_POST["fullname"] . "'  WHERE idusers = '" . $_SESSION["idusers"] . "'";
     $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-    if ($result) {
-        echo "Данные успешно обновлены";
-    } else {
-        echo "Ошибка: " . $query . "<br>" . $GLOBALS["db"]->error;
-    }
+    include("notification.php");
 }

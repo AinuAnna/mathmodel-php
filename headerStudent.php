@@ -1,5 +1,4 @@
 <header class="header">
-  <!-- Navbar-->
   <nav class="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white">
     <div class="container-fluid">
       <div class="d-flex align-items-center"><a class="navbar-brand py-1" href="main.php">
@@ -16,5 +15,4 @@
       </div>
     </div>
   </nav>
-  <!-- /Navbar -->
 </header>

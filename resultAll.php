@@ -7,7 +7,11 @@ include("bd.php");
 
 <head>
 <?php include('head.php') ?>
-  <title>Личный кабинет | Результаты тестов</title>
+<?php if ($_SESSION['roleid'] == 1) {
+    echo ' <title>Панель администратора | Результаты тестов</title>';
+  } else {
+    echo ' <title>Кабинет преподавателя | Результаты тестов</title>';
+  } ?>
 </head>
 
 <body>
@@ -18,11 +22,10 @@ include("bd.php");
         <div class="row">
           <form method="post">
             <?php $query = "SELECT * FROM `test-results`";
-            //Делаем запрос к БД, результат запроса пишем в $result:
             $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
             if ($result) {
-              $rows = mysqli_num_rows($result); // количество полученных строк
+              $rows = mysqli_num_rows($result);
 
               echo "
                     <div class = 'container-fluid p-2'>
@@ -47,7 +50,6 @@ include("bd.php");
               echo "</table>
                     </div>
                     </div>";
-              // очищаем результат
               mysqli_free_result($result);
             }
             ?>
