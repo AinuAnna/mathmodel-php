@@ -131,3 +131,7 @@ input#upload {
     font-weight: 600;
     color: #bece5f!important;
 }
+
+#reg {
+    padding: 150px 0px 40px 0px !important;
+}
