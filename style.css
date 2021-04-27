@@ -142,7 +142,6 @@ input#upload {
 
 #addInput {
     display: flex;
-    margin-bottom: -10px;
 }
 
 .add-question {

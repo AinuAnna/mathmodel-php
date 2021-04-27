@@ -5,7 +5,8 @@
             <label class="form-label" for="questiontext">Введите название теста:</label>
             <input class="form-control" name="question" id="question" type="text" placeholder="Матричные игры" autocomplete="off">
             <p class="add-question">Добавьте вопрос, нажав на кнопку ниже. <span id = "group" class="text-muted">Ограничение - 10 вопросов</span></p>
-            <div id="inp"></div>
+            <div id="inp">
+            </div>
             <button class="btn btn-primary" id="add">+</button>
         </div>
 </div>
