@@ -15,9 +15,9 @@ include ("bd.php");
     <section class="slice bg-section-secondary">
         <div class="content will-help-you">
             <div class="container">
-                <div class="row" style="flex-direction: column; align-items: center;">
-                    <h2 class="display-5 text-shadow font-weight-bold" style="margin-bottom: 50px; color:#00090b;">Добро пожаловать в панель администратора!</h2>
-                    <?php include('profile.php'); include('profiledata.php');?>
+                <div class="row" style="flex-direction: column;">
+                    <h2 class="display-5 text-shadow font-weight-bold text-center" style="margin-bottom: 50px; color:#00090b;">Добро пожаловать в панель администратора!</h2>
+                    <?php include('profile.php');?>
                 </div>
             </div>
         </div>

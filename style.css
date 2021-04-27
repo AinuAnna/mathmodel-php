@@ -139,3 +139,12 @@ input#upload {
 .slice.bg-section-secondary {
     min-height: 75vh;
 }
+
+#addInput {
+    display: flex;
+    margin-bottom: -10px;
+}
+
+.add-question {
+    margin-top: 1.5rem;
+}
