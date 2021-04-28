@@ -140,8 +140,13 @@ input#upload {
     min-height: 75vh;
 }
 
-#addInput {
+.element,
+.answer {
     display: flex;
+}
+
+.answer {
+    margin-left: 2rem;
 }
 
 .add-question {

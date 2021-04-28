@@ -1,46 +1,51 @@
 $(document).ready(function() {
-    jQuery(function($) {
-        var max = 10;
-        var x = 0;
-        var count = 0;
-        $('#add').click(function(e) {
-            if (x < max) {
-                $('#inp').append(`<div data-item=true><label class="form-label" for="questiontext">Введите текст вопроса:</label><p id="addInput"><input class="form-control" name="questiontext" id = "questiontext"type = "text" placeholder = "Модель - это" ><button class = "btn btn-primary remove_field">-</button><div class="inputasw ${count}"></div><button class="btn btn-primary addanswer" data-item = ${count}>+</button></p></div>`);
-                x++;
-                count++;
-                e.preventDefault();
-                e.stopPropagation();
-                var maxy = 5;
-                var y = 0;
-                $('.addanswer').click(function(event) {
-                    event.stopPropagation();
-                    event.preventDefault();
-                    var target = $(event.target).attr('data-item');
-                    if (y < maxy) {
-                        $(`.inputasw ${target}`).append('<div data-item2=true><label class="form-label" for="answer">Введите вариант ответа:</label><p id = "addInput"><textarea placeholder = "объект, который...." ></textarea><button class = "btn btn-primary remove_field_answer">-</button></p></div>');
-                        y++;
-                    } else {
-                        $('.addanswer').prop('disabled', true);
-                    }
-                });
-                $(`.inputasw ${this.count}`).on('click', '.remove_field_answer', function(event) {
-                    event.stopPropagation();
-                    event.preventDefault();
-                    $(this).closest('div[data-item2]').remove();
-                    y--;
-                });
 
-            } else {
-                $('#add').prop('disabled', true);
-            }
-        });
-        $('#inp').on('click', '.remove_field', function(e) {
-            $(this).closest('div[data-item]').remove();
-            x--;
-            count--;
+    const createAnswerHtml = (index) => {
+        return "<div class='answer' id='answer_" + index + "'><input class = 'form-control'type = 'text' placeholder = 'Введите вариант ответа:'id = 'txt_" + index + "'>&nbsp;<button class='btn btn-primary add-answer' id='answerb_" + index + "'>🔻</button>&nbsp;<button id='remove-answer_" + index + "' class='btn btn-primary remove-answer'>❌</button></div>";
+    }
+
+    $(document).on("click", ".add-answer", (e) => {
+        const container = $(e.target).closest(".my-container");
+        const nextindex = container.find(".answer").length;
+        container.append(createAnswerHtml(nextindex));
+        e.preventDefault();
+    });
+
+    $(document).on("click", ".remove-answer", (e) => {
+        $(e.target).closest(".answer").remove();
+        return false;
+    });
+
+    $(".add").click(function(e) {
+
+        var total_element = $(".element").length;
+
+        var lastid = $(".element:last").attr("id");
+        var split_id = lastid.split("_");
+        var nextindex = Number(split_id[1]) + 1;
+        var max = 10;
+
+        if (total_element < max) {
+
+            $(".my-container-big:last").after("<div class='my-container-big' id='big_" + nextindex + "'></div>");
             e.preventDefault();
-            e.stopPropagation();
-        })
+
+            $("#big_" + nextindex).append("<div class='element' id='element_" + nextindex + "'><input type='text' class ='form-control' placeholder='Введите текст вопроса:' id='txt_" + nextindex + "'>&nbsp;<button id='remove_" + nextindex + "' class='btn btn-primary remove'>✖️</button></div>");
+            $("#big_" + nextindex).append("<div class='my-container' id='container_" + nextindex + "'>" + createAnswerHtml(nextindex) +"</div>");
+        } else {
+            $(".add").prop('disabled', true);
+        }
 
     });
+
+    $('.my-container-bigger').on('click', '.remove', function(e) {
+
+        var id = this.id;
+        var split_id = id.split("_");
+        var deleteindex = split_id[1];
+
+        $("#big_" + deleteindex).remove();
+        e.preventDefault();
+    });
+
 });
