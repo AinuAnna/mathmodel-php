@@ -16,7 +16,7 @@
                 ?>
             </select>
             <label class="form-label" for="questiontext">Введите название теста:</label>
-            <input class="form-control" type='text' name="testtitle" placeholder='тест №1'>
+            <input class="form-control" type='text' name="testtitle" placeholder='тест номер один'>
             <p class="add-question">Добавьте вопрос, нажав на кнопку ниже. <span id="group" class="text-muted">Ограничение - 100 вопросов</span></p>
             <div class="my-container-bigger">
                 <div class="my-container-big" id='big_0'>
