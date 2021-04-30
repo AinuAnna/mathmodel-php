@@ -1,13 +1,15 @@
 $(document).ready(function() {
 
-    const createAnswerHtml = (index) => {
-        return "<div class='answer' id='answer_" + index + "'><input class = 'form-control'type = 'text' name = 'answer[]' placeholder = 'Введите вариант ответа:'id = 'txt_" + index + "'>&nbsp;<button class='btn btn-primary add-answer' id='answerb_" + index + "'>🔻</button>&nbsp;<button id='remove-answer_" + index + "' class='btn btn-primary remove-answer'>❌</button></div>";
+    const createAnswerHtml = (question, index) => {
+        return "<div class='answer' id='answer_" + index + "'><input class = 'form-control'type = 'text' name = 'answer["+question+"]["+index+"]' placeholder = 'Введите вариант ответа:'id = 'txt_" + index + "'>&nbsp;<button class='btn btn-primary add-answer' id='answerb_" + index + "'>🔻</button>&nbsp;<button id='remove-answer_" + index + "' class='btn btn-primary remove-answer'>❌</button></div>";
     }
 
     $(document).on("click", ".add-answer", (e) => {
         const container = $(e.target).closest(".my-container");
         const nextindex = container.find(".answer").length;
-        container.append(createAnswerHtml(nextindex));
+        const containerQuestion = $(e.target).closest(".my-container-bigger");
+        const question = containerQuestion.find(".element").length -1;
+        container.append(createAnswerHtml(question, nextindex));
         e.preventDefault();
     });
 
@@ -24,14 +26,15 @@ $(document).ready(function() {
         var split_id = lastid.split("_");
         var nextindex = Number(split_id[1]) + 1;
         var max = 10;
-
+        index = 0;
         if (total_element < max) {
 
             $(".my-container-big:last").after("<div class='my-container-big' id='big_" + nextindex + "'></div>");
             e.preventDefault();
 
-            $("#big_" + nextindex).append("<div class='element' id='element_" + nextindex + "'><input type='text' class ='form-control' name = 'question[]' placeholder='Введите текст вопроса:' id='txt_" + nextindex + "'>&nbsp;<button id='remove_" + nextindex + "' class='btn btn-primary remove'>✖️</button></div>");
-            $("#big_" + nextindex).append("<div class='my-container' id='container_" + nextindex + "'>" + createAnswerHtml(nextindex) +"</div>");
+            $("#big_" + nextindex).append("<div class='element' id='element_" + nextindex + "'><input type='text' class ='form-control' name = 'question["+nextindex+"]' placeholder='Введите текст вопроса:' id='txt_" + nextindex + "'>&nbsp;<button id='remove_" + nextindex + "' class='btn btn-primary remove'>✖️</button></div>");
+            $("#big_" + nextindex).append("<div class='my-container' id='container_" + nextindex + "'>" + createAnswerHtml(nextindex, index) +"</div>");
+            index++;
         } else {
             $(".add").prop('disabled', true);
         }

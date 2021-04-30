@@ -17,15 +17,15 @@
             </select>
             <label class="form-label" for="questiontext">Введите название теста:</label>
             <input class="form-control" type='text' name="testtitle" placeholder='тест №1'>
-            <p class="add-question">Добавьте вопрос, нажав на кнопку ниже. <span id="group" class="text-muted">Ограничение - 10 вопросов, 4 варианта ответа</span></p>
+            <p class="add-question">Добавьте вопрос, нажав на кнопку ниже. <span id="group" class="text-muted">Ограничение - 100 вопросов</span></p>
             <div class="my-container-bigger">
                 <div class="my-container-big" id='big_0'>
                     <div class='element' id='element_0'>
-                        <input class="form-control" type='text' name="question[]" placeholder='Введите текст вопроса:' id='txt_0'>&nbsp;<button class="btn btn-primary add">➕</button>
+                        <input class="form-control" type='text' name="question[0]" placeholder='Введите текст вопроса:' id='txt_0'>&nbsp;<button class="btn btn-primary add">➕</button>
                     </div>
                     <div class='my-container' id='container_0'>
                         <div class='answer'>
-                            <input class='form-control' type='text' name="answer[]" placeholder='Введите вариант ответа:' id='input_0'>&nbsp;<button class='btn btn-primary add-answer' id='answerb_0'>🔻</button>&nbsp;<button id='remove-answer_0' class='btn btn-primary remove-answer'>❌</button>
+                            <input class='form-control' type='text' name="answer[0][0]" placeholder='Введите вариант ответа:' id='input_0'>&nbsp;<button class='btn btn-primary add-answer' id='answerb_0'>🔻</button>&nbsp;<button id='remove-answer_0' class='btn btn-primary remove-answer'>❌</button>
                         </div>
                     </div>
                 </div>
@@ -49,19 +49,19 @@ if (isset($_POST['save'])) {
     for ($i = 0; $i < count($questions); $i++) {
 
         $question = mysqli_escape_string($GLOBALS['db'], $questions[$i]);
-        $sql = "INSERT INTO questions(idquestions, questiontext, idtests) VALUES (NULL, '{$question}', {$testId}); ";
-        $sql .= "SET @questionId = last_insert_id(); ";
-        for ($j = 0; $j < count($answers); $j++) {
-            $answer = mysqli_escape_string($GLOBALS['db'], $answers[$j]);
-
+        $sql .= "INSERT INTO questions(idquestions, questiontext, idtests) VALUES (NULL, '{$question}', {$testId}); ";
+        $sql .= "SET @questionId := last_insert_id();";
+            for ($j = 0; $j < count($answers[$i]); $j++) {
+            $answer = mysqli_escape_string($GLOBALS['db'], $answers[$i][$j]);
+            
             $sql .= "INSERT INTO answers(idanswers, idquestions, answer, ischecked) VALUES (NULL, @questionId , '{$answer}', 1);";
         }
-
-        if (mysqli_multi_query($GLOBALS['db'], $sql)) {
-            echo $sql;
-            echo "New records created successfully";
-        } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['db']);
-        }        
+      
+    }
+    if (mysqli_multi_query($GLOBALS['db'], $sql)) {
+        echo $sql;
+        echo "New records created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['db']);
     }
 } ?>

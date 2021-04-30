@@ -140,6 +140,9 @@ input#upload {
     min-height: 75vh;
 }
 
+#element_0{
+    margin-bottom: 1rem;
+}
 .element,
 .answer {
     display: flex;
@@ -165,4 +168,9 @@ input#upload {
     margin-top: 30px;
     margin-bottom: 1rem;
     font-size: 24px;
+}
+.add{
+    position: fixed;
+    bottom: 0;
+    transform: translate(1200px, 10px);
 }
