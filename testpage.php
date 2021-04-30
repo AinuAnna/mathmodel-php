@@ -64,7 +64,7 @@ include ("bd.php");
                         }
                         ?>
                         <div class="col-md-12 text-center">
-                            <button class="btn btn-primary" name="sendButton" id="sendButton" type="submit">Отправить</button>
+                            <button class="btn btn-primary" <?php if($_SESSION['roleid'] == 1 || $_SESSION['roleid'] == 3) {echo 'disabled';}?> name="sendButton" id="sendButton" type="submit">Отправить</button>
                         </div>
                     </form>
                     <?php

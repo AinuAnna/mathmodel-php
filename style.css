@@ -174,3 +174,7 @@ input#upload {
     bottom: 0;
     transform: translate(1200px, 10px);
 }
+.radio{
+    margin-top: 0.8rem; 
+    margin-right: 1rem;
+}
