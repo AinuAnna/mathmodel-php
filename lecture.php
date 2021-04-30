@@ -27,7 +27,11 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
 </head>
 
 <body>
-  <?php include('headerAdmin.php') ?>
+<?php if ($_SESSION['roleid'] == 1) {
+    include('headerAdmin.php');
+  } else {
+    include('headerTeacher.php');
+  } ?>
   <div class="content will-help-you">
     <div class="container">
       <div class="row" style="flex-direction: column; margin-bottom: 6rem;">

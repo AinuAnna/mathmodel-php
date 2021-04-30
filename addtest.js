@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     const createAnswerHtml = (index) => {
-        return "<div class='answer' id='answer_" + index + "'><input class = 'form-control'type = 'text' placeholder = 'Введите вариант ответа:'id = 'txt_" + index + "'>&nbsp;<button class='btn btn-primary add-answer' id='answerb_" + index + "'>🔻</button>&nbsp;<button id='remove-answer_" + index + "' class='btn btn-primary remove-answer'>❌</button></div>";
+        return "<div class='answer' id='answer_" + index + "'><input class = 'form-control'type = 'text' name = 'answer[]' placeholder = 'Введите вариант ответа:'id = 'txt_" + index + "'>&nbsp;<button class='btn btn-primary add-answer' id='answerb_" + index + "'>🔻</button>&nbsp;<button id='remove-answer_" + index + "' class='btn btn-primary remove-answer'>❌</button></div>";
     }
 
     $(document).on("click", ".add-answer", (e) => {
@@ -30,7 +30,7 @@ $(document).ready(function() {
             $(".my-container-big:last").after("<div class='my-container-big' id='big_" + nextindex + "'></div>");
             e.preventDefault();
 
-            $("#big_" + nextindex).append("<div class='element' id='element_" + nextindex + "'><input type='text' class ='form-control' placeholder='Введите текст вопроса:' id='txt_" + nextindex + "'>&nbsp;<button id='remove_" + nextindex + "' class='btn btn-primary remove'>✖️</button></div>");
+            $("#big_" + nextindex).append("<div class='element' id='element_" + nextindex + "'><input type='text' class ='form-control' name = 'question[]' placeholder='Введите текст вопроса:' id='txt_" + nextindex + "'>&nbsp;<button id='remove_" + nextindex + "' class='btn btn-primary remove'>✖️</button></div>");
             $("#big_" + nextindex).append("<div class='my-container' id='container_" + nextindex + "'>" + createAnswerHtml(nextindex) +"</div>");
         } else {
             $(".add").prop('disabled', true);
@@ -49,3 +49,25 @@ $(document).ready(function() {
     });
 
 });
+// $(document).ready(function() {
+//     $("#save").click(function(e){
+
+//         var question = [];
+//         $('input[name="question[]"]').each( function() {
+//             question.push(this.value);
+//         });
+//         var answer = [];
+//         $('input[name="answer[]"]').each( function() {
+//             answer.push(this.value);
+//         });
+//             $.ajax({
+//                 url: 'addtest.php',
+//                 type: 'post',
+//                 data: {question:question,answer:answer},
+//                 success: function(data){
+//                     alert(data);
+//                     // $('#nav')[0].reset();
+//                 }
+//             });
+//     });
+// });

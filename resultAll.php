@@ -25,11 +25,15 @@ include("bd.php");
 </head>
 
 <body>
-<?php include('headerAdmin.php')?>
+<?php if ($_SESSION['roleid'] == 1) {
+    include('headerAdmin.php');
+  } else {
+    include('headerTeacher.php');
+  } ?>
   <section class="slice bg-section-secondary">
   <div class="content will-help-you">
     <div class="container">
-      <div class="row" style="flex-direction: column; margin-bottom: 6rem;">
+      <div class="row" style="flex-direction: column;">
           <form method="post">
             <?php $query = "SELECT * FROM `test-results`";
             $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));

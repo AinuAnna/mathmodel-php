@@ -19,7 +19,7 @@ include ("bd.php");
     <section class="slice bg-section-secondary">
         <div class="content will-help-you">
             <div class="container">
-                <div class="row">
+                <div class="row" style = "display:inline;">
                     <div class="col-md-12 text-center">
                         <div class="display-4 text-shadow font-weight-bold" style="font-size: 26px; margin-bottom: 20px;color:#00090b;">
                             <?php

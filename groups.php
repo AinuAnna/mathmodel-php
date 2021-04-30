@@ -48,7 +48,7 @@ include("bd.php");
                                 echo "<td>" . $row4['groupnumber'] . "</td>";
                             }
                             echo "<td>" . $row['namegroup'] . "</td>";
-                            echo "<td><button class='btn btn-primary' name='openButton' id='openButton' type='submit'>Открыть</button></td>";
+                            echo "<td><button class='btn btn-primary' name='openButton' id='openButton' type='submit'><a href = 'groupOfStudents.php?idgroups=" . $row['idgroups'] . "'>Открыть</a></button></td>";
                             echo "</tr>";
                         }
                         echo "</table>
@@ -57,6 +57,9 @@ include("bd.php");
                         mysqli_free_result($result);
                     }
                     ?>
+                    <?php if(isset($_POST['openButton'])){
+                        header('location: groupOfStudents.php');
+                    }?>
 
                 </div>
                 <label class="form-label" for="idgroups">Идентификатор группы:</label>
