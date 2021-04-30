@@ -49,25 +49,3 @@ $(document).ready(function() {
     });
 
 });
-// $(document).ready(function() {
-//     $("#save").click(function(e){
-
-//         var question = [];
-//         $('input[name="question[]"]').each( function() {
-//             question.push(this.value);
-//         });
-//         var answer = [];
-//         $('input[name="answer[]"]').each( function() {
-//             answer.push(this.value);
-//         });
-//             $.ajax({
-//                 url: 'addtest.php',
-//                 type: 'post',
-//                 data: {question:question,answer:answer},
-//                 success: function(data){
-//                     alert(data);
-//                     // $('#nav')[0].reset();
-//                 }
-//             });
-//     });
-// });

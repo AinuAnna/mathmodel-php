@@ -2,7 +2,6 @@
 <div class="w-100 position-relative">
     <form class="form-validate" method="post">
         <div class="form-group" id="addTest">
-
             <label class="form-label" for="questiontext">Выберите название лекции, которой пренадлежит тест:</label>
             <select class="custom-select" name="addtype"> -->
                 <?php $query = "SELECT * FROM topics";
