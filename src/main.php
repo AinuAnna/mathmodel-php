@@ -27,8 +27,8 @@
   <section class="hero-home">
   <div id="video-bg">
     <video width="100%" autoplay muted loop>
-        <source src="assets/video/math-space-5.mp4" type="video/mp4"></source>
-        <source src="assets/video/math-space.webm" type="video/webm"></source>
+        <source src="../assets/video/math-space-5.mp4" type="video/mp4"></source>
+        <source src="../assets/video/math-space.webm" type="video/webm"></source>
     </video>
 </div>
     <div class="container py-6 py-md-7 text-white" style = "z-index: 1000;">
