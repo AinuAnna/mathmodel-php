@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/AinuAnna/mathmodel-php#readme",
   "dependencies": {
-    "composer-lock-diff": "^1.2.2"
+    "composer-lock-diff": "^1.2.2",
+    "dj-database-url": "0.0.1"
   }
 }
