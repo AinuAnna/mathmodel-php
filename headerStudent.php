@@ -11,6 +11,7 @@
           <li class="nav-item"><a class="nav-link" href="lectureStudent.php">Лекции</a></li>
           <li class="nav-item"><a class="nav-link" href="testsStudent.php">Тесты</a></li>
           <li class="nav-item"><a class="nav-link" href="result.php">Результаты тестов</a></li>
+          <li class="nav-item"><a class="nav-link" href="plot.php">Построение графиков</a></li>
           <li class="nav-item"><a class="btn btn-primary" href="logout.php">Выйти</a></li>
         </ul>
       </div>

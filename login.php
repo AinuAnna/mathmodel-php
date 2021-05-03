@@ -40,10 +40,6 @@ include("bd.php");
                       <input class="form-control" name="email" id="email" type="email" placeholder="name@address.com" autocomplete="off" required="" data-msg="Please enter your email">
                     </div>
                     <div class="form-group">
-                      <label class="form-label" for="fullname">Логин</label>
-                      <input class="form-control" name="fullname" id="fullname" type="text" placeholder="anna" autocomplete="off" required="" data-msg="Please enter your email">
-                    </div>
-                    <div class="form-group">
                       <label class="form-label" for="password">Пароль</label>
                       <input class="form-control" name="password" id="password" placeholder="Password" type="password" required="" data-msg="Please enter your password">
                     </div>
@@ -52,12 +48,6 @@ include("bd.php");
                   </form>
                   <?php
                   if (isset($_POST['loginButton'])) {
-                    if (isset($_POST['fullname'])) {
-                      $fullname = $_POST['fullname'];
-                      if ($fullname == '') {
-                        unset($fullname);
-                      }
-                    }
                     if (isset($_POST['password'])) {
                       $password = $_POST['password'];
                       if ($password == '') {
@@ -70,30 +60,26 @@ include("bd.php");
                         unset($email);
                       }
                     }
-                    if (empty($fullname) or empty($password) or empty($email)) {
+                    if (empty($password) or empty($email)) {
                       exit("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
                     }
-                    $fullname = stripslashes($fullname);
-                    $fullname = htmlspecialchars($fullname);
                     $email = stripslashes($email);
                     $email = htmlspecialchars($email);
                     $password = stripslashes($password);
                     $password = htmlspecialchars($password);
-                    $fullname = trim($fullname);
                     $password = trim($password);
                     $email = trim($email);
 
-                    $result = mysqli_query($GLOBALS["db"], "SELECT * FROM users WHERE fullname='$fullname'");
+                    $result = mysqli_query($GLOBALS["db"], "SELECT * FROM users WHERE email='$email'");
                     $myrow = mysqli_fetch_array($result);
                     if (empty($myrow['password'])) {
                       exit("Извините, введённый вами логин или пароль неверный.");
                     } else {
                       if ($myrow['password'] == $password) {
-                        $_SESSION['fullname'] = $myrow['fullname'];
                         $_SESSION['email'] = $myrow['email'];
                         $_SESSION['idusers'] = $myrow['idusers'];
                         $_SESSION['roleid'] = $myrow['roleid'];
-                        if (isset($_SESSION['fullname'])) {
+                        if (isset($_SESSION['email'])) {
                           if ($_SESSION['roleid'] == 2) {
                             header('location: info.php');
                           } else if ($_SESSION['roleid'] == 3) {
