@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/AinuAnna/mathmodel-php/issues"
   },
-  "homepage": "https://github.com/AinuAnna/mathmodel-php#readme"
+  "homepage": "https://github.com/AinuAnna/mathmodel-php#readme",
+  "dependencies": {
+    "composer-lock-diff": "^1.2.2"
+  }
 }
