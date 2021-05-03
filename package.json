@@ -1,0 +1,19 @@
+{
+  "name": "mathmodel-php",
+  "version": "1.0.0",
+  "description": "course work with php, mysql",
+  "main": "main.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AinuAnna/mathmodel-php.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AinuAnna/mathmodel-php/issues"
+  },
+  "homepage": "https://github.com/AinuAnna/mathmodel-php#readme"
+}
