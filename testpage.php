@@ -19,7 +19,7 @@ include ("bd.php");
     <section class="slice bg-section-secondary">
         <div class="content will-help-you">
             <div class="container">
-                <div class="row">
+                <div class="row" style = "display:inline;">
                     <div class="col-md-12 text-center">
                         <div class="display-4 text-shadow font-weight-bold" style="font-size: 26px; margin-bottom: 20px;color:#00090b;">
                             <?php
@@ -64,7 +64,7 @@ include ("bd.php");
                         }
                         ?>
                         <div class="col-md-12 text-center">
-                            <button class="btn btn-primary" name="sendButton" id="sendButton" type="submit">Отправить</button>
+                            <button class="btn btn-primary" <?php if($_SESSION['roleid'] == 1 || $_SESSION['roleid'] == 3) {echo 'disabled';}?> name="sendButton" id="sendButton" type="submit">Отправить</button>
                         </div>
                     </form>
                     <?php
@@ -105,6 +105,7 @@ include ("bd.php");
             </div>
         </div>
     </section>
+
 </body>
 
 </html>

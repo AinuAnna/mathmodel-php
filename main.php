@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <?php include ('head.php') ?>
+  <?php include('head.php') ?>
   <title>Математическое моделирование</title>
 </head>
 
@@ -25,7 +25,13 @@
     <!-- /Navbar -->
   </header>
   <section class="hero-home">
-    <div class="container py-6 py-md-7 text-white z-index-20">
+  <div id="video-bg">
+    <video width="100%" autoplay muted loop>
+        <source src="assets/video/math-space-5.mp4" type="video/mp4"></source>
+        <source src="assets/video/math-space.webm" type="video/webm"></source>
+    </video>
+</div>
+    <div class="container py-6 py-md-7 text-white" style = "z-index: 1000;">
       <div class="row">
         <div class="col-xl-10">
           <div class="text-center text-lg-left">

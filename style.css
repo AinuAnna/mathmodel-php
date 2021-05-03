@@ -2,16 +2,20 @@
     display: flex;
     position: relative;
     align-items: center;
-    min-height: 600px;
-    background-image: url('https://i.imgur.com/CeHCzym.jpg');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+    min-height: 100vh;
 }
 
 .subtitle {
     font-size: 20px;
     padding: 8px;
+}
+
+#search {
+    width: 20rem !important;
+}
+
+.container {
+    padding: 90px 0px 40px 0px !important;
 }
 
 a.btn-primary {
@@ -114,7 +118,89 @@ input#upload {
     background-color: rgb(74, 134, 132);
 }
 
-.student-profile__right {
-    display: flex;
-    justify-content: center;
+.profile {
+    margin-bottom: 50px;
 }
+
+#group {
+    font-style: italic;
+    font-weight: 600;
+    color: #bece5f!important;
+}
+
+#reg {
+    padding: 150px 0px 40px 0px !important;
+}
+
+.slice.bg-section-secondary {
+    min-height: 75vh;
+}
+
+#element_0{
+    margin-bottom: 1rem;
+}
+.element,
+.answer {
+    display: flex;
+}
+
+.answer {
+    margin-left: 2rem;
+}
+
+.add-question {
+    margin-top: 1.5rem;
+}
+
+.student-records{
+    margin-top: 70px;
+    margin-bottom: 1rem;
+    font-size: 30px;
+    font-weight: 800;
+    color: #dc3545;
+}
+.score{
+    color:rgb(74, 134, 132);
+    margin-top: 30px;
+    margin-bottom: 1rem;
+    font-size: 24px;
+}
+.add{
+    position: fixed;
+    bottom: 0;
+    transform: translate(1200px, 10px);
+}
+.radio{
+    margin-top: 0.8rem; 
+    margin-right: 1rem;
+}
+#video-bg {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 1;
+    background: url(assets/screen.png) no-repeat #94a233;
+    background-size: cover;
+}
+
+#video-bg > video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    width: auto;
+    height: auto; 
+}
+
+ @supports (object-fit: cover) {
+     #video-bg > video {
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+     }
+ }

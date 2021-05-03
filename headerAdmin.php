@@ -1,5 +1,4 @@
 <header class="header">
-  <!-- Navbar-->
   <nav class="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white">
     <div class="container-fluid">
       <div class="d-flex align-items-center"><a class="navbar-brand py-1" href="main.php">
@@ -7,7 +6,8 @@
       </div>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a class="nav-link" href="admin.php">Профиль</a></li>
+          <li class="nav-item"><a class="nav-link" href="adminProfile.php">Профиль</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin.php">Пользователи</a></li>
           <li class="nav-item"><a class="nav-link" href="lecture.php">Лекции</a></li>
           <li class="nav-item"><a class="nav-link" href="tests.php">Тесты</a></li>
           <li class="nav-item"><a class="nav-link" href="resultAll.php">Результаты тестов</a></li>
@@ -16,5 +16,4 @@
       </div>
     </div>
   </nav>
-  <!-- /Navbar -->
 </header>
