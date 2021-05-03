@@ -53,7 +53,7 @@ include("bd.php");
                             }
                             echo "</table>
               <div class='position-absolute d-md-block image-container' style = 'top: 40px; right: 0;'>
-                <img alt='lecture image' src='./assets/professor-animate.svg' style = 'width: 40rem !important;'>
+                <img alt='lecture image' src='../assets/professor-animate.svg' style = 'width: 40rem !important;'>
               </div>
             </div>
            </div>

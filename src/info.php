@@ -82,7 +82,7 @@ include("bd.php");
                                 </div>
                             </div>
                                 <div class="position-absolute d-md-block image-container" style = "top: 0; right: 0;">
-                                    <img alt="lecture image" src="./assets/mathematics-animate (2).svg" style = "width: 40rem !important;"">
+                                    <img alt="lecture image" src="../assets/mathematics-animate (2).svg" style = "width: 40rem !important;"">
                                 </div>
                             </div>
                             </div>';

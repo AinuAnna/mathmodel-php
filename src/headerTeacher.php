@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg fixed-top shadow navbar-light bg-white">
         <div class="container-fluid">
             <div class="d-flex align-items-center"><a class="navbar-brand py-1" href="main.php">
-                <img src="./assets/math.svg" width=30px style="margin-right: 21px;" alt="logo">Математическое моделирование</a>
+                <img src="../assets/math.svg" width=30px style="margin-right: 21px;" alt="logo">Математическое моделирование</a>
             </div>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav ml-auto">
