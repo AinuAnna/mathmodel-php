@@ -1,10 +1,10 @@
 <?php
 if ($_SERVER['SERVER_NAME'] == "https://math-model-php.herokuapp.com") {
 	$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-	$host = $url["host"];
-	$username = $url["user"];
-	$password = $url["pass"];
-	$dbname = substr($url["path"], 1);
+	$host = $url["localhost"];
+	$username = $url["root"];
+	$password = $url["26021711"];
+	$dbname = substr($url["mathmode"], 1);
 } else {
 	$db = mysqli_connect("localhost", "root", "26021711", "mathmode");
 
