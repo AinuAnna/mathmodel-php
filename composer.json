@@ -1,14 +1,2 @@
 {
-    "name": "anna.tereshko/mathmodel-php",
-    "description": "mathematical modeling web site",
-    "authors": [
-        {
-            "name": "Anna Tereshko",
-            "email": "anna.26.tereshko@gmail.com"
-        }
-    ],
-    "require": {
-        "php": "^8.0.3",
-        "another-vendor/package": "1.*"
-    }
 }
