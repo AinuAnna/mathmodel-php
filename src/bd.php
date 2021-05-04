@@ -1,11 +1,4 @@
 <?php
-if ($_SERVER['SERVER_NAME'] == "https://math-model-php.herokuapp.com") {
-	$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
-	$host = $url["localhost"];
-	$username = $url["root"];
-	$password = $url["26021711"];
-	$dbname = substr($url["mathmode"], 1);
-} else {
 	$db = mysqli_connect("localhost", "root", "26021711", "mathmode");
 
    if (!$db) {
@@ -13,6 +6,5 @@ if ($_SERVER['SERVER_NAME'] == "https://math-model-php.herokuapp.com") {
        echo "Код ошибки error: " . mysqli_connect_errno() . PHP_EOL;
        echo "Текст ошибки error: " . mysqli_connect_error() . PHP_EOL;
        exit;
-   }
 }
 ?>
