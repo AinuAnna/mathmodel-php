@@ -18,6 +18,11 @@
     padding: 90px 0px 40px 0px !important;
 }
 
+.active{
+     color: rgb(74, 134, 132) !important; 
+}
+
+
 a.btn-primary {
     background-color: #bece5f;
     border-color: #bece5f;

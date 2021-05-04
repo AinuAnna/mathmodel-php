@@ -55,7 +55,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
               $result2 = mysqli_query($GLOBALS['db'], $query2);
               echo "<ul>";
               while ($row2 = mysqli_fetch_array($result2)) {
-                echo "<li><a href = 'file.php?idlectures=" . $row['idlectures'] . "'>" . $row2['nametopic'] . "</a></li>";
+                echo "<li><a href = 'file.php?idtopics=" . $row2['idtopics'] . "'>" . $row2['nametopic'] . "</a></li>";
               }
               echo "</ul>";
             }
@@ -220,7 +220,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
               </select>
               <label class="form-label" for="nametopic">Название темы:</label><input class="form-control" name="nametopic" id="nametopic" type="text" placeholder="Матричные игры" autocomplete="off" required="" data-msg="Пожалуйста введите новую тему">
               <div class="custom-file mt-3">
-                <input type="file" class="custom-file-input" name="file" id="filename" />
+                <input type="file" class="custom-file-input" name="file" accept="application/pdf" id="filename" />
                 <label class="custom-file-label" data-browse="Выбрать" for="filename">Файл не
                   выбран</label>
               </div>

@@ -42,6 +42,7 @@ include ("bd.php");
                     <div class = 'container-fluid p-3'>
                     <ol class='list-group'>";
                             $count = 0;
+                            $for = 0;
                             while ($row = mysqli_fetch_array($result)) {
                                 echo "<li style = 'margin: 20px; font-size: 20px;'>" . $row['questiontext'] . "</li>";
                                 if ($row["idtests"] != null) {
@@ -51,8 +52,9 @@ include ("bd.php");
 
                                     while ($row2 = mysqli_fetch_array($result2)) {
                                         echo "
-                                <div><label class = 'list-group-item' for = 'answer'><input id = 'answers' type = 'radio' value = " . $row2['ischecked'] . " name = 'answer" . $count . "'/><span style = 'margin-left: 10px'>" . $row2['answer'] . "</span></label></div>";
-                                    }
+                                <div><label class = 'list-group-item' for = 'answer" . $for . "''><input id = 'answer" . $for . "' type = 'radio' value = " . $row2['ischecked'] . " name = 'answer" . $count . "'/><span id = 'answer' style = 'margin-left: 10px'>" . $row2['answer'] . "</span></label></div>";
+                                   $for++;
+                                 }
                                     echo "</div>";
                                 }
                                 $count++;
