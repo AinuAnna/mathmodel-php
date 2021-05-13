@@ -48,7 +48,7 @@ include("bd.php");
                                 echo "<td>" . $row4['groupnumber'] . "</td>";
                             }
                             echo "<td>" . $row['namegroup'] . "</td>";
-                            echo "<td><button class='btn btn-primary' name='openButton' id='openButton' type='submit'><a href = '/src/groupOfStudents.php?idgroups=" . $row['idgroups'] . "'>Открыть</a></button></td>";
+                            echo "<td><button class='btn btn-primary' name='openButton' id='openButton' type='submit'><a href = '   groupOfStudents.php?idgroups=" . $row['idgroups'] . "'>Открыть</a></button></td>";
                             echo "</tr>";
                         }
                         echo "</table>
@@ -57,9 +57,9 @@ include("bd.php");
                         mysqli_free_result($result);
                     }
                     ?>
-                    <?php if(isset($_POST['openButton'])){
-                          header('location: /src/groupOfStudents.php');
-                    }?>
+                    <?php if (isset($_POST['openButton'])) {
+                        header('location:    groupOfStudents.php');
+                    } ?>
 
                 </div>
                 <label class="form-label" for="idgroups">Идентификатор группы:</label>
@@ -77,10 +77,28 @@ include("bd.php");
                     } else echo "<div class=\"alert alert-warning alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Все поля должны быть заполнены!</div>";
                 }
                 ?>
+                <div class="card w-50 mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Добавление групп</h4>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
+                        <ul class="mt-3 mb-4">
+                            <li>Перейдите на страницу создания нажав кнопку ниже</li>
+                            <li>Выберите нужные параметры</li>
+                            <li>Введите название(описание) группы</li>
+                            <li>Сохраните новые данные</li>
+                        </ul>
+                        <div class="col-md-12 text-center">
+                        <button class="btn btn-primary" name="createNew" id="createNew"><a href='addgroups.php'>Создать</a></button>
+            </div>
+                    </div>
+                </div>
             </div>
 
         </div>
         </div>
+
     </section>
 </body>
 

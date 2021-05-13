@@ -179,6 +179,13 @@ input#upload {
     margin-top: 0.8rem; 
     margin-right: 1rem;
 }
+#createNew a{
+    text-decoration: none !important;
+    color: rgba(0, 0, 0, .5);
+}
+#createNew a:hover{
+    color: white
+}
 #video-bg {
     top: 0;
     right: 0;

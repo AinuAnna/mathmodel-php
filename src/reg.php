@@ -88,7 +88,7 @@ include("bd.php");
                     }
                     $result2 = mysqli_query($GLOBALS["db"], "INSERT INTO users (fullname, email, password) VALUES('$fullname','$email', '$password')");
                     if ($result2 == 'TRUE') {
-                        header('location: /src/login.php');
+                        header('location:    login.php');
                     } else {
                       echo "Ошибка! Вы не зарегистрированы.";
                     }

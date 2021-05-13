@@ -59,7 +59,7 @@ include("bd.php");
                 $query2 = "SELECT * FROM tests WHERE idtests = " . $id . $search;
                 $result2 = mysqli_query($GLOBALS['db'], $query2);
                 while ($row2 = mysqli_fetch_array($result2)) {
-                  echo "<li><a href = '/src/testpage.php?idtests=" . $row['idtests'] . "'>" . $row['testtitle'] . "</a></li>";
+                  echo "<li><a href = '   testpage.php?idtests=" . $row['idtests'] . "'>" . $row['testtitle'] . "</a></li>";
                 }
               }
             }

@@ -4,7 +4,7 @@
   "description": "course work with php, mysql",
   "main": "index.js",
   "scripts": {
-    "start": "start http://localhost/mathmodel-php/src/main.php",
+    "start": "start http://localhost/mathmodel-php   main.php",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

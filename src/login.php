@@ -81,11 +81,11 @@ include("bd.php");
                         $_SESSION['roleid'] = $myrow['roleid'];
                         if (isset($_SESSION['email'])) {
                           if ($_SESSION['roleid'] == 2) {
-                            echo "<script>document.location.replace('/src/info.php')</script>";
+                            echo "<script>document.location.replace(' /src/info.php')</script>";
                          } else if ($_SESSION['roleid'] == 3) {
-                             echo "<script>document.location.replace('/src/teacher.php')</script>";
+                             echo "<script>document.location.replace(' /src/teacher.php')</script>";
                          } else {
-                            echo "<script>document.location.replace('/src/adminProfile.php')</script>";
+                            echo "<script>document.location.replace(' /src/adminProfile.php')</script>";
                          }
                         }
                       } else {
