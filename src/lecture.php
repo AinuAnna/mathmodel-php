@@ -55,7 +55,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
               $result2 = mysqli_query($GLOBALS['db'], $query2);
               echo "<ul>";
               while ($row2 = mysqli_fetch_array($result2)) {
-                echo "<li><a href = 'file.php?idtopics=" . $row2['idtopics'] . "'>" . $row2['nametopic'] . "</a></li>";
+                echo "<li><a href = '/src/file.php?idtopics=" . $row2['idtopics'] . "'>" . $row2['nametopic'] . "</a></li>";
               }
               echo "</ul>";
             }

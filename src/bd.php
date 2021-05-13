@@ -1,5 +1,5 @@
 <?php
-	$db = mysqli_connect("localhost", "root", "26021711", "mathmode");
+	$db = mysqli_connect("mathmodel.mysql.database.azure.com", "notroot@mathmodel", "26021711Q!", "mathmodel", 3306);
 
    if (!$db) {
        echo "Ошибка: Невозможно установить соединение с MySQL." . PHP_EOL;

@@ -48,7 +48,7 @@ include("bd.php");
             <div class = 'table-responsive-md'>
                     <ol>";
             while ($row = mysqli_fetch_array($result)) {
-              echo "<li><a href = 'testpage.php?idtests=" . $row['idtests'] . "'>" . $row['testtitle'] . "</a></li>";
+              echo "<li><a href = '/src/testpage.php?idtests=" . $row['idtests'] . "'>" . $row['testtitle'] . "</a></li>";
             }
             echo "</ul>
             <div class='position-absolute d-md-block image-container' style = 'top: 0; right: 0;'>

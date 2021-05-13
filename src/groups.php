@@ -48,7 +48,7 @@ include("bd.php");
                                 echo "<td>" . $row4['groupnumber'] . "</td>";
                             }
                             echo "<td>" . $row['namegroup'] . "</td>";
-                            echo "<td><button class='btn btn-primary' name='openButton' id='openButton' type='submit'><a href = 'groupOfStudents.php?idgroups=" . $row['idgroups'] . "'>Открыть</a></button></td>";
+                            echo "<td><button class='btn btn-primary' name='openButton' id='openButton' type='submit'><a href = '/src/groupOfStudents.php?idgroups=" . $row['idgroups'] . "'>Открыть</a></button></td>";
                             echo "</tr>";
                         }
                         echo "</table>
@@ -58,7 +58,7 @@ include("bd.php");
                     }
                     ?>
                     <?php if(isset($_POST['openButton'])){
-                        header('location: groupOfStudents.php');
+                          header('location: /src/groupOfStudents.php');
                     }?>
 
                 </div>
