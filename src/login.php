@@ -81,12 +81,12 @@ include("bd.php");
                         $_SESSION['roleid'] = $myrow['roleid'];
                         if (isset($_SESSION['email'])) {
                           if ($_SESSION['roleid'] == 2) {
-                              header('location: /src/info.php');
-                          } else if ($_SESSION['roleid'] == 3) {
-                              header('location: /src/teacher.php');
-                          } else {
-                              header('location: /src/adminProfile.php');
-                          }
+                            echo "<script>document.location.replace('/src/info.php')</script>";
+                         } else if ($_SESSION['roleid'] == 3) {
+                             echo "<script>document.location.replace('/src/teacher.php')</script>";
+                         } else {
+                            echo "<script>document.location.replace('/src/adminProfile.php')</script>";
+                         }
                         }
                       } else {
                         exit("Извините, введённый вами логин или пароль неверный.");

@@ -60,7 +60,7 @@ include("bd.php");
               $result2 = mysqli_query($GLOBALS['db'], $query2);
               echo "<ul>";
               while ($row2 = mysqli_fetch_array($result2)) {
-                echo "<li><a href = '/src/file.php?idlectures=" . $row['idlectures'] . "'>" . $row2['nametopic'] . "</a></li>";
+                echo "<li><a href = 'file.php?idtopics=" . $row2['idtopics'] . "'>" . $row2['nametopic'] . "</a></li>";
               }
               echo "</ul>";
             }
