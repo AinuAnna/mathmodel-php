@@ -89,7 +89,7 @@ include("bd.php");
                 if (isset($_POST["deleteButton"])) {
                     if (!empty($_POST['idgroups'])) {
                         $idgroups = htmlspecialchars($_POST['idgroups']);
-                        $query = "DELETE FROM users WHERE idgroups ='$idgroups';";
+                        $query = "DELETE FROM `groups` WHERE idgroups ='$idgroups';";
                         $result = mysqli_query($GLOBALS["db"], $query);
                         include("notification.php");
                     } else echo "<div class=\"alert alert-warning alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Все поля должны быть заполнены!</div>";

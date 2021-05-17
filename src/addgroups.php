@@ -2,6 +2,11 @@
 session_start();
 include("bd.php");
 ?>
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,15 +85,17 @@ include("bd.php");
 
                             <div class="my-3 bg-white rounded box-shadow">
                                 <h4 class="border-bottom border-gray pb-2 mb-0">Список учащихся</h4>
-
                                 <?php
-                                $query = "SELECT * FROM `users` WHERE `groupsid` IS NULL";
+                                $query = "SELECT * FROM `users` WHERE `groupsid` IS NULL AND roleid = 2";
                                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
                                 if ($result) {
                                     $rows = mysqli_num_rows($result);
-
+                                    $count = 0;
                                     while ($row = mysqli_fetch_array($result)) {
-                                        echo '   <div class="media text-muted pt-3"><img alt="50x50" class="mr-3" src="';
+                                        $id = $row['idusers'];
+                                        echo ' <div class="media text-muted pt-3" >
+                                        <input type = "text" style = " display: contents;" name = "user[' . $count . '][' . $id  . ']"/>
+                                        <img alt="50x50" class="mr-3" src="';
                                         if ($row['avatar'] == '') {
                                             echo '../assets/user-avatar.svg';
                                         } else {
@@ -102,10 +109,11 @@ include("bd.php");
                                         <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
                                         <div class="d-flex justify-content-between align-items-center w-100">
                                         <strong class="text-gray-dark">' . $email . '</strong>
-                                        <a href="#">Выбрать</a>
+                                        <input type = "checkbox" style = "height: 1rem; width: 1rem;" id = "check" name = "check[' . $count . ']"/>
                                         </div>
                                         <span class="d-block">' . $fullname . '</span>
                                         </div></div>';
+                                        $count++;
                                     }
                                 }
                                 ?>
@@ -115,15 +123,30 @@ include("bd.php");
                         </form>
                         <?php
                         if (isset($_POST['saveGroup'])) {
+                            $users = $_POST['user'];
+                            $check = $_POST['check'];
                             if (!$_POST["description"]) {
                                 echo "Вы не ввели данные. Попробуйте еще раз";
                                 exit();
                             }
                             $query = "INSERT INTO `groups` (iddepartments, idcourses, idnumbers, namegroup) VALUES('" . $_POST['department'] . "','" .  $_POST['course'] . "','" .  $_POST['groupnumber'] . "','" . $_POST['description'] . "');";
-                            $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-                            include("notification.php");
-                        }
-                        ?>
+                            mysqli_query($GLOBALS['db'], $query);
+                            $groupid = mysqli_insert_id($GLOBALS['db']);
+
+                            for ($i = 0; $i < count($users); $i++) {
+                                foreach ($users[$i] as $j => $key) {
+                                    $user = intval($key);
+                                    $sql .= "UPDATE `users` SET `groupsid` = '{$groupid}' WHERE `idusers` = '{$user}'; ";
+                                }
+                            }
+
+                            if (mysqli_multi_query($GLOBALS['db'], $sql)) {
+                                echo $sql;
+                                echo "New records created successfully";
+                            } else {
+                                echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['db']);
+                            }
+                        } ?>
                     </div>
                 </div>
             </div>
@@ -133,3 +156,14 @@ include("bd.php");
 </body>
 
 </html>
+<script>
+    $(document).ready(function() {
+        var $check = $('#check');
+        $check.click(function(e) {
+            if ($('input[type=checkbox]:on')) {
+                $(e.target).closest("input[type=checkbox]").prop('value', '1');
+                $("input[type=checkbox]:not(:on)").prop('value', '0');
+            }
+        });
+    });
+</script>
