@@ -37,7 +37,7 @@ include("bd.php");
                   <form class="form-validate" method="post">
                     <div class="form-group">
                       <label class="form-label" for="email">Эл.Почта</label>
-                      <input class="form-control" name="email" id="email" type="email" placeholder="name@address.com" autocomplete="off" required="" data-msg="Please enter your email">
+                      <input class="form-control" name="email" id="email" type="email" placeholder="name@address.com" autocomplete="on" required="" data-msg="Please enter your email">
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="password">Пароль</label>

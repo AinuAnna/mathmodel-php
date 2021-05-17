@@ -25,9 +25,9 @@ include("bd.php");
                         $rows = mysqli_num_rows($result);
 
                         echo "
-                      <div class = 'container-fluid p-2'>
+                      <div class = 'container-fluid p-2 '>
                       <div class = 'table-responsive-md mt-4'>
-                      <table class = 'table'>
+                      <table class = 'table '>
                       <thead><th>Идентификатор группы</th><th>Отделение</th><th>Курс</th><th>Номер группы</th><th>Описание</th><th>Действия</th></thead>";
                         while ($row = mysqli_fetch_array($result)) {
                             echo "<tr>";
@@ -48,9 +48,10 @@ include("bd.php");
                                 echo "<td>" . $row4['groupnumber'] . "</td>";
                             }
                             echo "<td>" . $row['namegroup'] . "</td>";
-                            echo "<td><button class='btn btn-primary' name='openButton' id='openButton' type='submit'><a href = '   groupOfStudents.php?idgroups=" . $row['idgroups'] . "'>Открыть</a></button></td>";
+                            echo "<td><button class='btn btn-primary' name='openButton' id='openButton' type='submit'><a href = 'groupOfStudents.php?idgroups=" . $row['idgroups'] . "'>Открыть</a></button></td>";
                             echo "</tr>";
                         }
+                      
                         echo "</table>
                        </div>
                       </div>";
@@ -58,14 +59,31 @@ include("bd.php");
                     }
                     ?>
                     <?php if (isset($_POST['openButton'])) {
-                        header('location:    groupOfStudents.php');
+                        header('location: groupOfStudents.php');
                     } ?>
 
                 </div>
+                <div class="card w-50 mb-4 box-shadow" style="float: right;">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Добавление групп</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="mt-3 mb-4">
+                            <li>Перейдите на страницу создания нажав кнопку ниже</li>
+                            <li>Выберите нужные параметры</li>
+                            <li>Введите название(описание) группы</li>
+                            <li>Добавьте студентов</li>
+                            <li>Сохраните новые данные</li>
+                        </ul>
+                        <div class="col-md-12 text-center">
+                            <a href='addgroups.php'><button class="btn btn-primary" name="createNew" id="createNew">Создать</button></a>
+                        </div>
+                    </div>
+                </div>
                 <label class="form-label" for="idgroups">Идентификатор группы:</label>
-                <form class="form-validate" method="post">
-                    <input class="delete-id" name="idgroups" id="idgroups" type="text" placeholder="1" autocomplete="off" required="" data-msg="Пожалуйста введите идентификатор">
-                    <button class="btn btn-primary" name="deleteButton" id="deleteButton" type="submit">Удалить</button>
+                <form class="form-validate d-flex" method="post" style = "width: 30% !important">
+                    <input class="delete-id form-control" name="idgroups" id="idgroups" type="text" placeholder="1" autocomplete="off" required="" data-msg="Пожалуйста введите идентификатор">&nbsp;
+                    <button class="btn btn-primary" name="deleteButton" id="deleteButton" type="submit">❌</button>
                 </form>
                 <?php
                 if (isset($_POST["deleteButton"])) {
@@ -77,23 +95,7 @@ include("bd.php");
                     } else echo "<div class=\"alert alert-warning alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Все поля должны быть заполнены!</div>";
                 }
                 ?>
-                <div class="card w-50 mb-4 box-shadow">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Добавление групп</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
-                        <ul class="mt-3 mb-4">
-                            <li>Перейдите на страницу создания нажав кнопку ниже</li>
-                            <li>Выберите нужные параметры</li>
-                            <li>Введите название(описание) группы</li>
-                            <li>Сохраните новые данные</li>
-                        </ul>
-                        <div class="col-md-12 text-center">
-                        <button class="btn btn-primary" name="createNew" id="createNew"><a href='addgroups.php'>Создать</a></button>
-            </div>
-                    </div>
-                </div>
+               
             </div>
 
         </div>

@@ -79,10 +79,10 @@ include("bd.php");
         </div>
         </form>
         <label class="form-label" for="idtestResults">Идентификатор результата:</label>
-        <form class="form-validate" method="post">
-          <input class="delete-id" name="idtestResults" id="idtestResults" type="text" placeholder="1" autocomplete="off" required="" data-msg="Пожалуйста введите идентификатор">
-          <button class="btn btn-primary" name="deleteButton" id="deleteButton" type="submit">Удалить</button>
-        </form>
+        <form class="form-validate d-flex" method="post" style = "width: 30% !important">
+                    <input class="delete-id form-control" name="idtestResults" id="idtestResults" type="text" placeholder="1" autocomplete="off" required="" data-msg="Пожалуйста введите идентификатор">&nbsp;
+                    <button class="btn btn-primary" name="deleteButton" id="deleteButton" type="submit">❌</button>
+                </form>
         <?php
         if (isset($_POST["deleteButton"])) {
           if (!empty($_POST['idtestResults'])) {
