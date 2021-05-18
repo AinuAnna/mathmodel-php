@@ -32,11 +32,11 @@ include ("bd.php");
                     </div>
                     <form method="post">
                         <?php $query = "SELECT * FROM questions WHERE idtests ='" . $_GET['idtests'] . "' ;";
-                        //Делаем запрос к БД, результат запроса пишем в $result:
+                       
                         $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                         if ($result) {
-                            $rows = mysqli_num_rows($result); // количество полученных строк
+                            $rows = mysqli_num_rows($result); 
 
                             echo "
                     <div class = 'container-fluid p-3'>
@@ -61,7 +61,7 @@ include ("bd.php");
                             }
                             echo "</ol>
                     </div>";
-                            // очищаем результат
+                           
                             mysqli_free_result($result);
                         }
                         ?>
@@ -73,11 +73,11 @@ include ("bd.php");
                     if (isset($_POST['sendButton'])) {
 
                         $query = "SELECT * FROM questions WHERE idtests ='" . $_GET['idtests'] . "' ;";
-                        //Делаем запрос к БД, результат запроса пишем в $result:
+                      
                         $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                         if ($result) {
-                            $rows = mysqli_num_rows($result); // количество полученных строк
+                            $rows = mysqli_num_rows($result); 
                             $count = 0;
                             $correct = 0;
                             while ($row = mysqli_fetch_array($result)) {
@@ -96,7 +96,7 @@ include ("bd.php");
                             $query3 = "INSERT INTO `test-results` (idtestResults, mark, idusers, idtests) VALUES (NULL, '" . $correct . "', '" . $_SESSION['idusers'] . "', '" . $_GET['idtests'] . "');";
                             $result3 = mysqli_query($GLOBALS['db'], $query3) or die(mysqli_error($GLOBALS['db']));
                             if ($result3) {
-                                header("location: result.php");
+                                echo "<script>document.location.replace(' /src/result.php')</script>";
                             } else {
                                 echo "Ошибка: " . $query3 . "<br>" . $GLOBALS["db"]->error;
                             }

@@ -80,21 +80,22 @@ include("bd.php");
                             <div class="col-md-4">
                                 <h2>Название теста</h2>
                                 <div><?php $query = "SELECT * FROM tests";
-                                                            $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-                                                            if ($result) {
-                                                                while ($row = mysqli_fetch_array($result)) {
-                                                                    echo "<p class='score'>" . $row['testtitle'] . "</p>";
-                                                                }
-                                                            } ?></div>
+                                        $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
+                                        if ($result) {
+                                            while ($row = mysqli_fetch_array($result)) {
+                                                echo "<p class='score'>" . $row['testtitle'] . "</p>";
+                                            }
+                                        } ?></div>
                             </div>
                             <div class="col-md-4">
                                 <h2>Колличество попыток</h2>
                                 <div><?php $query = "SELECT idusers, COUNT(*) AS total FROM `test-results` WHERE idusers = '" . $_GET['idusers'] . "'  GROUP BY idtests";
-                                                            $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-                                                            while ($row = mysqli_fetch_array($result)) {
-                                                                echo "<p class='score'>" . $row['total'] . "</p>";
-                                                            }
-                                                            ?></p></div>
+                                        $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
+                                        while ($row = mysqli_fetch_array($result)) {
+                                            echo "<p class='score'>" . $row['total'] . "</p>";
+                                        }
+                                        ?></p>
+                                </div>
                             </div>
                         </div>
                         <hr>
