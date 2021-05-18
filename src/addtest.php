@@ -64,7 +64,6 @@ if (isset($_POST['save'])) {
         }
     }
     if (mysqli_multi_query($GLOBALS['db'], $sql)) {
-        echo $sql;
         echo "New records created successfully";
     } else {
         echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['db']);

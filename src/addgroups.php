@@ -134,13 +134,11 @@ include("bd.php");
 
                             foreach ($users as $j => $key) {
                                 foreach ($key as $i => $value) {
-                                    var_dump($value);
                                     $sql .= "UPDATE `users` SET `groupsid` = '{$groupid}' WHERE `idusers` = '{$i}'; ";
                                 }
                             }
 
                             if (mysqli_multi_query($GLOBALS['db'], $sql)) {
-                                echo $sql;
                                 echo "New records created successfully";
                             } else {
                                 echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['db']);

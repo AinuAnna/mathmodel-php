@@ -216,3 +216,26 @@ input#upload {
          object-fit: cover;
      }
  }
+
+ .account-user-avatar {
+    position: absolute;
+    left: 115px;
+    z-index: 100;
+}
+.account-user-name {
+    display: block;
+    font-weight: 600;
+}
+.account-position {
+    display: block;
+    font-size: 12px;
+    margin-top: -3px;
+}
+.nav-user {
+    padding: calc(31px / 2) 20px calc(31px / 2) 57px!important;
+    text-align: left!important;
+    position: relative;
+    border: 1px solid #f1f3fa;
+    border-width: 0 1px;
+    min-height: 70px;
+}

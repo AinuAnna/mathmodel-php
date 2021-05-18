@@ -33,7 +33,7 @@ include("bd.php");
                                         $query4 = "SELECT * FROM `departments` WHERE iddepartments = " . $row3['idgroups'] . "";
                                         $result4 = mysqli_query($GLOBALS['db'], $query4);
                                             while ($row4 = mysqli_fetch_array($result4)) {
-                                                $department =  "<a" . $row4['iddepartments'] . "'>" . $row4['departmentname'] . "</a>";
+                                                $department =  "<a" . $row4['iddepartments'] . ">" . $row4['departmentname'] . "</a>";
                                             }
                                     }
                             } else {
@@ -46,7 +46,7 @@ include("bd.php");
                                         $query6 = "SELECT * FROM `group-numbers` WHERE idnumbers = " . $row5['idnumbers'] . "";
                                         $result6 = mysqli_query($GLOBALS['db'], $query6);
                                             while ($row6 = mysqli_fetch_array($result6)) {
-                                                $number =  "<a" . $row6['idnumbers'] . "'>" . $row6['groupnumber'] . "</a>";
+                                                $number =  "<a" . $row6['idnumbers'] . ">" . $row6['groupnumber'] . "</a>";
                                             }
                                     }
                             } else {
@@ -59,7 +59,7 @@ include("bd.php");
                                         $query8 = "SELECT * FROM `courses` WHERE idcourses = " . $row7['idcourses'] . "";
                                         $result8 = mysqli_query($GLOBALS['db'], $query8);
                                             while ($row8 = mysqli_fetch_array($result8)) {
-                                                $course =  "<a" . $row8['idcourses'] . "'>" . $row8['coursenumber'] . "</a>";
+                                                $course =  "<a" . $row8['idcourses'] . ">" . $row8['coursenumber'] . "</a>";
                                             }
                                     }
                             } else {
@@ -69,7 +69,7 @@ include("bd.php");
                                 $query2 = "SELECT * FROM `groups` WHERE idgroups = " . $row['groupsid'] . "";
                                 $result2 = mysqli_query($GLOBALS['db'], $query2);
                                 while ($row2 = mysqli_fetch_array($result2)) {
-                                    $group =  "<a" . $row['idgroups'] . "'>" . $row2['namegroup'] . "</a>";
+                                    $group =  "<a" . $row['idgroups'] . ">" . $row2['namegroup'] . "</a>";
                                 }
                             } else {
                                 $group =   "<a style = 'color: #dc3545;'>!!! У вас пока нет группы !!!!</a>";
