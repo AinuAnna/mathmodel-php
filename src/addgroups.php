@@ -94,7 +94,7 @@ include("bd.php");
                                     while ($row = mysqli_fetch_array($result)) {
                                         $id = $row['idusers'];
                                         echo ' <div class="media text-muted pt-3" >
-                                        <input type = "text" style = " display: contents;" name = "user[' . $count . '][' . $id  . ']"/>
+                                       
                                         <img alt="50x50" class="mr-3" src="';
                                         if ($row['avatar'] == '') {
                                             echo '../assets/user-avatar.svg';
@@ -109,7 +109,7 @@ include("bd.php");
                                         <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
                                         <div class="d-flex justify-content-between align-items-center w-100">
                                         <strong class="text-gray-dark">' . $email . '</strong>
-                                        <input type = "checkbox" style = "height: 1rem; width: 1rem;" id = "check" name = "check[' . $count . ']"/>
+                                        <input type = "checkbox" style = "height: 1rem; width: 1rem;" id = "check" name = "user[' . $count . '][' . $id  . ']"/>
                                         </div>
                                         <span class="d-block">' . $fullname . '</span>
                                         </div></div>';
@@ -124,7 +124,6 @@ include("bd.php");
                         <?php
                         if (isset($_POST['saveGroup'])) {
                             $users = $_POST['user'];
-                            $check = $_POST['check'];
                             if (!$_POST["description"]) {
                                 echo "Вы не ввели данные. Попробуйте еще раз";
                                 exit();
@@ -133,10 +132,10 @@ include("bd.php");
                             mysqli_query($GLOBALS['db'], $query);
                             $groupid = mysqli_insert_id($GLOBALS['db']);
 
-                            for ($i = 0; $i < count($users); $i++) {
-                                foreach ($users[$i] as $j => $key) {
-                                    $user = intval($key);
-                                    $sql .= "UPDATE `users` SET `groupsid` = '{$groupid}' WHERE `idusers` = '{$user}'; ";
+                            foreach ($users as $j => $key) {
+                                foreach ($key as $i => $value) {
+                                    var_dump($value);
+                                    $sql .= "UPDATE `users` SET `groupsid` = '{$groupid}' WHERE `idusers` = '{$i}'; ";
                                 }
                             }
 
