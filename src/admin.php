@@ -32,11 +32,12 @@ include("bd.php");
               <div class = 'table-responsive-md'>
               <table class = 'table'>";
             echo "<tr><th>Идентификатор</th><th>Имя</th><th>Почта</th><th>Роль</th><th>Доступ</th><th>Группа</th><th>Аватар</th></tr>";
+            $count = 0;
             while ($row = mysqli_fetch_array($result)) {
               echo "<tr><td>" . $row['idusers'] . "</td>";
               echo "<td>" . $row['fullname'] . "</td>";
               echo "<td>" . $row['email'] . "</td>";
-              echo "<td>" . $row['roleid'] . "</td>";
+              echo "<td data-item = '" . $row['idusers'] . "'>" . $row['roleid'] . "<span class = 'inpcont'><input class='btn btn-primary' style = 'margin-left: 2rem; margin-bottom: 0;' name='changeRole[$count]' id='changeRole' value = '✏️' type='button'></span></td>";
               if ($row["roleid"] != null) {
                 $query2 = "SELECT * FROM role WHERE idrole = " . $row['roleid'] . "";
                 $result2 = mysqli_query($GLOBALS['db'], $query2);
@@ -62,21 +63,21 @@ include("bd.php");
               } else {
                 echo "<td><img src = '" . $row['avatar'] . "' width= 50px; height= 50px; style = 'object-fit: cover; border-radius: 50%'></td></tr>";
               }
+              $count++;
             }
             echo "</tr>
               </table>
                       </div>
                       </div>";
-            mysqli_free_result($result);
           }
           ?>
         </div>
         </form>
         <label class="form-label" for="idusers">Идентификатор пользователя:</label>
-        <form class="form-validate d-flex" method="post" style = "width: 30% !important">
-                    <input class="delete-id form-control" name="idusers" id="idusers" type="text" placeholder="1" autocomplete="off" required="" data-msg="Пожалуйста введите идентификатор">&nbsp;
-                    <button class="btn btn-primary" name="deleteButton" id="deleteButton" type="submit">❌</button>
-                </form>
+        <form class="form-validate d-flex" method="post" style="width: 30% !important">
+          <input class="delete-id form-control" name="idusers" id="idusers" type="text" placeholder="1" autocomplete="off" required="" data-msg="Пожалуйста введите идентификатор">&nbsp;
+          <button class="btn btn-primary" name="deleteButton" id="deleteButton" type="submit">❌</button>
+        </form>
         <?php
         if (isset($_POST["deleteButton"])) {
           if (!empty($_POST['idusers'])) {
@@ -93,3 +94,35 @@ include("bd.php");
 </body>
 
 </html>
+<script>
+  count = 0;
+  $(document).on("click", "#changeRole", (e) => {
+    const container = $(e.target).closest(".inpcont");
+    const data = $(e.target).closest('td').text();
+    const data2 = $(e.target).closest('td').attr('data-item');
+    console.log(data2);
+    container.append(`<form method = "post" class = "form" style = "display: inherit;"><input class = "form-control" style = "width: 30%; margin: auto 1rem; display: inherit" type = "text" value = "${data}" name = "editRole[${count}]"/><input type = "text" style = "display:none" name = "idUserForRole[${count}]" value = "${data2}"/><button class='btn btn-primary' style = 'margin: 0;' id = 'saveRole' name='saveRole[${count}]' type='submit'>✔️</button></form>`);
+    count++;
+    e.preventDefault();
+  });
+</script>
+<?php
+if (isset($_POST["saveRole"])) {
+  $editRole = $_POST['editRole'];
+  $idUserForRole = $_POST['idUserForRole'];
+
+  for ($i = 0; $i < count($editRole); $i++ ) {
+    $roleid = intval($editRole[$i]);
+    for ($j = 0; $j < count($idUserForRole); $j++ ) {
+      $user = intval($idUserForRole[$j]);
+    $sql .= "UPDATE `users` SET `roleid` = '{$roleid}' WHERE `idusers` = '{$user}'; ";
+    }
+  }
+
+  if (mysqli_multi_query($GLOBALS['db'], $sql)) {
+    echo "New records created successfully";
+  } else {
+    echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['db']);
+  }
+}
+?>

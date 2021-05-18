@@ -11,7 +11,11 @@ include("bd.php");
 </head>
 
 <body>
-    <?php include('headerTeacher.php') ?>
+<?php if ($_SESSION['roleid'] == 1) {
+    include('headerAdmin.php');
+  } else {
+    include('headerTeacher.php');
+  } ?>
     <section class="slice bg-section-secondary">
         <div class="content will-help-you">
             <div class="container" style="padding: 90px 0px;">

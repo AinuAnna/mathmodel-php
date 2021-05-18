@@ -24,6 +24,7 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a class="nav-link" href="adminProfile.php">Профиль</a></li>
           <li class="nav-item"><a class="nav-link" href="admin.php">Пользователи</a></li>
+          <li class="nav-item"><a class="nav-link" href="groups.php">Группы</a></li>
           <li class="nav-item"><a class="nav-link" href="lecture.php">Лекции</a></li>
           <li class="nav-item"><a class="nav-link" href="tests.php">Тесты</a></li>
           <li class="nav-item"><a class="nav-link" href="resultAll.php">Результаты тестов</a></li>

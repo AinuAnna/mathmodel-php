@@ -20,6 +20,7 @@
 
 .active{
      color: rgb(74, 134, 132) !important; 
+     font-weight: 700;
 }
 
 
@@ -27,6 +28,7 @@ a.btn-primary {
     background-color: #bece5f;
     border-color: #bece5f;
     color: rgba(0, 0, 0, .5);
+    vertical-align: inherit !important;
 }
 
 a.btn-primary:hover {
@@ -77,9 +79,22 @@ button.btn.btn-primary {
     border-color: #bece5f;
     color: rgba(0, 0, 0, .5);
     margin-bottom: 1rem;
+    vertical-align: inherit !important;
+}
+input.btn.btn-primary {
+    background-color: #bece5f;
+    border-color: #bece5f;
+    color: rgba(0, 0, 0, .5);
+    margin-bottom: 1rem;
+    vertical-align: inherit !important;
 }
 
 button.btn.btn-primary:hover {
+    background-color: rgb(74, 134, 132);
+    border-color: rgb(74, 134, 132);
+    color: white;
+}
+input.btn.btn-primary:hover {
     background-color: rgb(74, 134, 132);
     border-color: rgb(74, 134, 132);
     color: white;
@@ -232,10 +247,9 @@ input#upload {
     margin-top: -3px;
 }
 .nav-user {
-    padding: calc(31px / 2) 20px calc(31px / 2) 57px!important;
+    padding: calc(16px / 2) 20px calc(16px / 2) 57px!important;
     text-align: left!important;
     position: relative;
     border: 1px solid #f1f3fa;
     border-width: 0 1px;
-    min-height: 70px;
 }
