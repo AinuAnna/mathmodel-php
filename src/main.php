@@ -22,6 +22,12 @@ $result2 = mysqli_query($GLOBALS['db'], $query2) or die(mysqli_error($GLOBALS['d
 $row2 = mysqli_fetch_array($result2);
 $fullname =  $row2['fullname'];
 $avatar = $row2['avatar'];
+$roleid = $row2['roleid'];
+
+$query4 = "SELECT * FROM `role` WHERE idrole = $roleid";
+$result4 = mysqli_query($GLOBALS['db'], $query4) or die(mysqli_error($GLOBALS['db']));
+$row4 = mysqli_fetch_array($result4);
+$role = $row4['rus'];
 ?>
 
 <!DOCTYPE html>
@@ -70,21 +76,49 @@ $avatar = $row2['avatar'];
       </div>
     </div>
   </section>
-  <div class="container">
-    <div class="row">
-      <h2 class="display-5 text-shadow font-weight-bold" style="margin-bottom: 50px; color:#00090b;">Где угодно и когда удобно</h2>
-      <ul class="large-list">
-        <li>Занимайтесь из дома,
-          на работе или в путешествии — с компьютера или смартфона.</li>
-        <li>Бесплатный доступ</li>
-        <li>Обучение в тестах и лекциях</li>
-        <li>Отслеживание прогресса</li>
-        <li>И многое другое</li>
-      </ul>
-    </div>
-  </div>
+  <section class="py-6 bg-gray-100">
+      <div class="container">
+        <div class="text-center pb-lg-4">
+          <p class="subtitle text-secondary">Почему стоит выбрать нас</p>
+          <h2 class="mb-5">Где угодно и когда удобно</h2>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 mb-3 mb-lg-0 text-center">
+            <div class="px-0 px-lg-3">
+              <div class="icon-rounded bg-primary-light mb-3">
+              <img src = "../assets/access.png" >
+              </div>
+              <h3 class="h5">Удобный доступ</h3>
+              <p class="text-muted">Занимайтесь из дома, на работе или в путешествии — с компьютера или смартфона.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 mb-3 mb-lg-0 text-center">
+            <div class="px-0 px-lg-3">
+              <div class="icon-rounded bg-primary-light mb-3">
+              <img src = "../assets/tests.png" >
+              </div>
+              <h3 class="h5">Практика</h3>
+              <p class="text-muted">Новый материал закрепляется с помощью тестового задания, которое будет моментально проверено.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 mb-3 mb-lg-0 text-center">
+            <div class="px-0 px-lg-3">
+              <div class="icon-rounded bg-primary-light mb-4">
+              <img src = "../assets/stat.png" >
+              </div>
+              <h3 class="h5">Отслеживание прогресса</h3>
+              <p class="text-muted">Смотрите свои результаты работы, лучшие ответы и количество попыток в личном кабинете.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
   <div class="container" style="max-width: 700px">
+  <div class="w-md-80 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
+          <h2>Отзывы о курсе</h2>
+          <p>Сегодня на нашем курсе обучились уже более 1000 человек из трех отделений: радиотехническое, компьютерных технологий, электроники и управлению.</p>
+        </div>
     <div class="card bg-transparent shadow-none">
       <div class="row">
         <div class="col-lg-3 d-none d-lg-block">
@@ -116,7 +150,7 @@ $avatar = $row2['avatar'];
                   <div class="media">
                     <div class="media-body">
                       <span class="text-dark font-weight-bold"><?php echo $fullname; ?></span>
-                      <span class="font-size-1">— студент(ка) курса</span>
+                      <span class="font-size-1"> - <?php echo $role; ?></span>
                     </div>
                   </div>
                 </div>
@@ -128,12 +162,12 @@ $avatar = $row2['avatar'];
       </div>
     </div>
   </div>
-  <footer class="position-relative z-index-10 d-print-none">
-    <div class="py-4 font-weight-light bg-gray-800 text-gray-300" style="margin-top: 150px; background-color:#00090b; color: white;">
+  <footer class="position-relative z-index-10">
+    <div class="font-weight-light" style="background-color:#00090b; color: white;">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-md-6 text-center text-md-left">
-            <p class="text-sm mb-md-0">© 2021, Минск, Анна Терешко </p>
+            <p>© 2021, Минск, Анна Терешко </p>
           </div>
         </div>
       </div>

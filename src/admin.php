@@ -43,7 +43,7 @@ include("bd.php");
                 $result2 = mysqli_query($GLOBALS['db'], $query2);
                 echo "<td>";
                 while ($row2 = mysqli_fetch_array($result2)) {
-                  echo "<a" . $row['idrole'] . "'>" . $row2['type'] . "</a>";
+                  echo "<a" . $row['idrole'] . "'>" . $row2['rus'] . "</a>";
                 }
                 echo "</td>";
               }
