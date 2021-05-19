@@ -88,7 +88,7 @@ $role = $row4['rus'];
               <div class="icon-rounded bg-primary-light mb-3">
               <img src = "../assets/access.png" >
               </div>
-              <h3 class="h5">Удобный доступ</h3>
+              <h3 class="h5">Бесплатный доступ</h3>
               <p class="text-muted">Занимайтесь из дома, на работе или в путешествии — с компьютера или смартфона.</p>
             </div>
           </div>
