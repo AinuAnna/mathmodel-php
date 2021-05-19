@@ -36,11 +36,11 @@ include("bd.php");
                   <form class="form-validate" method="post">
                     <div class="form-group">
                       <label class="form-label" for="email">Эл. почта:</label>
-                      <input class="form-control" name="email" id="email" type="email" placeholder="name@address.com" autocomplete="on"  required="" data-msg="Please enter your email">
+                      <input class="form-control" name="email" id="email" type="email" placeholder="name@address.com" autocomplete="on" required="" data-msg="Please enter your email">
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="fullname">Логин</label>
-                      <input class="form-control" name="fullname" id="fullname" type="text" placeholder="anna" autocomplete="on"  required="" data-msg="Please enter your login">
+                      <input class="form-control" name="fullname" id="fullname" type="text" placeholder="anna" autocomplete="on" required="" data-msg="Please enter your login">
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="password">Пароль</label>
@@ -51,6 +51,22 @@ include("bd.php");
                   </form>
                   <?php
                   if (isset($_POST['regButton'])) {
+                    $email = $_POST["email"];
+                    $pattern = "/^[А-ЯA-Z][а-яa-zА-ЯA-Z\-]{0,}\s[А-ЯA-Z][а-яa-zА-ЯA-Z\-]{1,}(\s[А-ЯA-Z][а-яa-zА-ЯA-Z\-]{1,})?$/";
+                    if (!preg_match($pattern, $email)) {
+                      $ErrMsg = "Неверный формат почты.";
+                      echo  '<div class="error-msg">'.$ErrMsg.'</div>';
+                    }
+                    $name = $_POST["fullname"];
+                    if (!preg_match("/^[a-zA-z]*$/", $name)) {
+                      $ErrMsg = "Разрешены только буквы и пробелы!";
+                      echo  '<div class="error-msg">'.$ErrMsg.'</div>';
+                    }
+                    $password = $_POST["password"];
+                    if (!preg_match("/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/", $password)) {
+                      $ErrMsg = "Введите пароль, соответствующий правилам: минимум - 6 знаков, одна заглавная буква, одна строчная буква";
+                      echo  '<div class="error-msg">'.$ErrMsg.'</div>';
+                    }
                     if (isset($_POST['fullname'])) {
                       $fullname = $_POST['fullname'];
                       if ($fullname == '') {
@@ -81,16 +97,18 @@ include("bd.php");
                     $fullname = trim($fullname);
                     $password = trim($password);
                     $email = trim($email);
-                    $result = mysqli_query($GLOBALS["db"], "SELECT idusers FROM users WHERE fullname='$fullname'");
+                    $result = mysqli_query($GLOBALS["db"], "SELECT idusers FROM users WHERE fullname='$fullname' AND WHERE email='$email' AND WHERE password='$password' ");
                     $myrow = mysqli_fetch_array($result);
-                    if (!empty($myrow['idusers'])) {
-                      exit("Извините, введённый вами логин уже зарегистрирован. Введите другой логин.");
+                    if (!empty($myrow['fullname']) || !empty($myrow['email']) || !empty($myrow['password'])) {
+                      $ErrMsg = "Извините, введённые вами данные уже зарегистрированы. Введите другие.";
+                      echo  '<div class="error-msg">'.$ErrMsg.'</div>';
                     }
                     $result2 = mysqli_query($GLOBALS["db"], "INSERT INTO users (fullname, email, password) VALUES('$fullname','$email', '$password')");
                     if ($result2 == 'TRUE') {
-                        header('location:    login.php');
+                      header('location:  /src/login.php');
                     } else {
-                      echo "Ошибка! Вы не зарегистрированы.";
+                      $ErrMsg = "Ошибка! Вы не зарегистрированы!";
+                      echo  '<div class="error-msg">'.$ErrMsg.'</div>';
                     }
                   }
                   ?>

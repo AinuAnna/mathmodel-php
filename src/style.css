@@ -61,6 +61,11 @@ a.btn-primary:hover {
     padding: 70px 40px;
 }
 
+div.error-msg{
+    color:#dc3545;
+    font-weight: 600;
+}
+
 .large-list>li {
     font-size: 1.5em;
     line-height: 130%;
