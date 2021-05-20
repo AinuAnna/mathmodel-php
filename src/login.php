@@ -45,6 +45,13 @@ include("bd.php");
                     </div>
                     <button class="btn btn-lg btn-block btn-primary" name="loginButton" id="loginButton" type="submit">Войти</button>
                     <hr class="my-3 hr-text letter-spacing-2" data-content="OR">
+                    <a href="reg.php" style="color:rgb(74, 134, 132);">Зарегистрироваться</a>
+                </div>
+              </div>
+              <div class="position-absolute d-md-block image-container" style="top: 0; right: 0;">
+                <img alt="lecture image" src="../assets/teacher-animate (1).svg" style="width: 40rem !important;"">
+                </div>
+            </div>
                   </form>
                   <?php
                   if (isset($_POST['loginButton'])) {
@@ -61,7 +68,7 @@ include("bd.php");
                       }
                     }
                     if (empty($password) or empty($email)) {
-                      exit("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
+                      exit("<div class='error-msg'>Вы ввели не всю информацию, вернитесь назад и заполните все поля!</div>");
                     }
                     $email = stripslashes($email);
                     $email = htmlspecialchars($email);
@@ -73,7 +80,7 @@ include("bd.php");
                     $result = mysqli_query($GLOBALS["db"], "SELECT * FROM users WHERE email='$email'");
                     $myrow = mysqli_fetch_array($result);
                     if (empty($myrow['password'])) {
-                      exit("Извините, введённый вами логин или пароль неверный.");
+                      exit("<div class='error-msg'>Извините, введённый вами логин или пароль неверный.</div>");
                     } else {
                       if ($myrow['password'] == $password) {
                         $_SESSION['email'] = $myrow['email'];
@@ -82,25 +89,19 @@ include("bd.php");
                         if (isset($_SESSION['email'])) {
                           if ($_SESSION['roleid'] == 2) {
                             echo "<script>document.location.replace(' /src/info.php')</script>";
-                         } else if ($_SESSION['roleid'] == 3) {
-                             echo "<script>document.location.replace(' /src/teacher.php')</script>";
-                         } else {
+                          } else if ($_SESSION['roleid'] == 3) {
+                            echo "<script>document.location.replace(' /src/teacher.php')</script>";
+                          } else {
                             echo "<script>document.location.replace(' /src/adminProfile.php')</script>";
-                         }
+                          }
                         }
                       } else {
-                        exit("Извините, введённый вами логин или пароль неверный.");
+                        exit("<div class='error-msg'>Извините, введённый вами логин или пароль неверный.</div>");
                       }
                     }
                   }
                   ?>
-                  <a href="reg.php" style="color:rgb(74, 134, 132);">Зарегистрироваться</a>
-                </div>
-              </div>
-              <div class="position-absolute d-md-block image-container" style="top: 0; right: 0;">
-                <img alt="lecture image" src="../assets/teacher-animate (1).svg" style="width: 40rem !important;"">
-                </div>
-            </div>
+                  
           </div>
         </div>
       </div>

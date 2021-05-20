@@ -48,46 +48,21 @@ include("bd.php");
                     </div>
                     <button class="btn btn-lg btn-block btn-primary" name="regButton" id="regButton" type="submit">Зарегистрироваться</button>
                     <hr class="my-3 hr-text letter-spacing-2" data-content="OR">
+                    <a href="login.php" style="color:rgb(74, 134, 132);">Войти</a>
+                </div>
+              </div>
+              <div class="position-absolute d-md-block image-container" style="top: 0; right: 0;">
+                <img alt="lecture image" src="../assets/teacher-animate.svg" style="width: 40rem !important;"">
+              </div>
                   </form>
                   <?php
+
+                  $pattern = "/^([a-z0-9_\.-]+)@([a-z0-9_\.-]+)\.([a-z\.]{2,6})$/";
                   if (isset($_POST['regButton'])) {
-                    $email = $_POST["email"];
-                    $pattern = "/^[А-ЯA-Z][а-яa-zА-ЯA-Z\-]{0,}\s[А-ЯA-Z][а-яa-zА-ЯA-Z\-]{1,}(\s[А-ЯA-Z][а-яa-zА-ЯA-Z\-]{1,})?$/";
-                    if (!preg_match($pattern, $email)) {
-                      $ErrMsg = "Неверный формат почты.";
-                      echo  '<div class="error-msg">'.$ErrMsg.'</div>';
-                    }
-                    $name = $_POST["fullname"];
-                    if (!preg_match("/^[a-zA-z]*$/", $name)) {
-                      $ErrMsg = "Разрешены только буквы и пробелы!";
-                      echo  '<div class="error-msg">'.$ErrMsg.'</div>';
-                    }
-                    $password = $_POST["password"];
-                    if (!preg_match("/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/", $password)) {
-                      $ErrMsg = "Введите пароль, соответствующий правилам: минимум - 6 знаков, одна заглавная буква, одна строчная буква";
-                      echo  '<div class="error-msg">'.$ErrMsg.'</div>';
-                    }
-                    if (isset($_POST['fullname'])) {
-                      $fullname = $_POST['fullname'];
-                      if ($fullname == '') {
-                        unset($fullname);
-                      }
-                    }
-                    if (isset($_POST['password'])) {
-                      $password = $_POST['password'];
-                      if ($password == '') {
-                        unset($password);
-                      }
-                    }
-                    if (isset($_POST['email'])) {
-                      $email = $_POST['email'];
-                      if ($email == '') {
-                        unset($email);
-                      }
-                    }
-                    if (empty($fullname) or empty($password) or empty($email)) {
-                      exit("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
-                    }
+                    $fullname = $_POST['fullname'];
+                    $password = $_POST['password'];
+                    $email = $_POST['email'];
+
                     $fullname = stripslashes($fullname);
                     $fullname = htmlspecialchars($fullname);
                     $email = stripslashes($email);
@@ -97,27 +72,29 @@ include("bd.php");
                     $fullname = trim($fullname);
                     $password = trim($password);
                     $email = trim($email);
-                    $result = mysqli_query($GLOBALS["db"], "SELECT idusers FROM users WHERE fullname='$fullname' AND WHERE email='$email' AND WHERE password='$password' ");
+
+                    $result = mysqli_query($GLOBALS["db"], "SELECT idusers FROM users WHERE fullname='$fullname'");
                     $myrow = mysqli_fetch_array($result);
-                    if (!empty($myrow['fullname']) || !empty($myrow['email']) || !empty($myrow['password'])) {
-                      $ErrMsg = "Извините, введённые вами данные уже зарегистрированы. Введите другие.";
-                      echo  '<div class="error-msg">'.$ErrMsg.'</div>';
+                    if (!empty($myrow['idusers'])) {
+                      exit("<div class='error-msg'>Извините, введённый вами логин уже существует. Введите другой логин.</div>");
                     }
-                    $result2 = mysqli_query($GLOBALS["db"], "INSERT INTO users (fullname, email, password) VALUES('$fullname','$email', '$password')");
-                    if ($result2 == 'TRUE') {
-                      header('location:  /src/login.php');
-                    } else {
-                      $ErrMsg = "Ошибка! Вы не зарегистрированы!";
-                      echo  '<div class="error-msg">'.$ErrMsg.'</div>';
+                    $result3 = mysqli_query($GLOBALS["db"], "SELECT idusers FROM users WHERE email='$email'");
+                    $myrow3 = mysqli_fetch_array($result3);
+                    if (!empty($myrow3['idusers'])) {
+                      exit("<div class='error-msg'>Извините, введённая вами почта уже существует. Введите другую почту.</div>");
+                    }
+                      if (!preg_match("/^[a-z0-9_-]{6,18}$/", $password)) {
+                        exit("<div class='error-msg'>Неверный пароль. Буквы, цифры, дефисы и подчёркивания, от 6 до 18 символов.</div>");
+                      } elseif (!preg_match("/^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$/", $fullname)) {
+                        exit("<div class='error-msg'>Неверный логин. Буквы, цифры, дефисы и подчёркивания, от 3 до 16 символов.</div>");
+                      } elseif (!preg_match($pattern, $email)) {
+                        exit("<div class='error-msg'>Неверная почта. Общий вид — логин@поддомен.домен.</div>");
+                      } else {
+                        $result2 = mysqli_query($GLOBALS["db"], "INSERT INTO users (fullname, email, password) VALUES('$fullname','$email', '$password')");
+                        header('location: /src/login.php');
                     }
                   }
                   ?>
-                  <a href="login.php" style="color:rgb(74, 134, 132);">Войти</a>
-                </div>
-              </div>
-              <div class="position-absolute d-md-block image-container" style="top: 0; right: 0;">
-                <img alt="lecture image" src="../assets/teacher-animate.svg" style="width: 40rem !important;"">
-              </div>
             </div>
           </div>
         </div>
