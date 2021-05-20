@@ -91,7 +91,7 @@ include("bd.php");
                         exit("<div class='error-msg'>Неверная почта. Общий вид — логин@поддомен.домен.</div>");
                       } else {
                         $result2 = mysqli_query($GLOBALS["db"], "INSERT INTO users (fullname, email, password) VALUES('$fullname','$email', '$password')");
-                        header('location: /src/login.php');
+                        echo "<script>document.location.replace(' /src/login.php')</script>";
                     }
                   }
                   ?>
