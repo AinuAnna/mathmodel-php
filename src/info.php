@@ -30,7 +30,7 @@ include("bd.php");
                                 $query3 = "SELECT * FROM `groups` WHERE idgroups = " . $row['groupsid'] . "";
                                 $result3 = mysqli_query($GLOBALS['db'], $query3);
                                     while ($row3 = mysqli_fetch_array($result3)) {
-                                        $query4 = "SELECT * FROM `departments` WHERE iddepartments = " . $row3['idgroups'] . "";
+                                        $query4 = "SELECT * FROM `departments` WHERE iddepartments = " . $row3['iddepartments'] . "";
                                         $result4 = mysqli_query($GLOBALS['db'], $query4);
                                             while ($row4 = mysqli_fetch_array($result4)) {
                                                 $department =  "<a" . $row4['iddepartments'] . ">" . $row4['departmentname'] . "</a>";
