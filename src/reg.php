@@ -97,7 +97,7 @@ include("bd.php");
                       exit("<div class='error-msg'>Неверная почта. Общий вид — логин@поддомен.домен.</div>");
                     } else {
                       if (isset($groupnumber)) {
-                        $result3 = mysqli_query($GLOBALS["db"], "SELECT idgroups FROM groups WHERE groupnumber='$groupnumber'");
+                        $result3 = mysqli_query($GLOBALS["db"], "SELECT idgroups FROM `groups` WHERE groupnumber='$groupnumber'");
                         $myrow3 = mysqli_fetch_array($result3);
                         if (!empty($myrow3['idgroups'])) {
                           $idgroups = $myrow3['idgroups'];
