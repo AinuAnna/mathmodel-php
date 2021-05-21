@@ -43,14 +43,11 @@ include("bd.php");
                                 $query5 = "SELECT * FROM `groups` WHERE idgroups = " . $row['groupsid'] . "";
                                 $result5 = mysqli_query($GLOBALS['db'], $query5);
                                     while ($row5 = mysqli_fetch_array($result5)) {
-                                        $query6 = "SELECT * FROM `group-numbers` WHERE idnumbers = " . $row5['idnumbers'] . "";
-                                        $result6 = mysqli_query($GLOBALS['db'], $query6);
-                                            while ($row6 = mysqli_fetch_array($result6)) {
-                                                $number =  "<a" . $row6['idnumbers'] . ">" . $row6['groupnumber'] . "</a>";
-                                            }
+                                        $groupnumber =  "<a" . $row5['idgroups'] . ">" . $row5['groupnumber'] . "</a>";
+                                            
                                     }
                             } else {
-                                $number =   "<a style = 'color:#bd2130;'>!!! Ваш номер группы еще не записан!!!!</a>";
+                                $groupnumber =   "<a style = 'color:#bd2130;'>!!! Ваш номер группы еще не записан!!!!</a>";
                             }
                             if ($row["groupsid"]) {
                                 $query7 = "SELECT * FROM `groups` WHERE idgroups = " . $row['groupsid'] . "";
@@ -103,11 +100,11 @@ include("bd.php");
           </div>
           <div class="col-md-4">
             <h2>Ваш курс</h2>
-            <p><?php echo $number; ?> </p>
+            <p><?php echo $course; ?> </p>
           </div>
           <div class="col-md-4">
             <h2>Ваш номер группы</h2>
-            <p><?php echo $course; ?></p>
+            <p><?php echo $groupnumber; ?></p>
           </div>
         </div>
         <hr>

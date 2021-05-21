@@ -45,20 +45,7 @@ include("bd.php");
                                 </div>
                                 <div class="col-md-5 mb-3">
                                     <label for="groupnumber">Номер группы</label>
-                                    <select class="custom-select d-block w-100" id="groupnumber" name="groupnumber" required="">
-                                        <option value="">Выберите...</option>
-                                        <?php $query = "SELECT * FROM `group-numbers`";
-                                        $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-
-                                        if ($result) {
-                                            $rows = mysqli_num_rows($result);
-                                            while ($row = mysqli_fetch_array($result)) {
-                                                echo "<p><option value = " . $row['idnumbers'] . ">" . $row['groupnumber'] . "</p>";
-                                            }
-                                            mysqli_free_result($result);
-                                        }
-                                        ?>
-                                    </select>
+                                    <input type="text" class="form-control" name="groupnumber" id="groupnumber" placeholder="" required="">
                                 </div>
                                 <div class="col-md-5 mb-3">
                                     <label for="course">Номер курса</label>
@@ -128,7 +115,7 @@ include("bd.php");
                                 echo "Вы не ввели данные. Попробуйте еще раз";
                                 exit();
                             }
-                            $query = "INSERT INTO `groups` (iddepartments, idcourses, idnumbers, namegroup) VALUES('" . $_POST['department'] . "','" .  $_POST['course'] . "','" .  $_POST['groupnumber'] . "','" . $_POST['description'] . "');";
+                            $query = "INSERT INTO `groups` (iddepartments, idcourses, groupnumber, namegroup) VALUES('" . $_POST['department'] . "','" .  $_POST['course'] . "','" .  $_POST['groupnumber'] . "','" . $_POST['description'] . "');";
                             mysqli_query($GLOBALS['db'], $query);
                             $groupid = mysqli_insert_id($GLOBALS['db']);
 

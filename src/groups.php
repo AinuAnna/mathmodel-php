@@ -46,11 +46,7 @@ include("bd.php");
                             while ($row3 = mysqli_fetch_array($result3)) {
                                 echo "<td>" . $row3['coursenumber'] . "</td>";
                             }
-                            $query4 = "SELECT * FROM `group-numbers` WHERE idnumbers = " . $row['idnumbers'] . "";
-                            $result4 = mysqli_query($GLOBALS['db'], $query4);
-                            while ($row4 = mysqli_fetch_array($result4)) {
-                                echo "<td>" . $row4['groupnumber'] . "</td>";
-                            }
+                            echo "<td>" . $row['groupnumber'] . "</td>";
                             echo "<td>" . $row['namegroup'] . "</td>";
                             echo "<td><button class='btn btn-primary' name='openButton' id='openButton' type='submit'><a href = 'groupOfStudents.php?idgroups=" . $row['idgroups'] . "'>Открыть</a></button></td>";
                             echo "</tr>";
