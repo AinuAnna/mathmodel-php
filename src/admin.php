@@ -100,7 +100,6 @@ include("bd.php");
     const container = $(e.target).closest(".inpcont");
     const data = $(e.target).closest('td').text();
     const data2 = $(e.target).closest('td').attr('data-item');
-    console.log(data2);
     container.append(`<form method = "post" class = "form" style = "display: inherit;"><input class = "form-control" style = "width: 30%; margin: auto 1rem; display: inherit" type = "text" value = "${data}" name = "editRole[${count}]"/><input type = "text" style = "display:none" name = "idUserForRole[${count}]" value = "${data2}"/><button class='btn btn-primary' style = 'margin: 0;' id = 'saveRole' name='saveRole[${count}]' type='submit'>✔️</button></form>`);
     count++;
     e.preventDefault();

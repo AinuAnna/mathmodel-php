@@ -10,7 +10,7 @@
       $row = mysqli_fetch_array($result);
       if ($row['avatar'] == '') {
         echo '<span class = "account-user-avatar"><img src = "../assets/user-avatar.svg" width= 32px; height= 32px;></span>
-                <span>
+                <span class = "nav-user">
                 <span class="account-user-name">' . $row['fullname'] . '</span>
                 <span class="account-position">' . $row['email'] . '</span>
                 </span>';
@@ -28,7 +28,7 @@
           <li class="nav-item"><a class="nav-link" href="testsStudent.php">Тесты</a></li>
           <li class="nav-item"><a class="nav-link" href="result.php">Результаты тестов</a></li>
           <li class="nav-item"><a class="nav-link" href="plot.php">Построение графиков</a></li>
-
+          <li class="nav-item"><a class="nav-link" href="comments.php">Отзывы</a></li>
           <li class="nav-item"><a class="btn btn-primary" href="logout.php">Выйти</a></li>
         </ul>
       </div>

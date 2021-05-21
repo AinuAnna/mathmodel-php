@@ -37,7 +37,7 @@ include("bd.php");
                                             }
                                     }
                             } else {
-                                $department =   "<a style = 'color: #dc3545;'>!!! Ваше отделение пока не записано!!!!</a>";
+                                $department =   "<a style = 'color:#bd2130;'>!!! Ваше отделение пока не записано!!!!</a>";
                             }
                             if ($row["groupsid"]) {
                                 $query5 = "SELECT * FROM `groups` WHERE idgroups = " . $row['groupsid'] . "";
@@ -50,7 +50,7 @@ include("bd.php");
                                             }
                                     }
                             } else {
-                                $number =   "<a style = 'color: #dc3545;'>!!! Ваш номер группы еще не записан!!!!</a>";
+                                $number =   "<a style = 'color:#bd2130;'>!!! Ваш номер группы еще не записан!!!!</a>";
                             }
                             if ($row["groupsid"]) {
                                 $query7 = "SELECT * FROM `groups` WHERE idgroups = " . $row['groupsid'] . "";
@@ -63,7 +63,7 @@ include("bd.php");
                                             }
                                     }
                             } else {
-                                $course =   "<a style = 'color: #dc3545;'>!!! Ваш номер курса еще не записан!!!!</a>";
+                                $course =   "<a style = 'color:#bd2130;'>!!! Ваш номер курса еще не записан!!!!</a>";
                             }
                             if ($row["groupsid"]) {
                                 $query2 = "SELECT * FROM `groups` WHERE idgroups = " . $row['groupsid'] . "";
@@ -72,7 +72,7 @@ include("bd.php");
                                     $group =  "<a" . $row['idgroups'] . ">" . $row2['namegroup'] . "</a>";
                                 }
                             } else {
-                                $group =   "<a style = 'color: #dc3545;'>!!! У вас пока нет группы !!!!</a>";
+                                $group =   "<a style = 'color:#bd2130;'>!!! У вас пока нет группы !!!!</a>";
                             }
                             echo '
                             <div class="row featurette">

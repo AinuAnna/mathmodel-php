@@ -42,14 +42,18 @@ include("bd.php");
               <div class = 'table-responsive-md'>
               <table class = 'table' style = 'width: 40%;'>
               <thead><th>Название теста</th><th>Оценка</th></thead>";
-                            while ($row = mysqli_fetch_array($result)) {
-                                echo "<tr>";
-                                $query2 = "SELECT * FROM tests WHERE idtests = " . $row['idtests'] . "";
-                                $result2 = mysqli_query($GLOBALS['db'], $query2);
-                                while ($row2 = mysqli_fetch_array($result2)) {
-                                    echo "<td>" . $row2['testtitle'] . "</td>";
+                            if ($result->num_rows) {
+                                while ($row = mysqli_fetch_array($result)) {
+                                    echo "<tr>";
+                                    $query2 = "SELECT * FROM tests WHERE idtests = " . $row['idtests'] . "";
+                                    $result2 = mysqli_query($GLOBALS['db'], $query2);
+                                    while ($row2 = mysqli_fetch_array($result2)) {
+                                        echo "<td>" . $row2['testtitle'] . "</td>";
+                                    }
+                                    echo "<td>" . $row['mark'] . "</td></tr>";
                                 }
-                                echo "<td>" . $row['mark'] . "</td></tr>";
+                            } else {
+                                echo "<tr><td colspan = '3' class = 'text-center text-muted'>Результатов нет</td></tr>";
                             }
                             echo "</table>
               <div class='position-absolute d-md-block image-container' style = 'top: 40px; right: 0;'>
@@ -63,44 +67,29 @@ include("bd.php");
                         ?>
                 </div>
                 </form>
-                <div class="row text-center">
-                    <div class="col-md-4 ">
-                        <h2>Луший результат</h2>
-                        <p class="student-records"><?php $query = "SELECT MAX(mark) AS maxMark FROM `test-results` WHERE idusers = " . $_GET['idusers'] . " ";
-                                                    $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-                                                    $row = mysqli_fetch_array($result);
-                                                    echo $row['maxMark'];
-                                                    ?></p>
-
+                <div class="container">
+                    <div><?php echo "
+              <div style = 'height: 30rem;'>
+              <div class=' position-relative'>
+              <h2 class='display-5 text-shadow font-weight-bold' style='margin-bottom: 50px; color:#00090b; margin-bottom: 3rem;'>
+              Статистика</h2>
+              <div class = 'table-responsive-md'>
+              <table class = 'table' style = 'width: 40%;'>
+              <thead><th>Название теста</th><th>Количество попыток</th><th>Лучший результат</th></thead>";
+                            $query1 = "SELECT idusers, `test-results`.idtests, testtitle, COUNT(*) AS total, MAX(mark) AS maxMark FROM `test-results`, `tests` WHERE idusers = " . $_GET['idusers'] . " AND `test-results`.idtests =`tests`.idtests GROUP BY `test-results`.idtests;";
+                            $result1 = mysqli_query($GLOBALS['db'], $query1) or die(mysqli_error($GLOBALS['db']));
+                            if ($result1->num_rows) {
+                                while ($row1 = mysqli_fetch_array($result1)) {
+                                    echo "<tr><td>" . $row1['testtitle'] . "</td>";
+                                    echo "<td>" . $row1['total'] . "</td>";
+                                    echo "<td>" . $row1['maxMark'] . "</td></tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan = '3' class = 'text-center text-muted'>Результатов нет</td></tr>";
+                            }
+                            ?>
                     </div>
                 </div>
-                <section class="slice bg-section-secondary">
-                    <div class="container">
-                        <div class="row text-center">
-                            <div class="col-md-4">
-                                <h2>Название теста</h2>
-                                <div><?php $query = "SELECT * FROM tests";
-                                        $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-                                        if ($result) {
-                                            while ($row = mysqli_fetch_array($result)) {
-                                                echo "<p class='score'>" . $row['testtitle'] . "</p>";
-                                            }
-                                        } ?></div>
-                            </div>
-                            <div class="col-md-4">
-                                <h2>Колличество попыток</h2>
-                                <div><?php $query = "SELECT idusers, COUNT(*) AS total FROM `test-results` WHERE idusers = '" . $_GET['idusers'] . "'  GROUP BY idtests";
-                                        $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-                                        while ($row = mysqli_fetch_array($result)) {
-                                            echo "<p class='score'>" . $row['total'] . "</p>";
-                                        }
-                                        ?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-                </section>
 </body>
 
 </html>
