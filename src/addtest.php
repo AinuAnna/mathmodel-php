@@ -21,11 +21,11 @@
             <div class="my-container-bigger">
                 <div class="my-container-big" id='big_0'>
                     <div class='element' id='element_0'>
-                        <input class="form-control" type='text' name="question[0]" placeholder='Введите текст вопроса:' id='txt_0'>&nbsp;<button class="btn btn-primary add">➕</button>
+                        <input class="form-control" type='text' name="question[0]" placeholder='Введите текст вопроса:' id='0'>&nbsp;<button class="btn btn-primary add">➕</button>
                     </div>
                     <div class='my-container' id='container_0'>
                         <div class='answer'>
-                            <input type='radio' name="ischecked[0]" class="radio"><input class='form-control' type='text' name="answer[0][0]" placeholder='Введите вариант ответа:' id='input_0'>&nbsp;<button class='btn btn-primary add-answer' id='answerb_0'>🔻</button>&nbsp;<button id='remove-answer_0' class='btn btn-primary remove-answer'>❌</button>
+                            <input type='checkbox' name="ischecked[0]" class="radio"><input class='form-control' type='text' name="answer[0][0]" placeholder='Введите вариант ответа:' id='input_0'>&nbsp;<button class='btn btn-primary add-answer' id='answerb_0'>🔻</button>&nbsp;<button id='remove-answer_0' class='btn btn-primary remove-answer'>❌</button>
                         </div>
                     </div>
                 </div>
@@ -47,25 +47,32 @@ if (isset($_POST['save'])) {
     mysqli_query($GLOBALS['db'], $saveTestSql);
     $testId = mysqli_insert_id($GLOBALS['db']);
 
+    $sql = "";
     for ($i = 0; $i < count($questions); $i++) {
-
         $question = mysqli_escape_string($GLOBALS['db'], $questions[$i]);
         $sql .= "INSERT INTO questions(idquestions, questiontext, idtests) VALUES (NULL, '{$question}', {$testId}); ";
         $sql .= "SET @questionId := last_insert_id();";
         for ($j = 0; $j < count($answers[$i]); $j++) {
-            $answer = mysqli_escape_string($GLOBALS['db'], $answers[$i][$j]);
-            $correct = mysqli_escape_string($GLOBALS['db'], $corrects[$j]);
-            if($correct == NULL){
-            $sql .= "INSERT INTO answers(idanswers, idquestions, answer, ischecked) VALUES (NULL, @questionId , '{$answer}', 0);";
-            }
-            else{
-            $sql .= "INSERT INTO answers(idanswers, idquestions, answer, ischecked) VALUES (NULL, @questionId , '{$answer}', 1);"; 
-            }
+                $answer = mysqli_escape_string($GLOBALS['db'], $answers[$i][$j]);
+                $correct = mysqli_escape_string($GLOBALS['db'], $corrects[$i][$j]);
+                if ($correct == NULL) {
+                    $sql .= "INSERT INTO answers(idanswers, idquestions, answer, ischecked) VALUES (NULL, @questionId , '{$answer}', 0);";
+                } else {
+                    $sql .= "INSERT INTO answers(idanswers, idquestions, answer, ischecked) VALUES (NULL, @questionId , '{$answer}', 1);";
+                }
         }
     }
+
     if (mysqli_multi_query($GLOBALS['db'], $sql)) {
-        echo "New records created successfully";
+        while(mysqli_next_result($GLOBALS['db'])){;}
+        
+    } 
+
+    $error = mysqli_error($GLOBALS['db']);
+    if($error){
+        echo "Error: " . $sql . "<br>" . $error;
     } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['db']);
+        echo "New records created successfully";
     }
+    
 } ?>
