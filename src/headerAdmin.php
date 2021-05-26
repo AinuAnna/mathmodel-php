@@ -29,6 +29,7 @@
           <li class="nav-item"><a class="nav-link" href="tests.php">Тесты</a></li>
           <li class="nav-item"><a class="nav-link" href="resultAll.php">Результаты тестов</a></li>
           <li class="nav-item"><a class="nav-link" href="comments.php">Отзывы</a></li>
+          <li class="nav-item"><a class="nav-link" href="requests.php">Заявки</a></li>
           <li class="nav-item"><a class="btn btn-primary" href="logout.php">Выйти</a></li>
         </ul>
       </div>

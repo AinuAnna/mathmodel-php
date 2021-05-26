@@ -91,21 +91,15 @@ include("bd.php");
                     }
                     if (!preg_match("/^[a-z0-9_-]{6,18}$/", $password)) {
                       exit("<div class='error-msg'>Неверный пароль. Буквы, цифры, дефисы и подчёркивания, от 6 до 18 символов.</div>");
-                    } elseif (!preg_match("/^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$/", $fullname)) {
-                      exit("<div class='error-msg'>Неверный логин. Буквы, цифры, дефисы и подчёркивания, от 3 до 16 символов.</div>");
+                    } elseif (!preg_match("/^(?![0-9]).*$/", $fullname)) {
+                      exit("<div class='error-msg'>Неверный логин. Можно использовать только буквы.</div>");
                     } elseif (!preg_match($pattern, $email)) {
                       exit("<div class='error-msg'>Неверная почта. Общий вид — логин@поддомен.домен.</div>");
                     } else {
                       if (isset($groupnumber)) {
-                        $result3 = mysqli_query($GLOBALS["db"], "SELECT idgroups FROM `groups` WHERE groupnumber='$groupnumber'");
-                        $myrow3 = mysqli_fetch_array($result3);
-                        if (!empty($myrow3['idgroups'])) {
-                          $idgroups = $myrow3['idgroups'];
-                          $result2 = mysqli_query($GLOBALS["db"], "INSERT INTO users (fullname, email, password, groupsid) VALUES('$fullname','$email', '$password', '$idgroups')");
-                          echo "<script>document.location.replace(' /src/login.php')</script>";
-                        } else {
-                          exit("<div class='error-msg'>Такой группы еще нет в базе данных, обратитесь к преподавателю или администратору курса</div>");
-                        }
+                        $idgroups = $myrow3['idgroups'];
+                        $result2 = mysqli_query($GLOBALS["db"], "INSERT INTO users (fullname, email, password, numbergroup) VALUES('$fullname','$email', '$password', '$groupnumber')");
+                        echo "<script>document.location.replace(' /src/login.php')</script>";
                       } else {
                         $result2 = mysqli_query($GLOBALS["db"], "INSERT INTO users (fullname, email, password) VALUES('$fullname','$email', '$password')");
                         echo "<script>document.location.replace(' /src/login.php')</script>";

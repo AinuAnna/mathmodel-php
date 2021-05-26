@@ -127,7 +127,6 @@ include('bd.php');
                 </div>
             </div>
         </div>
-        </div>
     </section>
 </body>
 

@@ -31,7 +31,7 @@ include("bd.php");
               <div class = 'container-fluid p-0'>
               <div class = 'table-responsive-md'>
               <table class = 'table'>";
-            echo "<tr><th>Идентификатор</th><th>Имя</th><th>Почта</th><th>Роль</th><th>Доступ</th><th>Группа</th><th>Аватар</th></tr>";
+            echo "<tr><th>Идентификатор</th><th>Имя</th><th>Почта</th><th>Роль</th><th>Доступ</th><th>Группа</th><th>Описание группы</th><th>Номер группы</th><th>Аватар</th></tr>";
             $count = 0;
             while ($row = mysqli_fetch_array($result)) {
               echo "<tr><td>" . $row['idusers'] . "</td>";
@@ -47,16 +47,21 @@ include("bd.php");
                 }
                 echo "</td>";
               }
-              if ($row["groupsid"]) {
+              if ($row["groupsid"] != '') {
                 $query2 = "SELECT * FROM `groups` WHERE idgroups = " . $row['groupsid'] . "";
                 $result2 = mysqli_query($GLOBALS['db'], $query2);
-                echo "<td>";
                 while ($row2 = mysqli_fetch_array($result2)) {
-                  echo "<a" . $row['idgroups'] . "'>" . $row2['namegroup'] . "</a>";
+                  echo "<td><a" . $row['idgroups'] . "'>" . $row2['groupnumber'] . "</a></td>";
+                  echo "<td><a" . $row['idgroups'] . "'>" . $row2['namegroup'] . "</a></td>";
                 }
-                echo "</td>";
               } else {
-                echo "<td><a>этот пользователь не состоит в группе</a></td>";
+                echo "<td>➖</td>";
+                echo "<td>➖</td>";
+              }
+              if ($row['numbergroup'] == NULL) {
+                echo "<td>➖</td>";
+              } else {
+                echo "<td>" . $row['numbergroup'] . "</td>";
               }
               if ($row['avatar'] == '') {
                 echo '<td><img src = "../assets/user-avatar.svg" width= 50px; height= 50px;></td></tr>';
@@ -110,11 +115,11 @@ if (isset($_POST["saveRole"])) {
   $editRole = $_POST['editRole'];
   $idUserForRole = $_POST['idUserForRole'];
 
-  for ($i = 0; $i < count($editRole); $i++ ) {
+  for ($i = 0; $i < count($editRole); $i++) {
     $roleid = intval($editRole[$i]);
-    for ($j = 0; $j < count($idUserForRole); $j++ ) {
+    for ($j = 0; $j < count($idUserForRole); $j++) {
       $user = intval($idUserForRole[$j]);
-    $sql .= "UPDATE `users` SET `roleid` = '{$roleid}' WHERE `idusers` = '{$user}'; ";
+      $sql .= "UPDATE `users` SET `roleid` = '{$roleid}' WHERE `idusers` = '{$user}'; ";
     }
   }
 

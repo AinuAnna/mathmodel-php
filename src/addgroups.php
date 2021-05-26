@@ -68,7 +68,27 @@ include("bd.php");
                                     <label for="description">Описание</label>
                                     <input type="text" class="form-control" name="description" id="description" placeholder="" required="">
                                 </div>
+                                <?php
+                                if ($_SESSION['roleid'] == 1) {
+                                    echo ' <div class="col-md-7 mb-3">
+                                <label for="teacher">Преподаватель</label>
+                                <select class="custom-select d-block w-100" id="teacher" name="teacher" required="">
+                                <option value="">Выберите...</option>';
+                                    $query = "SELECT * FROM `users` WHERE roleid = 3";
+                                    $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
+
+                                    if ($result) {
+                                        $rows = mysqli_num_rows($result);
+                                        while ($row = mysqli_fetch_array($result)) {
+                                            echo "<p><option value = " . $row['idusers'] . ">" . $row['fullname'] . ": " . $row['email'] . "</p>";
+                                        }
+                                        mysqli_free_result($result);
+                                    }
+
+                                    echo '</select></div>';
+                                } ?>
                             </div>
+
 
                             <div class="my-3 bg-white rounded box-shadow">
                                 <h4 class="border-bottom border-gray pb-2 mb-0">Список учащихся</h4>
@@ -90,7 +110,7 @@ include("bd.php");
                                         }
                                         $email = $row['email'];
                                         $fullname = $row['fullname'];
-
+                                        $numbergroup = $row['numbergroup'];
                                         echo '"';
                                         echo 'style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%">
                                         <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
@@ -98,7 +118,7 @@ include("bd.php");
                                         <strong class="text-gray-dark">' . $email . '</strong>
                                         <input type = "checkbox" style = "height: 1rem; width: 1rem;" id = "check" name = "user[' . $count . '][' . $id  . ']"/>
                                         </div>
-                                        <span class="d-block">' . $fullname . '</span>
+                                        <span class="d-block">' . $fullname . '</span><span class="d-block">' . $numbergroup . '</span>
                                         </div></div>';
                                         $count++;
                                     }
@@ -111,11 +131,16 @@ include("bd.php");
                         <?php
                         if (isset($_POST['saveGroup'])) {
                             $users = $_POST['user'];
+                            $idteacher = $_SESSION['idusers'];
                             if (!$_POST["description"]) {
                                 echo "Вы не ввели данные. Попробуйте еще раз";
                                 exit();
                             }
-                            $query = "INSERT INTO `groups` (iddepartments, idcourses, groupnumber, namegroup) VALUES('" . $_POST['department'] . "','" .  $_POST['course'] . "','" .  $_POST['groupnumber'] . "','" . $_POST['description'] . "');";
+                            if ($_SESSION['roleid'] == 3) {
+                                $query = "INSERT INTO `groups` (iddepartments, idcourses, groupnumber, namegroup, idteacher) VALUES('" . $_POST['department'] . "','" .  $_POST['course'] . "','" .  $_POST['groupnumber'] . "','" . $_POST['description'] . "', {$idteacher});";
+                            } else {
+                                $query = "INSERT INTO `groups` (iddepartments, idcourses, groupnumber, namegroup, idteacher) VALUES('" . $_POST['department'] . "','" .  $_POST['course'] . "','" .  $_POST['groupnumber'] . "','" . $_POST['description'] . "', '" . $_POST['teacher'] . "');";
+                            }
                             mysqli_query($GLOBALS['db'], $query);
                             $groupid = mysqli_insert_id($GLOBALS['db']);
 

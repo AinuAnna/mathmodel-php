@@ -258,3 +258,7 @@ input#upload {
     border: 1px solid #f1f3fa;
     border-width: 0 1px;
 }
+.pinfo{
+    color:#4a8684!important;
+    font-size: 18px;
+}
