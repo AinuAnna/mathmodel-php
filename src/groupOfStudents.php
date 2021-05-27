@@ -141,6 +141,11 @@ include("bd.php");
                             foreach ($users as $j => $key) {
                                 foreach ($key as $i => $value) {
                                     $sql .= "UPDATE `users` SET `groupsid` = '{$groupid}' WHERE `idusers` = '{$i}'; ";
+                                    $query10 = "SELECT * FROM `requests` WHERE user = '{$i}'";
+                                    $result10 = mysqli_query($GLOBALS['db'], $query10);
+                                    if ($result10 != NULL) {
+                                        $sql .= "DELETE FROM `requests` WHERE user =" . $i . "";
+                                    }
                                 }
                             }
 

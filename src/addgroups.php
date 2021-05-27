@@ -65,6 +65,23 @@ include("bd.php");
                                     </select>
                                 </div>
                                 <div class="col-md-7 mb-3">
+                                    <label for="specialty">Специальность</label>
+                                    <select class="custom-select d-block w-100" name="specialty" id="specialty" required="">
+                                        <option value="">Выберите...</option>
+                                        <?php $query = "SELECT * FROM `specialties`";
+                                        $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
+
+                                        if ($result) {
+                                            $rows = mysqli_num_rows($result);
+                                            while ($row = mysqli_fetch_array($result)) {
+                                                echo "<p><option value = " . $row['idspeciality'] . ">" . $row['namespec'] . "</p>";
+                                            }
+                                            mysqli_free_result($result);
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-7 mb-3">
                                     <label for="description">Описание</label>
                                     <input type="text" class="form-control" name="description" id="description" placeholder="" required="">
                                 </div>
@@ -137,9 +154,9 @@ include("bd.php");
                                 exit();
                             }
                             if ($_SESSION['roleid'] == 3) {
-                                $query = "INSERT INTO `groups` (iddepartments, idcourses, groupnumber, namegroup, idteacher) VALUES('" . $_POST['department'] . "','" .  $_POST['course'] . "','" .  $_POST['groupnumber'] . "','" . $_POST['description'] . "', {$idteacher});";
+                                $query = "INSERT INTO `groups` (iddepartments, idcourses, groupnumber, namegroup, idteacher, idspecialty) VALUES('" . $_POST['department'] . "','" .  $_POST['course'] . "','" .  $_POST['groupnumber'] . "','" . $_POST['description'] . "', {$idteacher}, '" . $_POST['specialty'] . "');";
                             } else {
-                                $query = "INSERT INTO `groups` (iddepartments, idcourses, groupnumber, namegroup, idteacher) VALUES('" . $_POST['department'] . "','" .  $_POST['course'] . "','" .  $_POST['groupnumber'] . "','" . $_POST['description'] . "', '" . $_POST['teacher'] . "');";
+                                $query = "INSERT INTO `groups` (iddepartments, idcourses, groupnumber, namegroup, idteacher, idspecialty) VALUES('" . $_POST['department'] . "','" .  $_POST['course'] . "','" .  $_POST['groupnumber'] . "','" . $_POST['description'] . "', '" . $_POST['teacher'] . "', '" . $_POST['specialty'] . "');";
                             }
                             mysqli_query($GLOBALS['db'], $query);
                             $groupid = mysqli_insert_id($GLOBALS['db']);
@@ -147,6 +164,11 @@ include("bd.php");
                             foreach ($users as $j => $key) {
                                 foreach ($key as $i => $value) {
                                     $sql .= "UPDATE `users` SET `groupsid` = '{$groupid}' WHERE `idusers` = '{$i}'; ";
+                                    $query10 = "SELECT * FROM `requests` WHERE user = '{$i}'";
+                                    $result10 = mysqli_query($GLOBALS['db'], $query10);
+                                    if ($result10 != NULL) {
+                                        $sql .= "DELETE FROM `requests` WHERE user =" . $i . "";
+                                    }
                                 }
                             }
 

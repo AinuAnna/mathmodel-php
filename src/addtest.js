@@ -59,4 +59,5 @@ $(document).ready(function () {
             $("input[type=checkbox]:not(:checked)").prop('value', '0');
         }
     });
+    
 });

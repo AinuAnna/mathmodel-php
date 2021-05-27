@@ -38,7 +38,7 @@ include("bd.php");
               </div>
             </form>
           </div>
-          <?php $query = "SELECT * FROM tests";
+          <?php $query = "SELECT * FROM topics";
           $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
           if ($result) {
@@ -51,18 +51,21 @@ include("bd.php");
             Тесты</h2>
             <div class = 'table-responsive-md'>
                     <ol>";
-            while ($row = mysqli_fetch_array($result)) {
-              $search = "";
-              if ($row["idtests"] != null) {
-                $id = $row['idtests'];
-                if (isset($_POST['searchtype'])) $search = " AND testtitle LIKE '%" . $_POST['searchtype'] . "%'";
-                $query2 = "SELECT * FROM tests WHERE idtests = " . $id . $search;
-                $result2 = mysqli_query($GLOBALS['db'], $query2);
-                while ($row2 = mysqli_fetch_array($result2)) {
-                  echo "<li><a href = '   testpage.php?idtests=" . $row['idtests'] . "'>" . $row['testtitle'] . "</a></li>";
-                }
-              }
-            }
+                    while ($row = mysqli_fetch_array($result)) {
+                      $search = "";
+                      $query2 = "SELECT * FROM tests WHERE idtopics = ".$row['idtopics']."";
+                      $result2 = mysqli_query($GLOBALS['db'], $query2) or die(mysqli_error($GLOBALS['db']));
+                      echo "<li>" . $row['nametopic'] . "</li>";
+                      while ($row2 = mysqli_fetch_array($result2)) {
+                        $id = $row2['idtests'];
+                        if (isset($_POST['searchtype'])) $search = " AND testtitle LIKE '%" . $_POST['searchtype'] . "%'";
+                        $query3 = "SELECT * FROM tests WHERE idtests = " . $id . $search;
+                        $result3 = mysqli_query($GLOBALS['db'], $query3);
+                        while ($row3 = mysqli_fetch_array($result3)) {
+                          echo "<ul><li><a href = '   testpage.php?idtests=" . $row2['idtests'] . "'>" . $row2['testtitle'] . "</a></li></ul>";
+                        }
+                    }
+                    }
             echo "</ul>
             <div class='position-absolute d-md-block image-container' style = 'top: 0; right: 0;'>
               <img alt='lecture image' src='../assets/mathematics-animate (1).svg' style = 'width: 40rem !important;'>

@@ -52,7 +52,7 @@ include ("bd.php");
 
                                     while ($row2 = mysqli_fetch_array($result2)) {
                                         echo "
-                                <div><label class = 'list-group-item' for = 'answer" . $for . "''><input id = 'answer" . $for . "' type = 'radio' value = " . $row2['ischecked'] . " name = 'answer" . $count . "'/><span id = 'answer' style = 'margin-left: 10px'>" . $row2['answer'] . "</span></label></div>";
+                                <div><label class = 'list-group-item' for = 'answer" . $for . "''><input id = 'answer" . $for . "' type = 'checkbox' value = " . $row2['ischecked'] . " name = 'answer" . $count . "'/><span id = 'answer' style = 'margin-left: 10px'>" . $row2['answer'] . "</span></label></div>";
                                    $for++;
                                  }
                                     echo "</div>";

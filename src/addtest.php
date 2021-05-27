@@ -25,7 +25,7 @@
                     </div>
                     <div class='my-container' id='container_0'>
                         <div class='answer'>
-                            <input type='checkbox' name="ischecked[0]" class="radio"><input class='form-control' type='text' name="answer[0][0]" placeholder='Введите вариант ответа:' id='input_0'>&nbsp;<button class='btn btn-primary add-answer' id='answerb_0'>🔻</button>&nbsp;<button id='remove-answer_0' class='btn btn-primary remove-answer'>❌</button>
+                            <input type='checkbox' name="ischecked[0][0]" class="radio"><input class='form-control' type='text' name="answer[0][0]" placeholder='Введите вариант ответа:' id='input_0'>&nbsp;<button class='btn btn-primary add-answer' id='answerb_0'>🔻</button>&nbsp;<button id='remove-answer_0' class='btn btn-primary remove-answer'>❌</button>
                         </div>
                     </div>
                 </div>

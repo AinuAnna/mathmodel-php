@@ -34,7 +34,7 @@ include("bd.php");
     <div class="content will-help-you">
       <div class="container">
         <div class="row" style="flex-direction: column; margin-bottom: 6rem;">
-          <?php $query = "SELECT * FROM tests";
+          <?php $query = "SELECT * FROM topics";
           $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
           if ($result) {
@@ -48,9 +48,14 @@ include("bd.php");
             <div class = 'table-responsive-md'>
                     <ol>";
             while ($row = mysqli_fetch_array($result)) {
-              echo "<li><a href = '   testpage.php?idtests=" . $row['idtests'] . "'>" . $row['testtitle'] . "</a></li>";
+              $query2 = "SELECT * FROM tests WHERE idtopics = ".$row['idtopics']."";
+              $result2 = mysqli_query($GLOBALS['db'], $query2) or die(mysqli_error($GLOBALS['db']));
+              echo "<li>" . $row['nametopic'] . "</li>";
+              while ($row2 = mysqli_fetch_array($result2)) {
+                echo "<ul><li><a href = 'testpage.php?idtests=" . $row2['idtests'] . "'>" . $row2['testtitle'] . "</a></li></ul>";
+              }
             }
-            echo "</ul>
+            echo "</ol>
             <div class='position-absolute d-md-block image-container' style = 'top: 0; right: 0;'>
               <img alt='lecture image' src='../assets/mathematics-animate (1).svg' style = 'width: 40rem !important;'>
             </div>

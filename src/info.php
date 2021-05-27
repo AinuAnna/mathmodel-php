@@ -70,7 +70,7 @@ include("bd.php");
                                     $query10 = "SELECT * FROM requests WHERE user = " . $_SESSION['idusers'] . "";
                                     $result10 = mysqli_query($GLOBALS['db'], $query10) or die(mysqli_error($GLOBALS['db']));
                                     $row10 = mysqli_fetch_array($result10);
-                                    if ($result10) {
+                                    if ($result10 == NULL) {
                                         echo '<p><span style = "color:#4a8684!important" class="text-muted" >Вы уже подали заявку на вступление в группу. Подождите немного!</span></p>';
                                     } else {
                                         echo '

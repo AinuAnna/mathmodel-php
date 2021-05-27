@@ -94,7 +94,7 @@ include('bd.php');
                                     <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Введите сюда свой отзыв..." rows="5" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 54px;"></textarea>
                                 </div>
                                 <div class="text-right">
-                                    <button class="btn btn-primary" id="saveComments" type="submit" name="saveComments">Отправить</button>
+                                    <button class="btn btn-primary"  id="saveComments" type="submit" name="saveComments">Отправить</button>
                                 </div>
                             </form>
                             <?php
@@ -102,7 +102,7 @@ include('bd.php');
                                 if (!$_POST["comment"]) {
                                     echo "Вы не ввели отзыв. Вернитесь назад и попробуйте еще раз";
                                     exit();
-                                }
+                                } 
                                 $query = "INSERT INTO comments (idcomments, textcomment, idusers, datatime)
                                 VALUES (NULL, '" . $_POST['comment'] . "', '" . $_SESSION['idusers'] . "', now());";
                                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
@@ -129,5 +129,3 @@ include('bd.php');
         </div>
     </section>
 </body>
-
-</html>
