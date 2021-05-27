@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("bd.php");
+include("confirm.php");
 ?>
 <script>
   if (window.history.replaceState) {
@@ -69,7 +70,7 @@ include("bd.php");
         <div class="row" style="flex-direction: column; align-items: center;">
           <h4 style="margin-top: 40px; margin-top: 20px;">Удаление теста:</h4>
           <div class="w-100 position-relative">
-            <form class="form-validate" method="post">
+            <form class="form-validate" method="post" onsubmit="return confirmDesactiv()">
               <div class="form-group">
                 <label class="form-label" for="testtitle">Выберите тест, который хотите удалить:</label>
                 <select class="custom-select" name="deletetype">
@@ -101,7 +102,7 @@ include("bd.php");
           ?>
           <h4 style="margin-top: 40px; margin-top: 20px;">Удаление вопроса:</h4>
           <div class="w-100 position-relative">
-            <form class="form-validate" method="post">
+            <form class="form-validate" method="post" onsubmit="return confirmDesactiv()">
               <div class="form-group">
                 <label class="form-label" for="questiontext">Выберите вопрос, который хотите удалить:</label>
                 <select class="custom-select" name="deleteterm">
@@ -131,7 +132,7 @@ include("bd.php");
             } else echo "<div class=\"alert alert-warning alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Все поля должны быть заполнены!</div>";
           }
           ?>
-          <h4 style="margin-top: 40px; margin-top: 20px;">Редактирование вопроса:</h4>
+          <h4 style="margin-top: 40px; margin-top: 20px;" onsubmit="return confirmEdit()">Редактирование вопроса:</h4>
           <div class="w-100 position-relative">
             <form class="form-validate" method="post">
               <div class="form-group">

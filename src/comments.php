@@ -1,28 +1,36 @@
 <?php
 session_start();
-include('bd.php');
+include("bd.php");
+include("confirm.php");
 ?>
 <script>
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
 </script>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <?php include('head.php') ?>
-    <title>Личный кабинет | Информация</title>
+  <?php include('head.php') ?>
+  <?php if ($_SESSION['roleid'] == 1) {
+    echo ' <title>Панель администратора | Отзывы</title>';
+  } else if ($_SESSION['roleid'] == 3){
+    echo ' <title>Кабинет преподавателя | Отзывы</title>';
+  }else {
+    echo ' <title>Личный кабинет | Отзывы</title>';
+  }  ?>
 </head>
 
 <body>
-    <?php if ($_SESSION['roleid'] == 1) {
-        include('headerAdmin.php');
-    } else if ($_SESSION['roleid'] == 2) {
-        include('headerStudent.php');
-    } else {
-        include('headerTeacher.php');
-    } ?>
+<?php if ($_SESSION['roleid'] == 1) {
+    include('headerAdmin.php');
+  } else if($_SESSION['roleid'] == 3){
+    include('headerTeacher.php');
+  }
+  else{
+    include('headerStudent.php');  
+  } ?>
     <section class="slice bg-section-secondary">
         <div class="content will-help-you">
             <div class="container">
@@ -45,7 +53,7 @@ include('bd.php');
                         $dt->setTimezone(new DateTimeZone('Europe/Minsk'));
                         echo '<div class="col-sm-7">
                         <hr>
-                        <form method="post">
+                        <form method="post" onsubmit="return confirmDesactiv()">
                         <div class="review-block"><div class="row">
                         <div class="col-sm-3">';
                         if ($_SESSION['roleid'] == 2) {
@@ -94,7 +102,7 @@ include('bd.php');
                                     <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Введите сюда свой отзыв..." rows="5" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 54px;"></textarea>
                                 </div>
                                 <div class="text-right">
-                                    <button class="btn btn-primary"  id="saveComments" type="submit" name="saveComments">Отправить</button>
+                                    <button class="btn btn-primary" id="saveComments" type="submit" name="saveComments">Отправить</button>
                                 </div>
                             </form>
                             <?php
@@ -102,7 +110,7 @@ include('bd.php');
                                 if (!$_POST["comment"]) {
                                     echo "Вы не ввели отзыв. Вернитесь назад и попробуйте еще раз";
                                     exit();
-                                } 
+                                }
                                 $query = "INSERT INTO comments (idcomments, textcomment, idusers, datatime)
                                 VALUES (NULL, '" . $_POST['comment'] . "', '" . $_SESSION['idusers'] . "', now());";
                                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
@@ -110,7 +118,7 @@ include('bd.php');
                             }
                             ?>
                         </div>
-                        <?php if ($_SESSION['roleid'] != 2) {
+                        <?php if ($_SESSION['roleid'] == 1 ) {
                             if (isset($_POST["deleteComment"])) {
                                 $comments = $_POST['comments'];
                                 foreach ($comments as $j => $key) {
@@ -129,3 +137,4 @@ include('bd.php');
         </div>
     </section>
 </body>
+</html>

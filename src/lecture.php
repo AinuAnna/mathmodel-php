@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("bd.php");
+include("confirm.php");
 mysqli_query($GLOBALS['db'], "ALTER TABLE topics AUTO_INCREMENT = 0");
 mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
 ?>
@@ -74,7 +75,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
       <div class="row" style="flex-direction: column; align-items: center;">
         <h4 style="margin-top: 40px; margin-top: 20px;">Удаление раздела:</h4>
         <div class="w-100 position-relative">
-          <form class="form-validate" method="post">
+          <form class="form-validate" method="post" onsubmit="return confirmDesactiv()">
             <div class="form-group">
               <label class="form-label" for="theme">Выберите раздел, который хотите удалить:</label>
               <select class="custom-select" name="deletetype">
@@ -105,7 +106,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Удаление темы:</h4>
         <div class="w-100 position-relative">
-          <form class="form-validate" method="post">
+          <form class="form-validate" method="post" onsubmit="return confirmDesactiv()">
             <div class="form-group">
               <label class="form-label" for="idtopics">Выберите тему, которую хотите удалить:</label>
               <select class="custom-select" name="deleteterm">
@@ -137,7 +138,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Редактирование раздела:</h4>
         <div class="w-100 position-relative">
-          <form class="form-validate" method="post">
+          <form class="form-validate" method="post" onsubmit="return confirmEdit()">
             <div class="form-group">
               <label class="form-label" for="theme">Выберите раздел, который хотите изменить:</label>
               <select class="custom-select" name="editterm">
@@ -170,7 +171,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Редактирование темы:</h4>
         <div class="w-100 position-relative">
-          <form class="form-validate" method="post">
+          <form class="form-validate" method="post" onsubmit="return confirmEdit()">
             <div class="form-group">
               <label class="form-label" for="nametopic">Выберите тему, которую хотите изменить:</label>
               <select class="custom-select" name="edittype">
@@ -203,7 +204,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Добавление лекции:</h4>
         <div class="w-100 position-relative">
-          <form class="form-validate" method="post">
+          <form class="form-validate" method="post" onsubmit="return confirmActiv()">
             <div class="form-group">
               <select class="custom-select" name="addtype">
                 <?php $query = "SELECT * FROM lectures";
@@ -250,7 +251,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Добавление раздела:</h4>
         <div class="w-100 position-relative">
-          <form class="form-validate" method="post">
+          <form class="form-validate" method="post" onsubmit="return confirmActiv()">
             <div class="form-group">
               <label class="form-label" for="theme">Название раздела:</label><input class="form-control" name="theme" id="theme" type="text" placeholder="Матричные игры" autocomplete="off" required="" data-msg="Пожалуйста введите новый раздел">
             </div>

@@ -1,6 +1,6 @@
 <h4 style="margin-top: 40px; margin-top: 20px;">Добавление теста:</h4>
 <div class="w-100 position-relative">
-    <form class="form-validate" method="post">
+    <form class="form-validate" method="post" onsubmit="return confirmActiv()">
         <div class="form-group" id="addTest">
             <label class="form-label" for="questiontext">Выберите название лекции, которой пренадлежит тест:</label>
             <select class="custom-select" name="addtype"> -->
@@ -37,6 +37,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <?php
 include('bd.php');
+include("confirm.php");
 if (isset($_POST['save'])) {
 
     $questions = $_POST['question'];

@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("bd.php");
+include("confirm.php");
 ?>
 <script>
   if (window.history.replaceState) {
@@ -79,7 +80,7 @@ include("bd.php");
         </div>
         </form>
         <label class="form-label" for="idusers">Идентификатор пользователя:</label>
-        <form class="form-validate d-flex" method="post" style="width: 30% !important">
+        <form class="form-validate d-flex" onsubmit="return confirmDesactiv()" method="post" style="width: 30% !important">
           <input class="delete-id form-control" name="idusers" id="idusers" type="text" placeholder="1" autocomplete="off" required="" data-msg="Пожалуйста введите идентификатор">&nbsp;
           <button class="btn btn-primary" name="deleteButton" id="deleteButton" type="submit">❌</button>
         </form>

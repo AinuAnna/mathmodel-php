@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("bd.php");
+include("confirm.php");
 ?>
 <script>
     if (window.history.replaceState) {
@@ -24,7 +25,7 @@ include("bd.php");
                     <h2 class="display-5 text-shadow font-weight-bold" style="margin-bottom: 50px; color:#00090b;">
                         Добавление групп учащихся</h2>
                     <div class="col-md-8 order-md-1">
-                        <form class="needs-validation" method="post" novalidate="">
+                        <form class="needs-validation" method="post" novalidate="" onsubmit="return confirmActiv()">
                             <div class="row">
                                 <div class="col-md-7 mb-3">
                                     <label for="department">Отделение</label>

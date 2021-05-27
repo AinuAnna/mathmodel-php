@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("bd.php");
+include("confirm.php");
 ?>
 <script>
     if (window.history.replaceState) {
@@ -12,15 +13,20 @@ include("bd.php");
 
 <head>
     <?php include('head.php') ?>
-    <title>Кабинет преподавателя | Группы</title>
+    <?php if ($_SESSION['roleid'] == 1) {
+         echo '<title>Панель администратора | Заявки</title>';
+    } else {
+       echo '<title>Кабинет преподавателя | Заявки</title>';
+    } ?>
+  
 </head>
 
 <body>
-    <?php if ($_SESSION['roleid'] == 1) {
-        include('headerAdmin.php');
-    } else {
-        include('headerTeacher.php');
-    } ?>
+<?php if ($_SESSION['roleid'] == 1) {
+    include('headerAdmin.php');
+  } else {
+    include('headerTeacher.php');
+  } ?>
     <section class="slice bg-section-secondary">
         <div class="content will-help-you">
             <div class="container" style="padding: 90px 0px;">
@@ -40,7 +46,7 @@ include("bd.php");
                         $email = $row['email'];
                         $avatar = $row['avatar'];
                         $idrequest = $row2['idrequest'];
-                        echo ' <form method="post" action ="" style = "width:70%">
+                        echo ' <form method="post" action ="" style = "width:70%" onsubmit="return confirmDesactiv()">
                         <div class="row align-items-center py-3 border-top border-bottom"> 
                         <span style = "display:none" id = req>' . $idrequest . '</span>
                         <input id = "reqNew" style = "display:none" type="text" />
@@ -72,9 +78,6 @@ include("bd.php");
             </form>
            ';
                         $count++;
-                    }
-                    if($_SESSION['roleid'] = 1){
-                        
                     } ?>
                 </div>
             </div>

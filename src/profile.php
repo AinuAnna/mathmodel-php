@@ -1,13 +1,14 @@
 <?php
 session_start();
 include("bd.php");
+include("confirm.php");
 ?>
 <script>
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
 </script>
-<form class="form-validate" method="post">
+<form class="form-validate" method="post" onsubmit="return confirmEdit()">
     <div class="profile">
         <div class="center-cont">
             <div class="card-body" id="user-avatar" name="upload" area-label="user avatar" style="background: url('<?php include("avatar.php"); ?>') center center/cover">
@@ -23,7 +24,7 @@ include("bd.php");
         <button class="btn btn-primary" name="saveButton2" id="saveButton2" type="submit">Обновить</button>
     </div>
 </form>
-<form class="form-validate" method="post">
+<form class="form-validate" method="post" onsubmit="return confirmEdit()">
     <div class="w-100 position-relative">
         <div class="form-group">
             <label class="form-label" for="fullname">Имя пользователя: </label>

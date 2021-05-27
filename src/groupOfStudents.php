@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("bd.php");
+include("confirm.php");
 ?>
 <script>
     if (window.history.replaceState) {
@@ -62,8 +63,9 @@ include("bd.php");
                         } ?>
                         <button class='btn btn-primary' name='addStudent' id='addStudent' type='submit'>Добавить студента в группу</button>
                         <button class='btn btn-primary' name='deleteStudent' id='deleteStudent' style = "float:right;" type='submit'>Удалить студента из группы</button>
+                        </form>
                         <?php if (isset($_POST['addStudent'])) {
-                            echo '<div class="my-3 bg-white rounded box-shadow">
+                            echo '<form class="form-validate" method="post" style = "width:66%"  onsubmit="return confirmActiv()"><div class="my-3 bg-white rounded box-shadow">
                        <h4 class="border-bottom border-gray pb-2 mb-0">Список учащихся</h4>';
                             $query = "SELECT * FROM `users` WHERE `groupsid` IS NULL AND roleid = 2";
                             $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
@@ -95,10 +97,10 @@ include("bd.php");
                                     $count++;
                                 }
                             }
-                            echo '</div><button class="btn btn-primary" id="saveStudent" type="submit" name="saveStudent">Добавить</button>';
+                            echo '</div><button class="btn btn-primary" id="saveStudent" type="submit" name="saveStudent">Добавить</button></form>';
                         } ?>
                         <?php if (isset($_POST['deleteStudent'])) {
-                            echo '<div class="my-3 bg-white rounded box-shadow">
+                            echo '<form class="form-validate" style = "width:66%" method="post" onsubmit="return confirmDesactiv()"><div class="my-3 bg-white rounded box-shadow">
                        <h4 class="border-bottom border-gray pb-2 mb-0">Список учащихся</h4>';
                             $query = "SELECT * FROM `users` WHERE `groupsid` = {$_GET['idgroups']}";
                             $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
@@ -130,9 +132,9 @@ include("bd.php");
                                     $count++;
                                 }
                             }
-                            echo '</div><button class="btn btn-primary" id="delStudent" type="submit" name="delStudent">Удалить</button>';
+                            echo '</div><button class="btn btn-primary" id="delStudent" type="submit" name="delStudent">Удалить</button></form>';
                         } ?>
-                    </form>
+               
                     <?php
                         if (isset($_POST['saveStudent'])) {
                             $users = $_POST['user'];

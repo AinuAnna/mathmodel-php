@@ -30,7 +30,7 @@ include ("bd.php");
                             ?>
                         </div>
                     </div>
-                    <form method="post">
+                    <form method="post" onsubmit="return confirmConfirm()">
                         <?php $query = "SELECT * FROM questions WHERE idtests ='" . $_GET['idtests'] . "' ;";
                        
                         $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
