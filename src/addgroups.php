@@ -24,7 +24,6 @@ include("confirm.php");
                 <div class="row" style="flex-direction: column; align-items: center;">
                     <h2 class="display-5 text-shadow font-weight-bold" style="margin-bottom: 50px; color:#00090b;">
                         Добавление групп учащихся</h2>
-                    <div class="col-md-8 order-md-1">
                         <form class="needs-validation" method="post" novalidate="" onsubmit="return confirmActiv()">
                             <div class="row">
                                 <div class="col-md-7 mb-3">
@@ -75,7 +74,7 @@ include("confirm.php");
                                         if ($result) {
                                             $rows = mysqli_num_rows($result);
                                             while ($row = mysqli_fetch_array($result)) {
-                                                echo "<p><option value = " . $row['idspeciality'] . ">" . $row['namespec'] . "</p>";
+                                                echo "<p><option value = " . $row['idspecialty'] . ">" . $row['namespec'] . "</p>";
                                             }
                                             mysqli_free_result($result);
                                         }
@@ -88,7 +87,7 @@ include("confirm.php");
                                 </div>
                                 <?php
                                 if ($_SESSION['roleid'] == 1) {
-                                    echo ' <div class="col-md-7 mb-3">
+                                    echo ' <div class="col-md-5 mb-3">
                                 <label for="teacher">Преподаватель</label>
                                 <select class="custom-select d-block w-100" id="teacher" name="teacher" required="">
                                 <option value="">Выберите...</option>';
@@ -173,13 +172,9 @@ include("confirm.php");
                                 }
                             }
 
-                            if (mysqli_multi_query($GLOBALS['db'], $sql)) {
-                                echo "New records created successfully";
-                            } else {
-                                echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['db']);
-                            }
+                            $result = mysqli_multi_query($GLOBALS['db'], $sql);
+                                include('notification.php');
                         } ?>
-                    </div>
                 </div>
             </div>
         </div>

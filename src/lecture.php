@@ -47,7 +47,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
             <div class=' position-relative'>
             <h2 class='display-5 text-shadow font-weight-bold' style='margin-bottom: 50px; color:#00090b; margin-bottom: 3rem;'>
             Лекции</h2>
-            <div class = 'table-responsive-md'>
+            <div class = 'table-responsive-md' style = 'max-width: 30rem;'>
                     <ol>";
           while ($row = mysqli_fetch_array($result)) {
             echo "<li>" . $row['theme'] . "</li>";

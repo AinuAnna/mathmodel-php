@@ -62,31 +62,31 @@ include("confirm.php");
                             header('location: groupOfStudents.php');
                         } ?>
                         <button class='btn btn-primary' name='addStudent' id='addStudent' type='submit'>Добавить студента в группу</button>
-                        <button class='btn btn-primary' name='deleteStudent' id='deleteStudent' style = "float:right;" type='submit'>Удалить студента из группы</button>
-                        </form>
-                        <?php if (isset($_POST['addStudent'])) {
-                            echo '<form class="form-validate" method="post" style = "width:66%"  onsubmit="return confirmActiv()"><div class="my-3 bg-white rounded box-shadow">
+                        <button class='btn btn-primary' name='deleteStudent' id='deleteStudent' style="float:right;" type='submit'>Удалить студента из группы</button>
+                    </form>
+                    <?php if (isset($_POST['addStudent'])) {
+                        echo '<form class="form-validate" method="post" style = "width:66%"  onsubmit="return confirmActiv()"><div class="my-3 bg-white rounded box-shadow">
                        <h4 class="border-bottom border-gray pb-2 mb-0">Список учащихся</h4>';
-                            $query = "SELECT * FROM `users` WHERE `groupsid` IS NULL AND roleid = 2";
-                            $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-                            if ($result) {
-                                $rows = mysqli_num_rows($result);
-                                $count = 0;
-                                while ($row = mysqli_fetch_array($result)) {
-                                    $id = $row['idusers'];
-                                    echo ' <div class="media text-muted pt-3" >
+                        $query = "SELECT * FROM `users` WHERE `groupsid` IS NULL AND roleid = 2";
+                        $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
+                        if ($result) {
+                            $rows = mysqli_num_rows($result);
+                            $count = 0;
+                            while ($row = mysqli_fetch_array($result)) {
+                                $id = $row['idusers'];
+                                echo ' <div class="media text-muted pt-3" >
                               
                                <img alt="50x50" class="mr-3" src="';
-                                    if ($row['avatar'] == '') {
-                                        echo '../assets/user-avatar.svg';
-                                    } else {
-                                        echo $row['avatar'];
-                                    }
-                                    $email = $row['email'];
-                                    $fullname = $row['fullname'];
-                                    $numbergroup = $row['numbergroup'];
-                                    echo '"';
-                                    echo 'style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%">
+                                if ($row['avatar'] == '') {
+                                    echo '../assets/user-avatar.svg';
+                                } else {
+                                    echo $row['avatar'];
+                                }
+                                $email = $row['email'];
+                                $fullname = $row['fullname'];
+                                $numbergroup = $row['numbergroup'];
+                                echo '"';
+                                echo 'style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%">
                                <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
                                <div class="d-flex justify-content-between align-items-center w-100">
                                <strong class="text-gray-dark">' . $email . '</strong>
@@ -94,34 +94,34 @@ include("confirm.php");
                                </div>
                                <span class="d-block">' . $fullname . '</span><span class="d-block">' . $numbergroup . '</span>
                                </div></div>';
-                                    $count++;
-                                }
+                                $count++;
                             }
-                            echo '</div><button class="btn btn-primary" id="saveStudent" type="submit" name="saveStudent">Добавить</button></form>';
-                        } ?>
-                        <?php if (isset($_POST['deleteStudent'])) {
-                            echo '<form class="form-validate" style = "width:66%" method="post" onsubmit="return confirmDesactiv()"><div class="my-3 bg-white rounded box-shadow">
+                        }
+                        echo '</div><button class="btn btn-primary" id="saveStudent" type="submit" name="saveStudent">Добавить</button></form>';
+                    } ?>
+                    <?php if (isset($_POST['deleteStudent'])) {
+                        echo '<form class="form-validate" style = "width:66%" method="post" onsubmit="return confirmDesactiv()"><div class="my-3 bg-white rounded box-shadow">
                        <h4 class="border-bottom border-gray pb-2 mb-0">Список учащихся</h4>';
-                            $query = "SELECT * FROM `users` WHERE `groupsid` = {$_GET['idgroups']}";
-                            $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-                            if ($result) {
-                                $rows = mysqli_num_rows($result);
-                                $count = 0;
-                                while ($row = mysqli_fetch_array($result)) {
-                                    $id = $row['idusers'];
-                                    echo ' <div class="media text-muted pt-3" >
+                        $query = "SELECT * FROM `users` WHERE `groupsid` = {$_GET['idgroups']}";
+                        $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
+                        if ($result) {
+                            $rows = mysqli_num_rows($result);
+                            $count = 0;
+                            while ($row = mysqli_fetch_array($result)) {
+                                $id = $row['idusers'];
+                                echo ' <div class="media text-muted pt-3" >
                               
                                <img alt="50x50" class="mr-3" src="';
-                                    if ($row['avatar'] == '') {
-                                        echo '../assets/user-avatar.svg';
-                                    } else {
-                                        echo $row['avatar'];
-                                    }
-                                    $email = $row['email'];
-                                    $fullname = $row['fullname'];
-                                    $numbergroup = $row['numbergroup'];
-                                    echo '"';
-                                    echo 'style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%">
+                                if ($row['avatar'] == '') {
+                                    echo '../assets/user-avatar.svg';
+                                } else {
+                                    echo $row['avatar'];
+                                }
+                                $email = $row['email'];
+                                $fullname = $row['fullname'];
+                                $numbergroup = $row['numbergroup'];
+                                echo '"';
+                                echo 'style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%">
                                <div class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
                                <div class="d-flex justify-content-between align-items-center w-100">
                                <strong class="text-gray-dark">' . $email . '</strong>
@@ -129,51 +129,45 @@ include("confirm.php");
                                </div>
                                <span class="d-block">' . $fullname . '</span><span class="d-block">' . $numbergroup . '</span>
                                </div></div>';
-                                    $count++;
-                                }
+                                $count++;
                             }
-                            echo '</div><button class="btn btn-primary" id="delStudent" type="submit" name="delStudent">Удалить</button></form>';
-                        } ?>
-               
+                        }
+                        echo '</div><button class="btn btn-primary" id="delStudent" type="submit" name="delStudent">Удалить</button></form>';
+                    } ?>
+
                     <?php
-                        if (isset($_POST['saveStudent'])) {
-                            $users = $_POST['user'];
-                            $groupid = $_GET['idgroups'];
+                    if (isset($_POST['saveStudent'])) {
+                        $users = $_POST['user'];
+                        $groupid = $_GET['idgroups'];
 
-                            foreach ($users as $j => $key) {
-                                foreach ($key as $i => $value) {
-                                    $sql .= "UPDATE `users` SET `groupsid` = '{$groupid}' WHERE `idusers` = '{$i}'; ";
-                                    $query10 = "SELECT * FROM `requests` WHERE user = '{$i}'";
-                                    $result10 = mysqli_query($GLOBALS['db'], $query10);
-                                    if ($result10 != NULL) {
-                                        $sql .= "DELETE FROM `requests` WHERE user =" . $i . "";
-                                    }
+                        foreach ($users as $j => $key) {
+                            foreach ($key as $i => $value) {
+                                $sql .= "UPDATE `users` SET `groupsid` = '{$groupid}' WHERE `idusers` = '{$i}'; ";
+                                $query10 = "SELECT * FROM `requests` WHERE user = '{$i}'";
+                                $result10 = mysqli_query($GLOBALS['db'], $query10);
+                                if ($result10 != NULL) {
+                                    $sql .= "DELETE FROM `requests` WHERE user =" . $i . "";
                                 }
                             }
+                        }
 
-                            if (mysqli_multi_query($GLOBALS['db'], $sql)) {
-                                echo "New records created successfully";
-                            } else {
-                                echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['db']);
-                            }
-                        } ?>
-                         <?php
-                        if (isset($_POST['delStudent'])) {
-                            $users = $_POST['user'];
-                            $groupid = $_GET['idgroups'];
+                        $result = mysqli_multi_query($GLOBALS['db'], $sql);
+                        include('notification.php');
+                    } ?>
+                    <?php
+                    if (isset($_POST['delStudent'])) {
+                        $users = $_POST['user'];
+                        $groupid = $_GET['idgroups'];
 
-                            foreach ($users as $j => $key) {
-                                foreach ($key as $i => $value) {
-                                    $sql .= "UPDATE `users` SET `groupsid` = NULL WHERE `idusers` = '{$i}'; ";
-                                }
+                        foreach ($users as $j => $key) {
+                            foreach ($key as $i => $value) {
+                                $sql .= "UPDATE `users` SET `groupsid` = NULL WHERE `idusers` = '{$i}'; ";
                             }
+                        }
 
-                            if (mysqli_multi_query($GLOBALS['db'], $sql)) {
-                                echo "New records created successfully";
-                            } else {
-                                echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['db']);
-                            }
-                        } ?>
+                        $result = mysqli_multi_query($GLOBALS['db'], $sql);
+                        include('notification.php');
+                    } ?>
                 </div>
             </div>
         </div>

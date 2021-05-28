@@ -46,15 +46,20 @@ include("confirm.php");
             <div class=' position-relative'>
             <h2 class='display-5 text-shadow font-weight-bold' style='margin-bottom: 50px; color:#00090b; margin-bottom: 3rem;'>
             Тесты</h2>
-            <div class = 'table-responsive-md'>
+            <div class = 'table-responsive-md' style = 'max-width: 30rem;'>
                     <ol>";
             while ($row = mysqli_fetch_array($result)) {
+              $query3 = "SELECT * FROM tests WHERE idtopics = ".$row['idtopics']."";
+              $result3 = mysqli_query($GLOBALS['db'], $query3) or die(mysqli_error($GLOBALS['db']));
+              $row3 = mysqli_fetch_array($result3);
+              if($row['idtopics'] && $row3['idtests']){
+              echo "<li>" . $row['nametopic'] . "</li>";
               $query2 = "SELECT * FROM tests WHERE idtopics = ".$row['idtopics']."";
               $result2 = mysqli_query($GLOBALS['db'], $query2) or die(mysqli_error($GLOBALS['db']));
-              echo "<li>" . $row['nametopic'] . "</li>";
               while ($row2 = mysqli_fetch_array($result2)) {
-                echo "<ul><li><a href = 'testpage.php?idtests=" . $row2['idtests'] . "'>" . $row2['testtitle'] . "</a></li></ul>";
+                echo "<ul><li><a href = 'edittests.php?idtests=" . $row2['idtests'] . "'>" . $row2['testtitle'] . "</a></li></ul>";
               }
+            }
             }
             echo "</ol>
             <div class='position-absolute d-md-block image-container' style = 'top: 0; right: 0;'>
@@ -132,9 +137,9 @@ include("confirm.php");
             } else echo "<div class=\"alert alert-warning alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Все поля должны быть заполнены!</div>";
           }
           ?>
-          <h4 style="margin-top: 40px; margin-top: 20px;" onsubmit="return confirmEdit()">Редактирование вопроса:</h4>
+          <h4 style="margin-top: 40px; margin-top: 20px;">Редактирование вопроса:</h4>
           <div class="w-100 position-relative">
-            <form class="form-validate" method="post">
+            <form class="form-validate" method="post"  onsubmit="return confirmEdit()">
               <div class="form-group">
                 <label class="form-label" for="questiontext">Выберите вопрос, который хотите обновить:</label>
                 <select class="custom-select" name="edittype">
@@ -162,6 +167,40 @@ include("confirm.php");
               exit();
             }
             $query = "UPDATE questions SET questiontext = '" . $_POST["questiontext"] . "' WHERE idquestions = '" . $_POST["edittype"] . "'";
+            $result = mysqli_query($GLOBALS["db"], $query);
+            include("notification.php");
+          }
+          ?>
+           <h4 style="margin-top: 40px; margin-top: 20px;">Редактирование названия теста:</h4>
+          <div class="w-100 position-relative">
+            <form class="form-validate" method="post"  onsubmit="return confirmEdit()">
+              <div class="form-group">
+                <label class="form-label" for="testtitle">Выберите название теста, который хотите обновить:</label>
+                <select class="custom-select" name="edittype2">
+                  <?php $query = "SELECT * FROM `tests`";
+                  $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
+
+                  if ($result) {
+                    $rows = mysqli_num_rows($result);
+                    while ($row = mysqli_fetch_array($result)) {
+                      echo "<p><option value = " . $row['idtests'] . ">" . $row['testtitle'] . "</p>";
+                    }
+                    mysqli_free_result($result);
+                  }
+                  ?>
+                </select>
+                <label class="form-label" for="testtitle">Новое название:</label><input class="form-control" name="testtitle" id="testtitle" type="text" placeholder="Модель - это" autocomplete="off" required="" data-msg="Пожалуйста введите новое навзание">
+              </div>
+          </div>
+          <button class="btn btn-primary" name="editButton2" id="editButton2" type="submit">Обновить</button>
+          </form>
+          <?php
+          if (isset($_POST['editButton2'])) {
+            if (!$_POST["edittype2"]) {
+              echo "Вы не ввели критерии поиска. Вернитесь назад и попробуйте еще раз";
+              exit();
+            }
+            $query = "UPDATE `tests` SET testtitle = '" . $_POST["testtitle"] . "' WHERE idtests = '" . $_POST["edittype2"] . "'";
             $result = mysqli_query($GLOBALS["db"], $query);
             include("notification.php");
           }

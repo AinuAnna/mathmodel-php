@@ -49,23 +49,28 @@ include("bd.php");
             <div class=' position-relative'>
             <h2 class='display-5 text-shadow font-weight-bold' style='margin-bottom: 50px; color:#00090b; margin-bottom: 3rem;'>
             Тесты</h2>
-            <div class = 'table-responsive-md'>
+            <div class = 'table-responsive-md'style = 'max-width: 30rem;'>
                     <ol>";
-                    while ($row = mysqli_fetch_array($result)) {
-                      $search = "";
-                      $query2 = "SELECT * FROM tests WHERE idtopics = ".$row['idtopics']."";
-                      $result2 = mysqli_query($GLOBALS['db'], $query2) or die(mysqli_error($GLOBALS['db']));
-                      echo "<li>" . $row['nametopic'] . "</li>";
-                      while ($row2 = mysqli_fetch_array($result2)) {
-                        $id = $row2['idtests'];
-                        if (isset($_POST['searchtype'])) $search = " AND testtitle LIKE '%" . $_POST['searchtype'] . "%'";
-                        $query3 = "SELECT * FROM tests WHERE idtests = " . $id . $search;
-                        $result3 = mysqli_query($GLOBALS['db'], $query3);
-                        while ($row3 = mysqli_fetch_array($result3)) {
-                          echo "<ul><li><a href = '   testpage.php?idtests=" . $row2['idtests'] . "'>" . $row2['testtitle'] . "</a></li></ul>";
-                        }
-                    }
-                    }
+            while ($row = mysqli_fetch_array($result)) {
+              $search = "";
+              $query3 = "SELECT * FROM tests WHERE idtopics = ".$row['idtopics']."";
+              $result3 = mysqli_query($GLOBALS['db'], $query3) or die(mysqli_error($GLOBALS['db']));
+              $row3 = mysqli_fetch_array($result3);
+              if($row['idtopics'] && $row3['idtests']){
+              $query2 = "SELECT * FROM tests WHERE idtopics = " . $row['idtopics'] . "";
+              $result2 = mysqli_query($GLOBALS['db'], $query2) or die(mysqli_error($GLOBALS['db']));
+                while ($row2 = mysqli_fetch_array($result2)) {
+                  echo "<li>" . $row['nametopic'] . "</li>";
+                  $id = $row2['idtests'];
+                  if (isset($_POST['searchtype'])) $search = " AND testtitle LIKE '%" . $_POST['searchtype'] . "%'";
+                  $query3 = "SELECT * FROM tests WHERE idtests = " . $id . $search;
+                  $result3 = mysqli_query($GLOBALS['db'], $query3);
+                  while ($row3 = mysqli_fetch_array($result3)) {
+                    echo "<ul><li><a href = '   testpage.php?idtests=" . $row2['idtests'] . "'>" . $row2['testtitle'] . "</a></li></ul>";
+                  }
+                }
+              }
+            }
             echo "</ul>
             <div class='position-absolute d-md-block image-container' style = 'top: 0; right: 0;'>
               <img alt='lecture image' src='../assets/mathematics-animate (1).svg' style = 'width: 40rem !important;'>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include ("bd.php");
+include("bd.php");
 ?>
 <script>
     if (window.history.replaceState) {
@@ -11,7 +11,7 @@ include ("bd.php");
 <html lang="en">
 
 <head>
-<?php include('head.php') ?>
+    <?php include('head.php') ?>
     <title>Личный кабинет | Тесты</title>
 </head>
 
@@ -19,7 +19,7 @@ include ("bd.php");
     <section class="slice bg-section-secondary">
         <div class="content will-help-you">
             <div class="container">
-                <div class="row" style = "display:inline;">
+                <div class="row" style="display:inline;">
                     <div class="col-md-12 text-center">
                         <div class="display-4 text-shadow font-weight-bold" style="font-size: 26px; margin-bottom: 20px;color:#00090b;">
                             <?php
@@ -29,14 +29,23 @@ include ("bd.php");
                             echo $row['testtitle'];
                             ?>
                         </div>
+                        <b>
+                            <p>Максимальный балл за тест — <span id="group" class="text-muted"><?php
+                                                                                                $query = "SELECT `questions`.idquestions,  `answers`.idquestions, COUNT(*) AS total, SUM(COUNT(*)) OVER() AS total_count FROM `answers`,  `questions` WHERE idtests = '" . $_GET['idtests'] . "' AND ischecked = 1 AND `answers`.idquestions =`questions`.idquestions GROUP BY `answers`.idquestions;";
+                                                                                                $result = mysqli_query($GLOBALS['db'], $query);
+                                                                                                $row = mysqli_fetch_array($result);
+                                                                                                echo $row['total_count'];
+                                                                                                ?></span></p>
+                        </b>
                     </div>
+
                     <form method="post" onsubmit="return confirmConfirm()">
                         <?php $query = "SELECT * FROM questions WHERE idtests ='" . $_GET['idtests'] . "' ;";
-                       
+
                         $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                         if ($result) {
-                            $rows = mysqli_num_rows($result); 
+                            $rows = mysqli_num_rows($result);
 
                             echo "
                     <div class = 'container-fluid p-3'>
@@ -53,31 +62,33 @@ include ("bd.php");
                                     while ($row2 = mysqli_fetch_array($result2)) {
                                         echo "
                                 <div><label class = 'list-group-item' for = 'answer" . $for . "''><input id = 'answer" . $for . "' type = 'checkbox' value = " . $row2['ischecked'] . " name = 'answer" . $count . "'/><span id = 'answer' style = 'margin-left: 10px'>" . $row2['answer'] . "</span></label></div>";
-                                   $for++;
-                                 }
+                                        $for++;
+                                    }
                                     echo "</div>";
                                 }
                                 $count++;
                             }
                             echo "</ol>
                     </div>";
-                           
+
                             mysqli_free_result($result);
                         }
                         ?>
                         <div class="col-md-12 text-center">
-                            <button class="btn btn-primary" <?php if($_SESSION['roleid'] == 1 || $_SESSION['roleid'] == 3) {echo 'disabled';}?> name="sendButton" id="sendButton" type="submit">Отправить</button>
+                            <button class="btn btn-primary" <?php if ($_SESSION['roleid'] == 3) {
+                                                                echo 'disabled';
+                                                            } ?> name="sendButton" id="sendButton" type="submit">Отправить</button>
                         </div>
                     </form>
                     <?php
                     if (isset($_POST['sendButton'])) {
 
                         $query = "SELECT * FROM questions WHERE idtests ='" . $_GET['idtests'] . "' ;";
-                      
+
                         $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
 
                         if ($result) {
-                            $rows = mysqli_num_rows($result); 
+                            $rows = mysqli_num_rows($result);
                             $count = 0;
                             $correct = 0;
                             while ($row = mysqli_fetch_array($result)) {

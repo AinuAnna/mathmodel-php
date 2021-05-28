@@ -95,8 +95,7 @@ include("confirm.php");
                 </div>
                 <div class="container" style="margin: 0; padding-top: 20px !important;">
                     <div class="row" style="flex-direction: column; align-items: center;">
-                        <div class="col-md-7">
-                            <form accept-charset="UTF-8" action="" method="post">
+                            <form style = "width: 60%" accept-charset="UTF-8" action="" method="post">
                                 <div style="margin-bottom: 1rem;">
                                     <input id="ratings-hidden" name="rating" type="hidden">
                                     <textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Введите сюда свой отзыв..." rows="5" style="overflow: hidden; overflow-wrap: break-word; resize: horizontal; height: 54px;"></textarea>
@@ -117,18 +116,14 @@ include("confirm.php");
                                 include("notification.php");
                             }
                             ?>
-                        </div>
                         <?php if ($_SESSION['roleid'] == 1 ) {
                             if (isset($_POST["deleteComment"])) {
                                 $comments = $_POST['comments'];
                                 foreach ($comments as $j => $key) {
                                     $sql .= "DELETE FROM comments WHERE idcomments ='$j'; ";
                                 }
-                                if (mysqli_multi_query($GLOBALS['db'], $sql)) {
-                                    echo "New records created successfully";
-                                } else {
-                                    echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['db']);
-                                }
+                                $result = mysqli_multi_query($GLOBALS['db'], $sql);
+                                include('notification.php');
                             }
                         } ?>
                     </div>

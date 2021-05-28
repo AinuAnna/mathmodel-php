@@ -9,13 +9,13 @@
       $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
       $row = mysqli_fetch_array($result);
       if ($row['avatar'] == '') {
-        echo '<span class = "account-user-avatar"><img src = "../assets/user-avatar.svg" width= 32px; height= 32px;></span>
+        echo '<span class = "account-user-avatar"><a href = "adminProfile.php"><img src = "../assets/user-avatar.svg" width= 32px; height= 32px;></a></span>
         <span class = "nav-user">
                 <span class="account-user-name">' . $row['fullname'] . '</span>
                 <span class="account-position">' . $row['email'] . '</span>
                 </span>';
       } else {
-        echo "<span class = 'account-user-avatar'><img src = '" . $row['avatar'] . "' width= 32px; height= 32px; style = 'object-fit: cover; border-radius: 50%'></span>
+        echo "<span class = 'account-user-avatar'><a href = 'adminProfile.php'><img src = '" . $row['avatar'] . "' width= 32px; height= 32px; style = 'object-fit: cover; border-radius: 50%'></a></span>
         <span class = 'nav-user'><span class='account-user-name'>" . $row['fullname'] . "</span>
         <span class='account-position'>" . $row['email'] . "</span>
     </span>";

@@ -38,7 +38,7 @@ include("confirm.php");
               echo "<tr><td>" . $row['idusers'] . "</td>";
               echo "<td>" . $row['fullname'] . "</td>";
               echo "<td>" . $row['email'] . "</td>";
-              echo "<td data-item = '" . $row['idusers'] . "'>" . $row['roleid'] . "<span class = 'inpcont'><input class='btn btn-primary' style = 'margin-left: 2rem; margin-bottom: 0;' name='changeRole[$count]' id='changeRole' value = '✏️' type='button'></span></td>";
+              echo "<td data-item = '" . $row['idusers'] . "'>" . $row['roleid'] . "<span class = 'inpcont'><input class='btn btn-primary' style = ' margin-top: -1.5rem;margin-left: 1rem; margin-bottom: 0;' name='changeRole[$count]' id='changeRole' value = '✏️' type='button'></span></td>";
               if ($row["roleid"] != null) {
                 $query2 = "SELECT * FROM role WHERE idrole = " . $row['roleid'] . "";
                 $result2 = mysqli_query($GLOBALS['db'], $query2);
@@ -106,7 +106,7 @@ include("confirm.php");
     const container = $(e.target).closest(".inpcont");
     const data = $(e.target).closest('td').text();
     const data2 = $(e.target).closest('td').attr('data-item');
-    container.append(`<form method = "post" class = "form" style = "display: inherit;"><input class = "form-control" style = "width: 30%; margin: auto 1rem; display: inherit" type = "text" value = "${data}" name = "editRole[${count}]"/><input type = "text" style = "display:none" name = "idUserForRole[${count}]" value = "${data2}"/><button class='btn btn-primary' style = 'margin: 0;' id = 'saveRole' name='saveRole[${count}]' type='submit'>✔️</button></form>`);
+    container.append(`<form method = "post" onsubmit="return confirmEdit()" class = "form" style = "display: inherit;"><input class = "form-control" style = " width: 20%; margin: auto 0.25rem; display: inherit" type = "text" value = "${data}" name = "editRole[${count}]"/><input type = "text" style = "display:none" name = "idUserForRole[${count}]" value = "${data2}"/><button class='btn btn-primary' style = 'margin: 0;' id = 'saveRole' name='saveRole[${count}]' type='submit'>✔️</button></form>`);
     count++;
     e.preventDefault();
   });
@@ -124,10 +124,7 @@ if (isset($_POST["saveRole"])) {
     }
   }
 
-  if (mysqli_multi_query($GLOBALS['db'], $sql)) {
-    echo "New records created successfully";
-  } else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($GLOBALS['db']);
-  }
+  $result = mysqli_multi_query($GLOBALS['db'], $sql);
+  include('notification.php');
 }
 ?>

@@ -7,6 +7,11 @@ include("bd.php");
         window.setTimeout(document.querySelector('svg').classList.add('animated'), 1000);
     })
 </script>
+<script>
+  if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
+  }
+</script>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,7 +30,7 @@ include("bd.php");
                         пожаловать в личный кабинет!</h2>
                     <div class="position-relative">
                         <div class="table-responsive-md">
-                            <form accept-charset="UTF-8" action="" method="post">
+                            <form method="post">
                                 <?php $query = "SELECT * FROM users WHERE idusers = " . $_SESSION['idusers'] . "";
                                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
                                 $row = mysqli_fetch_array($result);
@@ -67,10 +72,10 @@ include("bd.php");
                                 <h2 class="featurette-heading" style = "margin-bottom: 25px;">Здравствуйте, <span id = "group" class="text-muted"> ' . $fullname . '.</span></h2>
                                 <p class="lead">Данная программа обучения поможет Вам в освоении учебной дисциплины "Математическое моделирование". Ваша группа на протяжении курса —  <span id = "group" class="text-muted"> ' . $group . '.</span></p>';
                                 if (!$row["groupsid"]) {
-                                    $query10 = "SELECT * FROM requests WHERE user = " . $_SESSION['idusers'] . "";
+                                    $query10 = "SELECT user FROM `requests` WHERE user = " . $_SESSION['idusers'] . "";
                                     $result10 = mysqli_query($GLOBALS['db'], $query10) or die(mysqli_error($GLOBALS['db']));
                                     $row10 = mysqli_fetch_array($result10);
-                                    if ($result10 == NULL) {
+                                    if ($row10['user'] != NULL) {
                                         echo '<p><span style = "color:#4a8684!important" class="text-muted" >Вы уже подали заявку на вступление в группу. Подождите немного!</span></p>';
                                     } else {
                                         echo '
