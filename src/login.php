@@ -41,7 +41,7 @@ include("bd.php");
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="password">Пароль</label>
-                      <input class="form-control" name="password" id="password" placeholder="Password" type="password" required="" data-msg="Please enter your password">
+                      <input class="form-control" name="password" id="password" placeholder="Password" type="password" required="" autocomplete="on" data-msg="Please enter your password">
                     </div>
                     <button class="btn btn-lg btn-block btn-primary" name="loginButton" id="loginButton" type="submit">Войти</button>
                     <hr class="my-3 hr-text letter-spacing-2" data-content="OR">

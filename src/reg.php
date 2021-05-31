@@ -44,7 +44,7 @@ include("bd.php");
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="password">Пароль</label>
-                      <input class="form-control" name="password" id="password" placeholder="Password" type="password" required="" data-msg="Please enter your password">
+                      <input class="form-control" name="password" id="password" placeholder="Password" type="password" autocomplete="on" required="" data-msg="Please enter your password">
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="groupnumber">Группа</label></br>
