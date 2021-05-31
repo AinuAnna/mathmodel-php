@@ -74,14 +74,14 @@ include("bd.php");
               <h2 class='display-5 text-shadow font-weight-bold' style='margin-bottom: 50px; color:#00090b; margin-bottom: 3rem;'>
               Статистика</h2>
               <div class = 'table-responsive-md'>
-              <table class = 'table' style = 'font-size: 18px; font-weight: 500;>
+              <table class = 'table' style = 'font-size: 18px; font-weight: 500;'>
               <thead style = 'color: #bece5f;'><th>Название теста</th><th>Количество попыток</th><th>Лучший результат</th><th>Максимально возможный результат</th></thead>";
                             $query1 = "SELECT idusers, `test-results`.idtests, testtitle, COUNT(*) AS total, MAX(mark) AS maxMark FROM `test-results`, `tests` WHERE idusers = " . $_GET['idusers'] . " AND `test-results`.idtests =`tests`.idtests GROUP BY `test-results`.idtests;";
                             $result1 = mysqli_query($GLOBALS['db'], $query1) or die(mysqli_error($GLOBALS['db']));
 
                             if ($result1->num_rows) {
                                 while ($row1 = mysqli_fetch_array($result1)) {
-                                    $query2 = "SELECT `questions`.idquestions,  `answers`.idquestions, COUNT(*) AS total, SUM(COUNT(*)) OVER() AS total_count FROM `answers`,  `questions` WHERE idtests = " . $row1['idtests'] . " AND ischecked = 1 AND `answers`.idquestions =`questions`.idquestions GROUP BY `answers`.idquestions;";
+                                    $query2 = "SELECT SUM(total) AS total_count FROM ( SELECT `questions`.idquestions,  `answers`.idquestions as answeridquestion, COUNT(*) AS total FROM `answers`,  `questions` WHERE idtests = {$row1['idtests']} AND ischecked = 1 AND `answers`.idquestions =`questions`.idquestions GROUP BY `answers`.idquestions) as t;";
                                     $result2 = mysqli_query($GLOBALS['db'], $query2);
                                     $row2 = mysqli_fetch_array($result2);
                                     echo "<tr><td>" . $row1['testtitle'] . "</td>";

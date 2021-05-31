@@ -32,7 +32,7 @@ include("confirm.php");
                         </div>
                         <b>
                             <p>Максимальный балл за тест — <span id="group" class="text-muted"><?php
-                                                                                                $query = "SELECT SUM(total) AS total_count FROM ( SELECT `questions`.idquestions,  `answers`.idquestions as answeridquestion, COUNT(*) AS total FROM `answers`,  `questions` WHERE idtests = 205 AND ischecked = 1 AND `answers`.idquestions =`questions`.idquestions GROUP BY `answers`.idquestions) as t;";
+                                                                                                $query = "SELECT SUM(total) AS total_count FROM ( SELECT `questions`.idquestions,  `answers`.idquestions as answeridquestion, COUNT(*) AS total FROM `answers`,  `questions` WHERE idtests = {$_GET['idtests']} AND ischecked = 1 AND `answers`.idquestions =`questions`.idquestions GROUP BY `answers`.idquestions) as t;";
                                                                                                 $result = mysqli_query($GLOBALS['db'], $query);
                                                                                                 $row = mysqli_fetch_array($result);
                                                                                                 echo $row['total_count'];

@@ -86,7 +86,7 @@ include("bd.php");
               $result1 = mysqli_query($GLOBALS['db'], $query1) or die(mysqli_error($GLOBALS['db']));
               if ($result1->num_rows) {
                 while ($row1 = mysqli_fetch_array($result1)) {
-                  $query2 = "SELECT `questions`.idquestions,  `answers`.idquestions, COUNT(*) AS total, SUM(COUNT(*)) OVER() AS total_count FROM `answers`,  `questions` WHERE idtests = " . $row1['idtests'] . " AND ischecked = 1 AND `answers`.idquestions =`questions`.idquestions GROUP BY `answers`.idquestions;";
+                  $query2 = "SELECT SUM(total) AS total_count FROM ( SELECT `questions`.idquestions,  `answers`.idquestions as answeridquestion, COUNT(*) AS total FROM `answers`,  `questions` WHERE idtests = {$row1['idtests']} AND ischecked = 1 AND `answers`.idquestions =`questions`.idquestions GROUP BY `answers`.idquestions) as t;";
                   $result2 = mysqli_query($GLOBALS['db'], $query2);
                   $row2 = mysqli_fetch_array($result2);
                   echo "<tr><td>" . $row1['testtitle'] . "</td>";
