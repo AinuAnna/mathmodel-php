@@ -267,8 +267,10 @@ input[type="file"] {
     display: none;
 }
 .custom-file-upload {
-    border: 1px solid #ccc;
+    border: 1px solid #ced4da;
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
+    color: #495057;
+    border-radius: .25rem;
 }
