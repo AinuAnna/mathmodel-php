@@ -59,8 +59,8 @@ include("bd.php");
               if($row['idtopics'] && $row3['idtests']){
               $query2 = "SELECT * FROM tests WHERE idtopics = " . $row['idtopics'] . "";
               $result2 = mysqli_query($GLOBALS['db'], $query2) or die(mysqli_error($GLOBALS['db']));
+              echo "<li>" . $row['nametopic'] . "</li>";
                 while ($row2 = mysqli_fetch_array($result2)) {
-                  echo "<li>" . $row['nametopic'] . "</li>";
                   $id = $row2['idtests'];
                   if (isset($_POST['searchtype'])) $search = " AND testtitle LIKE '%" . $_POST['searchtype'] . "%'";
                   $query3 = "SELECT * FROM tests WHERE idtests = " . $id . $search;
