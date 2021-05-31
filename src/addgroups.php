@@ -11,13 +11,22 @@ include("confirm.php");
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
-    <?php include('head.php') ?>
-    <title>Кабинет преподавателя | Группы</title>
+  <?php include('head.php') ?>
+  <?php if ($_SESSION['roleid'] == 1) {
+    echo ' <title>Панель администратора | Группы</title>';
+  } else {
+    echo ' <title>Кабинет преподавателя | Группы</title>';
+  } ?>
 </head>
 
 <body>
-    <?php include('headerTeacher.php') ?>
+  <?php if ($_SESSION['roleid'] == 1) {
+    include('headerAdmin.php');
+  } else {
+    include('headerTeacher.php');
+  } ?>
     <section class="slice bg-section-secondary">
         <div class="content will-help-you">
             <div class="container" style="padding: 90px 0px;">

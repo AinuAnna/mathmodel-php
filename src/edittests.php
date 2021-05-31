@@ -12,11 +12,20 @@ include("confirm.php");
 <html lang="en">
 
 <head>
-    <?php include('head.php') ?>
-    <title>Личный кабинет | Тесты</title>
+  <?php include('head.php') ?>
+  <?php if ($_SESSION['roleid'] == 1) {
+    echo ' <title>Панель администратора | Тесты</title>';
+  } else {
+    echo ' <title>Кабинет преподавателя | Тесты</title>';
+  } ?>
 </head>
 
 <body>
+  <?php if ($_SESSION['roleid'] == 1) {
+    include('headerAdmin.php');
+  } else {
+    include('headerTeacher.php');
+  } ?>
     <section class="slice bg-section-secondary">
         <div class="content will-help-you">
             <div class="container">

@@ -29,7 +29,7 @@ include("confirm.php");
           if ($result) {
             $rows = mysqli_num_rows($result);
             echo "
-              <div class = 'container-fluid p-0'>
+              <div class = 'container-fluid p-0' style = 'width: 78rem'>
               <div class = 'table-responsive-md'>
               <table class = 'table'>";
             echo "<tr><th>Идентификатор</th><th>Имя</th><th>Почта</th><th>Роль</th><th>Доступ</th><th>Группа</th><th>Описание группы</th><th>Номер группы</th><th>Аватар</th></tr>";
@@ -88,7 +88,7 @@ include("confirm.php");
         if (isset($_POST["deleteButton"])) {
           if (!empty($_POST['idusers'])) {
             $idusers = htmlspecialchars($_POST['idusers']);
-            $query = "DELETE FROM users WHERE idusers ='$idusers';";
+            $query = "DELETE FROM `users` WHERE idusers ='$idusers';";
             $result = mysqli_query($GLOBALS["db"], $query);
             include("notification.php");
           } else echo "<div class=\"alert alert-warning alert-dismissible text-center\"><a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>Все поля должны быть заполнены!</div>";
