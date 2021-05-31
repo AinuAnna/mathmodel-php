@@ -116,7 +116,7 @@ include("confirm.php");
                                 include("notification.php");
                             }
                             ?>
-                        <?php if ($_SESSION['roleid'] == 1 && $_SESSION['roleid'] == 3 ) {
+                        <?php if ($_SESSION['roleid'] == 1 or $_SESSION['roleid'] == 3 ) {
                             if (isset($_POST["deleteComment"])) {
                                 $comments = $_POST['comments'];
                                 foreach ($comments as $j => $key) {
