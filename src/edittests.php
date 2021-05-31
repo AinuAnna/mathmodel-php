@@ -116,19 +116,17 @@ include("confirm.php");
                                 }
                             }
                         }
-                        echo $sql;
-                        if (mysqli_multi_query($GLOBALS['db'], $sql)) {
-                            while (mysqli_next_result($GLOBALS['db'])) {;
-                            }
+                        $result = mysqli_multi_query($GLOBALS['db'], $sql);
+                        while (mysqli_next_result($GLOBALS['db'])) {;
                         }
+                        include('notification.php');
 
                         $error = mysqli_error($GLOBALS['db']);
                         if ($error) {
                             echo "Error: " . $sql . "<br>" . $error;
-                        } else {
-                            echo "New records created successfully";
                         }
                     } ?>
+
                 </div>
             </div>
         </div>
