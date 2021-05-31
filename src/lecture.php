@@ -28,7 +28,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
 </head>
 
 <body>
-<?php if ($_SESSION['roleid'] == 1) {
+  <?php if ($_SESSION['roleid'] == 1) {
     include('headerAdmin.php');
   } else {
     include('headerTeacher.php');
@@ -74,7 +74,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
       </div>
       <div class="row" style="flex-direction: column; align-items: center;">
         <h4 style="margin-top: 40px; margin-top: 20px;">Удаление раздела:</h4>
-        <div class="w-100 position-relative">
+        <div class="w-100">
           <form class="form-validate" method="post" onsubmit="return confirmDesactiv()">
             <div class="form-group">
               <label class="form-label" for="theme">Выберите раздел, который хотите удалить:</label>
@@ -105,7 +105,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Удаление темы:</h4>
-        <div class="w-100 position-relative">
+        <div class="w-100">
           <form class="form-validate" method="post" onsubmit="return confirmDesactiv()">
             <div class="form-group">
               <label class="form-label" for="idtopics">Выберите тему, которую хотите удалить:</label>
@@ -137,7 +137,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Редактирование раздела:</h4>
-        <div class="w-100 position-relative">
+        <div class="w-100">
           <form class="form-validate" method="post" onsubmit="return confirmEdit()">
             <div class="form-group">
               <label class="form-label" for="theme">Выберите раздел, который хотите изменить:</label>
@@ -170,7 +170,7 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Редактирование темы:</h4>
-        <div class="w-100 position-relative">
+        <div class="w-100">
           <form class="form-validate" method="post" onsubmit="return confirmEdit()">
             <div class="form-group">
               <label class="form-label" for="nametopic">Выберите тему, которую хотите изменить:</label>
@@ -203,8 +203,8 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Добавление лекции:</h4>
-        <div class="w-100 position-relative">
-          <form class="form-validate" method="post" onsubmit="return confirmActiv()">
+        <div class="w-100">
+          <form class="form-validate" method="post" onsubmit="return confirmActiv()"  enctype="multipart/form-data">
             <div class="form-group">
               <select class="custom-select" name="addtype">
                 <?php $query = "SELECT * FROM lectures";
@@ -221,36 +221,40 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
               </select>
               <label class="form-label" for="nametopic">Название темы:</label><input class="form-control" name="nametopic" id="nametopic" type="text" placeholder="Матричные игры" autocomplete="off" required="" data-msg="Пожалуйста введите новую тему">
               <div class="custom-file mt-3">
-                <input type="file" class="custom-file-input" name="file" accept="application/pdf" id="filename" />
-                <label class="custom-file-label" data-browse="Выбрать" for="filename">Файл не
-                  выбран</label>
-              </div>
-              <script type="text/javascript">
-                $('.custom-file input').change(function(e) {
-                  var files = [];
-                  for (var i = 0; i < $(this)[0].files.length; i++) {
-                    files.push($(this)[0].files[i].name);
-                  }
-                  $(this).next('.custom-file-label').html(files.join(', '));
-                });
-              </script>
-            </div><button class="btn btn-primary" name="addButton" id="addButton" type="submit">Добавить</button>
+              <input type="file" name="uploaded_file"><br>
+            </div><button class="btn btn-primary" name="addButton" id="addButton" type="submit">Добавить</dutton>
           </form>
         </div>
         <?php
-        if (isset($_POST['addButton'])) {
-          if (!$_POST["nametopic"]) {
-            echo "Вы не ввели критерии поиска. Вернитесь назад и попробуйте еще раз";
-            exit();
+        // Check if a file has been uploaded
+        if (isset($_FILES['uploaded_file'])) {
+          // Make sure the file was sent without errors
+          if ($_FILES['uploaded_file']['error'] == 0) {
+            $name = $GLOBALS['db']->real_escape_string($_FILES['uploaded_file']['name']);
+            $mime = $GLOBALS['db']->real_escape_string($_FILES['uploaded_file']['type']);
+            $data = $GLOBALS['db']->real_escape_string(file_get_contents($_FILES['uploaded_file']['tmp_name']));
+            $size = intval($_FILES['uploaded_file']['size']);
+
+            // Create the SQL query
+            $query = "INSERT INTO topics (idtopics, idlectures, nametopic, file, filename)
+                VALUES (NULL, '" . $_POST['addtype'] . "', '" . $_POST['nametopic'] . "', ' $data ', '$name');";
+
+            // Execute the query
+            $result = $GLOBALS['db']->query($query);
+             include("notification.php");
+          } else {
+            echo 'An error accured while the file was being uploaded. '
+              . 'Error code: ' . intval($_FILES['uploaded_file']['error']);
           }
-          $query = "INSERT INTO topics (idtopics, idlectures, nametopic, file)
-            VALUES (NULL, '" . $_POST['addtype'] . "', '" . $_POST['nametopic'] . "', '" . $_POST['file'] . "');";
-          $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-          include("notification.php");
+
+          // Close the mysql connection
+          $GLOBALS['db']->close();
+        } else {
+          echo 'Error! A file was not sent!';
         }
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Добавление раздела:</h4>
-        <div class="w-100 position-relative">
+        <div class="w-100">
           <form class="form-validate" method="post" onsubmit="return confirmActiv()">
             <div class="form-group">
               <label class="form-label" for="theme">Название раздела:</label><input class="form-control" name="theme" id="theme" type="text" placeholder="Матричные игры" autocomplete="off" required="" data-msg="Пожалуйста введите новый раздел">
