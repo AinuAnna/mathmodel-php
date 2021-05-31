@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("bd.php");
+include("confirm.php");
 ?>
 <script>
     if (window.history.replaceState) {
@@ -31,7 +32,7 @@ include("bd.php");
                         </div>
                         <b>
                             <p>Максимальный балл за тест — <span id="group" class="text-muted"><?php
-                                                                                                $query = "SELECT `questions`.idquestions,  `answers`.idquestions, COUNT(*) AS total, SUM(COUNT(*)) OVER() AS total_count FROM `answers`,  `questions` WHERE idtests = '" . $_GET['idtests'] . "' AND ischecked = 1 AND `answers`.idquestions =`questions`.idquestions GROUP BY `answers`.idquestions;";
+                                                                                                $query = "SELECT SUM(total) AS total_count FROM ( SELECT `questions`.idquestions,  `answers`.idquestions as answeridquestion, COUNT(*) AS total FROM `answers`,  `questions` WHERE idtests = 205 AND ischecked = 1 AND `answers`.idquestions =`questions`.idquestions GROUP BY `answers`.idquestions) as t;";
                                                                                                 $result = mysqli_query($GLOBALS['db'], $query);
                                                                                                 $row = mysqli_fetch_array($result);
                                                                                                 echo $row['total_count'];
@@ -59,20 +60,24 @@ include("bd.php");
                                     echo "<div>";
 
                                     while ($row2 = mysqli_fetch_array($result2)) {
-                                        if (intval($row2['ischecked']) == 1) {
+                                        if ($row2['ischecked'] == 1) {
                                             echo "
-                                    <div><label class = 'list-group-item' for = 'answer" . $for . "''><input id = 'ischecked" . $for . "' style = 'width: 1rem;
+                                    <div><label class = 'list-group-item' for = 'answer" . $for . "''>
+                                    <input id = 'ischecked[" . $row['idquestions'] . "][" . $row2['idanswers'] . "]' style = 'width: 1rem;
                                     position: absolute;
                                     top: 1.5rem;
                                     left: 0.5rem;
-                                    height: 1rem;' type = 'checkbox' checked name = 'ischecked[" . $row2['idanswers'] . "]'/><input class = 'form-control' id = 'answer' name = answer[" . $row['idquestions'] . "][" . $row2['idanswers'] . "]' style = 'margin-left: 10px' value = '" . $row2['answer'] . "'></label></div>";
+                                    height: 1rem;' type = 'checkbox' checked name = 'ischecked[" . $row2['idanswers'] . "]'/>
+                                    <input class = 'form-control' id = 'answer' name = answer[" . $row['idquestions'] . "][" . $row2['idanswers'] . "]' style = 'margin-left: 10px' value = '" . $row2['answer'] . "'></label></div>";
                                         } else {
                                             echo "
-                                            <div><label class = 'list-group-item' for = 'answer" . $for . "''><input id = 'ischecked' style = 'width: 1rem;
+                                            <div><label class = 'list-group-item' for = 'answer" . $for . "''>
+                                            <input id = 'ischecked[" . $row['idquestions'] . "][" . $row2['idanswers'] . "]' style = 'width: 1rem;
                                             position: absolute;
                                             top: 1.5rem;
                                             left: 0.5rem;
-                                            height: 1rem;' type = 'checkbox' name = 'ischecked[" . $row2['idanswers'] . "]'/><input class = 'form-control' id = 'answer' name = answer[" . $row['idquestions'] . "][" . $row2['idanswers'] . "]' style = 'margin-left: 10px' value = '" . $row2['answer'] . "'></label></div>";
+                                            height: 1rem;' type = 'checkbox' name = 'ischecked[" . $row2['idanswers'] . "]'/>
+                                            <input class = 'form-control' id = 'answer' name = answer[" . $row['idquestions'] . "][" . $row2['idanswers'] . "]' style = 'margin-left: 10px' value = '" . $row2['answer'] . "'></label></div>";
                                         }
                                         $for++;
                                     }
@@ -102,26 +107,26 @@ include("bd.php");
                                 $sql .= "UPDATE questions SET questiontext = '{$question}' WHERE idtests = {$_GET['idtests']} AND idquestions = {$j};";
                                 foreach ($answers[$j] as $k => $value) {
                                     $answer = mysqli_escape_string($GLOBALS['db'], $value);
-                                    if ($checked[$k] == "on") {
-                                        foreach ($checked[$k] as $a => $new) {
-                                            $correct = mysqli_escape_string($GLOBALS['db'], $new);
-                                            $sql .= "UPDATE answers SET answer = '{$answer}' WHERE idanswers = {$k} AND ischecked = 0; ";
-                                        }
+                                    if ($checked[$k] != NULL) {
+                                        $correct = mysqli_escape_string($GLOBALS['db'], $checked[$k]);
+                                        $sql .= "UPDATE `answers` SET answer = '{$answer}', ischecked = 1 WHERE idanswers = {$k}; ";
                                     } else {
-                                        $sql .= "UPDATE answers SET answer = '{$answer}' WHERE idanswers = {$k} AND ischecked = 1; ";
+                                        $sql .= "UPDATE `answers` SET answer = '{$answer}', ischecked = 0 WHERE idanswers = {$k}; ";
                                     }
                                 }
                             }
                         }
-
-                        $result = mysqli_multi_query($GLOBALS['db'], $sql);
-                        while (mysqli_next_result($GLOBALS['db'])) {;
+                        echo $sql;
+                        if (mysqli_multi_query($GLOBALS['db'], $sql)) {
+                            while (mysqli_next_result($GLOBALS['db'])) {;
+                            }
                         }
-                        include('notification.php');
 
                         $error = mysqli_error($GLOBALS['db']);
                         if ($error) {
                             echo "Error: " . $sql . "<br>" . $error;
+                        } else {
+                            echo "New records created successfully";
                         }
                     } ?>
                 </div>
@@ -132,11 +137,3 @@ include("bd.php");
 </body>
 
 </html>
-<script>
-    $(document).ready(function() {
-        var $check = $('#ischecked');
-        $check.click(function(e) {
-            $('input[type=checkbox]').prop("checked", true);
-        });
-    });
-</script>

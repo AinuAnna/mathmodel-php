@@ -1,5 +1,5 @@
 <?php
-include ('bd.php');
+include('bd.php');
 $query= "SELECT * FROM topics WHERE idtopics='".$_GET['idtopics']."'";
 $result = mysqli_query($GLOBALS['db'], $query);
 $row = mysqli_fetch_array($result);
