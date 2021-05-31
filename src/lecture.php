@@ -204,8 +204,9 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
         ?>
         <h4 style="margin-top: 40px; margin-top: 20px;">Добавление лекции:</h4>
         <div class="w-100">
-          <form class="form-validate" method="post" onsubmit="return confirmActiv()"  enctype="multipart/form-data">
+          <form class="form-validate" method="post" onsubmit="return confirmActiv()" enctype="multipart/form-data">
             <div class="form-group">
+              <label class="form-label" for="addtype">Выберите название раздела:</label>
               <select class="custom-select" name="addtype">
                 <?php $query = "SELECT * FROM lectures";
                 $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
@@ -220,61 +221,69 @@ mysqli_query($GLOBALS['db'], "ALTER TABLE lectures AUTO_INCREMENT = 0");
                 ?>
               </select>
               <label class="form-label" for="nametopic">Название темы:</label><input class="form-control" name="nametopic" id="nametopic" type="text" placeholder="Матричные игры" autocomplete="off" required="" data-msg="Пожалуйста введите новую тему">
-              <div class="custom-file mt-3">
-              <input type="file" name="uploaded_file"><br>
-            </div><button class="btn btn-primary" name="addButton" id="addButton" type="submit">Добавить</dutton>
+              <div class="custom-file mt-3" style="margin-bottom: 1rem;">
+                <label for="file-upload" class="custom-file-upload">
+                  Загрузите лекцию
+                </label>
+                <input type="file" id="file-upload" name="uploaded_file" accept="application/pdf" multiple><span id="nameFile"></span><br>
+              </div><button class="btn btn-primary" name="addButton" id="addButton" type="submit">Добавить</dutton>
           </form>
+          <script>
+            $("#file-upload").change(function() {
+              var filename = $(this).val().replace(/.*\\/, "");
+              $("#nameFile").text(filename);
+            });
+          </script>
         </div>
-        <?php
-        // Check if a file has been uploaded
-        if (isset($_FILES['uploaded_file'])) {
-          // Make sure the file was sent without errors
-          if ($_FILES['uploaded_file']['error'] == 0) {
-            $name = $GLOBALS['db']->real_escape_string($_FILES['uploaded_file']['name']);
-            $mime = $GLOBALS['db']->real_escape_string($_FILES['uploaded_file']['type']);
-            $data = $GLOBALS['db']->real_escape_string(file_get_contents($_FILES['uploaded_file']['tmp_name']));
-            $size = intval($_FILES['uploaded_file']['size']);
-
-            // Create the SQL query
-            $query = "INSERT INTO topics (idtopics, idlectures, nametopic, file, filename)
-                VALUES (NULL, '" . $_POST['addtype'] . "', '" . $_POST['nametopic'] . "', ' $data ', '$name');";
-
-            // Execute the query
-            $result = $GLOBALS['db']->query($query);
-             include("notification.php");
-          } else {
-            echo 'An error accured while the file was being uploaded. '
-              . 'Error code: ' . intval($_FILES['uploaded_file']['error']);
-          }
-
-          // Close the mysql connection
-          $GLOBALS['db']->close();
-        } else {
-          echo 'Error! A file was not sent!';
-        }
-        ?>
-        <h4 style="margin-top: 40px; margin-top: 20px;">Добавление раздела:</h4>
-        <div class="w-100">
-          <form class="form-validate" method="post" onsubmit="return confirmActiv()">
-            <div class="form-group">
-              <label class="form-label" for="theme">Название раздела:</label><input class="form-control" name="theme" id="theme" type="text" placeholder="Матричные игры" autocomplete="off" required="" data-msg="Пожалуйста введите новый раздел">
-            </div>
-            <button class="btn btn-primary" name="addButton2" id="addButton2" type="submit">Добавить</button>
-          </form>
-        </div>
-        <?php
-        if (isset($_POST['addButton2'])) {
-          if (!$_POST["theme"]) {
-            echo "Вы не ввели критерии поиска. Вернитесь назад и попробуйте еще раз";
-            exit();
-          }
-          $query = "INSERT INTO lectures (idlectures, theme) VALUES (NULL, '" . $_POST['theme'] . "');";
-          $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
-          include("notification.php");
-        }
-        ?>
       </div>
+      <?php
+      // Check if a file has been uploaded
+      if (isset($_POST['addButton'])) {
+        // Make sure the file was sent without errors
+        if ($_FILES['uploaded_file']['error'] == 0) {
+          $name = $GLOBALS['db']->real_escape_string($_FILES['uploaded_file']['name']);
+          $mime = $GLOBALS['db']->real_escape_string($_FILES['uploaded_file']['type']);
+          $data = $GLOBALS['db']->real_escape_string(file_get_contents($_FILES['uploaded_file']['tmp_name']));
+          $size = intval($_FILES['uploaded_file']['size']);
+
+          // Create the SQL query
+          $query = "INSERT INTO topics (idtopics, idlectures, nametopic, file)
+                VALUES (NULL, '" . $_POST['addtype'] . "', '" . $_POST['nametopic'] . "', ' $data ');";
+
+          // Execute the query
+          $result = $GLOBALS['db']->query($query);
+          include("notification.php");
+        } else {
+          echo 'An error accured while the file was being uploaded. '
+            . 'Error code: ' . intval($_FILES['uploaded_file']['error']);
+        }
+
+        // Close the mysql connection
+        $GLOBALS['db']->close();
+      }
+      ?>
+      <h4 style="margin-top: 40px; margin-top: 20px;">Добавление раздела:</h4>
+      <div class="w-100">
+        <form class="form-validate" method="post" onsubmit="return confirmActiv()">
+          <div class="form-group">
+            <label class="form-label" for="theme">Название раздела:</label><input class="form-control" name="theme" id="theme" type="text" placeholder="Матричные игры" autocomplete="off" required="" data-msg="Пожалуйста введите новый раздел">
+          </div>
+          <button class="btn btn-primary" name="addButton2" id="addButton2" type="submit">Добавить</button>
+        </form>
+      </div>
+      <?php
+      if (isset($_POST['addButton2'])) {
+        if (!$_POST["theme"]) {
+          echo "Вы не ввели критерии поиска. Вернитесь назад и попробуйте еще раз";
+          exit();
+        }
+        $query = "INSERT INTO lectures (idlectures, theme) VALUES (NULL, '" . $_POST['theme'] . "');";
+        $result = mysqli_query($GLOBALS['db'], $query) or die(mysqli_error($GLOBALS['db']));
+        include("notification.php");
+      }
+      ?>
     </div>
+  </div>
   </div>
   </section>
 </body>

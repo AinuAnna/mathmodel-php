@@ -90,7 +90,7 @@ include("bd.php");
                       exit("<div class='error-msg'>Извините, введённая вами почта уже существует. Введите другую почту.</div>");
                     }
                     if (!preg_match("/^[a-z0-9_-]{6,18}$/", $password)) {
-                      exit("<div class='error-msg'>Неверный пароль. Буквы, цифры, дефисы и подчёркивания, от 6 до 18 символов.</div>");
+                      exit("<div class='error-msg'>Неверный пароль. Строчные буквы, цифры, от 6 до 18 символов.</div>");
                     } elseif (!preg_match("/^(?![0-9]).*$/", $fullname)) {
                       exit("<div class='error-msg'>Неверный логин. Можно использовать только буквы.</div>");
                     } elseif (!preg_match($pattern, $email)) {
